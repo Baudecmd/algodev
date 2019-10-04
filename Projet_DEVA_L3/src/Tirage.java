@@ -3,16 +3,16 @@ import java.util.Random;
 
 public class Tirage {
 
-    private int nbJoueurs;
+    private int nbPlayers;
     private int nextToken;  //prochain numero tiré (entre 1 et 90)
     private ArrayList<Integer> unusedTokens = new ArrayList<Integer>();   //liste des jetons qui n'ont pas encore été utilisés
 
-    public int getNbJoueurs() {
-        return nbJoueurs;
+    public int getNbPlayers() {
+        return nbPlayers;
     }
 
-    public void setNbJoueurs(int nbJoueurs) {
-        this.nbJoueurs = nbJoueurs;
+    public void setNbPlayers(int nbPlayers) {
+        this.nbPlayers = nbPlayers;
     }
 
     public int getNextToken() {
@@ -23,22 +23,35 @@ public class Tirage {
         this.nextToken = nextToken;
     }
 
-    public Tirage(int nbJoueurs, int nextToken) {
-        this.nbJoueurs = nbJoueurs;
+    public Tirage(int nbPlayers, int nextToken) {
+        this.nbPlayers = nbPlayers;
         this.nextToken = nextToken;
         for(int i=1;i<91;i++){
             unusedTokens.add(i-1,i);
         }
     }
 
-    public Tirage(int nbJoueurs, int nextToken, ArrayList<Integer> unusedTokens) {
-        this.nbJoueurs = nbJoueurs;
+    public Tirage(int nbPlayers, int nextToken, ArrayList<Integer> unusedTokens) {
+        this.nbPlayers = nbPlayers;
         this.nextToken = nextToken;
         this.unusedTokens = unusedTokens;
     }
 
-    public void initGrille(){   //3 lignes de 5 numéros, 9 colonnes de 15 numéros
+    public void initGrid(){   //3 lignes de 5 numéros, 9 colonnes de 15 numéros
+        Random fill=new Random();
+        int n;
+        int Grid[3][9];
+        int count=15;   //il y a 15 nombres à placer
+        for(int i=0;i<3;i++){
+            for(int j=0;j<9;j++){
+                if(count>0){
+                    n=fill.nextInt(2);        //une chance sur deux de remplir la case
+                    if(n==1){   //on remplit la case
 
+                    }
+                }
+            }
+        }
     }
 
     public void RandomToken(){
