@@ -1,3 +1,5 @@
+package loto;
+
 import java.util.ArrayList;
 import java.util.Random;
 
