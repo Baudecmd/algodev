@@ -39,15 +39,31 @@ public class Tirage {
 
     public void initGrid(){   //3 lignes de 5 numéros, 9 colonnes de 15 numéros
         Random fill=new Random();
+        Random value=new Random();
+        ArrayList<Integer> availableValues = new ArrayList<Integer>();
+        int index;
+        for(int i=1;i<91;i++){
+            availableValues.add(i-1,i);     //on remplit la liste des valeurs possibles
+        }
         int n;
-        int Grid[3][9];
+        int [][]gridGame= new int[3][9];
         int count=15;   //il y a 15 nombres à placer
         for(int i=0;i<3;i++){
             for(int j=0;j<9;j++){
-                if(count>0){
-                    n=fill.nextInt(2);        //une chance sur deux de remplir la case
-                    if(n==1){   //on remplit la case
-
+                gridGame[i][j]=0;   //toutes les cases qui resteront à 0 à la fin seront des cases vides
+            }
+        }
+        while(count>0){     //tant qu'il n'y a pas 15 nombres
+            for(int i=0;i<3;i++){
+                for(int j=0;j<9;j++){
+                    if(count>0){
+                        n=fill.nextInt(2);        //une chance sur deux de remplir la case
+                        if(n==1){   //on remplit la case
+                            index=value.nextInt(availableValues.size());
+                            gridGame[i][j]=availableValues.indexOf(index);
+                            availableValues.remove(index);  //pas besoin de vérifier que la liste est vide, la variable de compteur sera égale à zéro avant
+                            count--;
+                        }
                     }
                 }
             }
