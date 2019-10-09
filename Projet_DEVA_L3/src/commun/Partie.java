@@ -6,8 +6,7 @@ import java.util.Collections;
 
 public interface Partie {
     void initialiser();
-    void partieGagnee();
-    void partiePerdu();
+    Boolean partieGagnee();
 
     static ArrayList<Joueur> recupererScore(String f) {
         ArrayList<Joueur> scores = new ArrayList<>(10);
