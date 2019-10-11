@@ -37,7 +37,9 @@ public class Tirage {
         this.unusedTokens = unusedTokens;
     }
 
-    public void initGrid(){   //3 lignes de 5 numéros, 9 colonnes de 15 numéros
+    public void initGrid(){   //3 lignes,  9 colonnes
+        //5 nombres par ligne, 2 par colonne, 1 à 9, 10 à 19, 20 à 29, etc. jusqu'à 90, 15 numéros au total
+        //première ligne : 9 possibilités (1 à 9), dernière ligne: 11 possibilités (80 à 90)
         Random fill=new Random();
         Random value=new Random();
         ArrayList<Integer> availableValues = new ArrayList<Integer>();
