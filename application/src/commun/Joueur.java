@@ -1,6 +1,7 @@
 package commun;
 
 import java.io.*;
+import java.util.Objects;
 
 public class Joueur implements Serializable, Comparable {
     private String nom;
@@ -13,6 +14,18 @@ public class Joueur implements Serializable, Comparable {
 
     public void setScore(float score) {
         this.score = score;
+    }
+
+    public void increaseScore(float score) {
+        this.score += score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Joueur joueur = (Joueur) o;
+        return Objects.equals(nom, joueur.nom);
     }
 
     @Override

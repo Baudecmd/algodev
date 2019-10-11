@@ -24,8 +24,4 @@ public class Grille {
         this.nbLignes = nbLignes;
         this.nbColonnes = nbColonnes;
     }
-
-    public boolean isEmpty(){
-        return false;
-    }
 }
