@@ -28,8 +28,8 @@ public class Loto implements Partie {
     public Joueur retournerGagnant() {
         for (Joueur j : joueurs.keySet())
             if (joueurs.get(j).isContained(tiree)){
-                return j;
                 Partie.ajouterScore("resources/scoreboardLoto.ser",j);
+                return j;
             }
         return null;
     }
