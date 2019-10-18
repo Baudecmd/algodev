@@ -4,12 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public interface Partie {
+public interface Partie { //L'interface partie apporte les fonctions necessaire au deroulement de tous les jeux du projet
     void tourSuivant();
     Boolean partieFinie();
     Joueur retournerGagnant();
-
-    static void initialiser(String nomFichier) {
+    //gestion des scores
+    static void initialiser(String nomFichier) { //initialise le tableau des scores a une liste de joueur vide si le fichier est vide
         File f = new File(nomFichier);
         try {
             if (f.length() == 0) {
@@ -26,7 +26,7 @@ public interface Partie {
             e.printStackTrace();
         }
     }
-    static ArrayList<Joueur> recupererScore(String nomFichier) {
+    static ArrayList<Joueur> recupererScore(String nomFichier) { //renvoie le tableau des scores sous forme de liste de joueur
         ArrayList<Joueur> scores = new ArrayList<>(10);
         try {
             FileInputStream fI = new FileInputStream(nomFichier);
@@ -44,7 +44,7 @@ public interface Partie {
         return scores;
     }
 
-    static void ajouterScore(String nomFichier,Joueur j) {
+    static void ajouterScore(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par plus haut score par partie
         ArrayList<Joueur> scores = recupererScore(nomFichier);
         scores.add(j);
         Collections.sort(scores);
@@ -62,7 +62,7 @@ public interface Partie {
         }
     }
 
-    static void ajouterVictoire(String nomFichier,Joueur j) {
+    static void ajouterVictoire(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par nombre de parties gagnées
         ArrayList<Joueur> scores = recupererScore(nomFichier);
 
         if(scores.contains(j)) {
