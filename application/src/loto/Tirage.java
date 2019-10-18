@@ -41,8 +41,8 @@ public class Tirage {
 
     public void RandomToken(){
         Random randomVar=new Random();
-        int index=randomVar.nextInt(unusedTokens.size());   //nombre aléatoire >=0 et <taille de la liste des tokens restants
-        this.nextToken=unusedTokens.indexOf(index);     //on récupère le nombre de la liste
+        int index=randomVar.nextInt(unusedTokens.size());
+        this.nextToken=unusedTokens.get(index);
         unusedTokens.remove(index);     //on supprime cet élément de la liste
     }
 

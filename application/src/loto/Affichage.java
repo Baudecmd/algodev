@@ -1,5 +1,7 @@
 package loto;
 
+import commun.Grille;
+import commun.Joueur;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,17 +26,30 @@ public class Affichage extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        List listeJoueur=new ArrayList<Joueur>();
+        Joueur j=new Joueur("Conrad");
+        Joueur j2=new Joueur("Patrick");
+        Joueur j3=new Joueur("LALALALA");
+        Joueur j4=new Joueur("PaEAick");
+        Joueur j5=new Joueur("LALAEAAALA");
 
-        int premiersNombres[][] = { {1,2,4,6,5,3,11,4,13},{87,44,76,32,16,13,28,45,19},{47,54,21,31,17,78,76,15,45} };
-        int i=0;
+        listeJoueur.add(j);
+        listeJoueur.add(j2);
+        listeJoueur.add(j3);
+        listeJoueur.add(j4);
+        listeJoueur.add(j5);
+
+        Loto l=new Loto(listeJoueur);
         primaryStage.setTitle("Loto :p");
         Pane root = new Pane();
-
-        ArrayList r=new ArrayList<Integer>();
         Button btn = new Button();
         Label text = new Label();
         text.setLayoutX(550);
         text.setLayoutY(160);
+        Label text2 = new Label();
+        text2.setLayoutX(550);
+        text2.setLayoutY(160);
+        root.getChildren().add(text2);
 
         btn.setText("Jouer");
         btn.setLayoutX(540);
@@ -43,60 +58,71 @@ public class Affichage extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                Random re = new Random();
-                int low = 10;
-                int high = 100;
-                int result = re.nextInt(high-low) + low;
+                l.tourSuivant();
+                text2.setText(String.valueOf(l.getTirage().getNextToken()));
 
-                text.setText(String.valueOf(result));
-                r.add(result);
-                afficherTableau(root, premiersNombres,r);
+
+
+                afficherTableau(root, l.getListeGrille(),l.getTiree());
+
+                if(l.partieFinie())afficherEcranFin(root,l.retournerGagnant());
 
             }
         });
         root.getChildren().add(btn);
         root.getChildren().add(text);
 
-        afficherTableau(root, premiersNombres,r);
-        primaryStage.setScene(new Scene(root, 650, 280));
+        afficherTableau(root, l.getListeGrille(),l.getTiree());
+        primaryStage.setScene(new Scene(root, 650, 200*l.getJoueurs().size()));
         primaryStage.show();
     }
 
-    public void afficherTableau(Pane root, int[][]tableau, List<Integer> tokenDejaTire){
-        int i=0;
+    private void afficherEcranFin(Pane root,Joueur retournerGagnant) {
+        Label text = new Label();
+        text.setText(retournerGagnant.toString());
+        text.setLayoutX(550);
+        text.setLayoutY(160);
+        root.getChildren().add(text);
+
+    }
 
 
+    public void afficherTableau(Pane root, List<Grille> lg, List<Integer> tokenDejaTire) {
 
-        for(int[] x:tableau){
-            int j=0;
-            for(int y:x){
-                Label text = new Label();
-                text.setText(String.valueOf(y));
-                text.setLayoutX(50+j*45);
-                text.setLayoutY(50+i*50);
-                root.getChildren().add(text);
+        int nbJoueur=0;
+        for (Grille g:lg) {
+            int i = 0;
+            for (int[] x : g.getMatrice()) {
+                int j = 0;
+                for (int y : x) {
+                    Label text = new Label();
+                    text.setText(String.valueOf(y));
+                    text.setLayoutX(50 + j * 45);
+                    text.setLayoutY(nbJoueur*200+50 + i * 50);
+                    root.getChildren().add(text);
 
-                Rectangle rectangle = new Rectangle(35+j*45,35+i*50,45, 50);
-                rectangle.setFill(Color.TRANSPARENT);
-                rectangle.setStroke(Color.BLACK);
-                root.getChildren().add(rectangle);
+                    Rectangle rectangle = new Rectangle(35 + j * 45, nbJoueur*200+35 + i * 50, 45, 50);
+                    rectangle.setFill(Color.TRANSPARENT);
+                    rectangle.setStroke(Color.BLACK);
+                    root.getChildren().add(rectangle);
 
 
-                if(tokenDejaTire.contains(y)){
-                    Circle c=new Circle(55+j*45,58+i*50,15);
-                    c.setFill(Color.TRANSPARENT);
-                    c.setStroke(Color.RED);
+                    if (tokenDejaTire.contains(y)) {
+                        Circle c = new Circle(55 + j * 45, nbJoueur*200+58 + i * 50, 15);
+                        c.setFill(Color.TRANSPARENT);
+                        c.setStroke(Color.RED);
 
-                    root.getChildren().add(c);
+                        root.getChildren().add(c);
+                    }
+                    j++;
+
                 }
-                j++;
+                i++;
 
             }
-            i++;
-
+            nbJoueur++;
         }
-
     }
 
-    }
+}
 

@@ -18,14 +18,35 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
         this.joueurs = new HashMap<>();
         for (Joueur j: L){
             joueurs.put(j, new Grille(3,9));
-            joueurs.get(j).initGrid2();
+            joueurs.get(j).initTab();
         }
         this.tiree = new ArrayList<>();
         this.tirage = new Tirage(L.size(), 0);
         Partie.initialiser("resources/scoreboardLoto.ser");
     }
 
-    public Joueur retournerGagnant() { //Renvoie le joueur qui a gagné la partie 
+    public Map<Joueur, Grille> getJoueurs() {
+        return joueurs;
+    }
+
+    public Tirage getTirage() {
+        return tirage;
+    }
+
+    public List<Integer> getTiree() {
+        return tiree;
+    }
+
+    public List<Grille> getListeGrille(){
+        ArrayList<Grille> list=new ArrayList<Grille>();
+        for(Map.Entry m:joueurs.entrySet()){
+
+            list.add((Grille) m.getValue());
+        }
+        return list;
+    }
+
+    public Joueur retournerGagnant() { //Renvoie le joueur qui a gagné la partie
         for (Joueur j : joueurs.keySet())
             if (joueurs.get(j).isContained(tiree)){
                 Partie.ajouterScore("resources/scoreboardLoto.ser",j);
