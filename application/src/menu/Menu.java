@@ -6,12 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import loto.Affichage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,7 +30,7 @@ public class Menu extends Application {
 
 	public static int nbJoueurInt;
 	public static int nbJoueurInt2;
- 
+
 	@FXML
 	private TextField nbJoueur;
 
@@ -49,10 +51,12 @@ public class Menu extends Application {
 
 	@FXML
 	private Stage stage;
-	
+
 	@FXML
 	private Button loto;
 
+	@FXML
+	private Label labelNomJoueur;
 
 	public static void stringtoint(String s, int a) {
 		a = Integer.parseInt(s);
@@ -62,13 +66,9 @@ public class Menu extends Application {
 		int a = Integer.parseInt(s);
 		return a;
 	}
-	
+
 /////////////////////////////////////////
 //Ajouter les méthodes pour lancer les parties ici
-	
-	public void buttonLoto() {
-
-	}
 
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
@@ -121,8 +121,14 @@ public class Menu extends Application {
 		System.out.println(Menu.nbJoueurInt);
 	}
 
+	public void creationLabel(String s) {
+		this.labelNomJoueur.setText(s);
+		System.out.println(this.labelNomJoueur.getText());
+		this.labelNomJoueur.setText(s);
+	}
+
 	@FXML
-	public void handleNomsJoueurs(ActionEvent event) throws IOException {
+	public void handleNomsJoueurs(ActionEvent event) throws IOException, InterruptedException {
 		Window w = entrerNomJoueur.getScene().getWindow();
 		if (nomJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -133,17 +139,26 @@ public class Menu extends Application {
 		} else {
 			if (Menu.nbJoueurInt > 0) {
 
-				Joueur j = new Joueur(entrerNomJoueur.getText());
+				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + this.nbJoueurInt + "!");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
-			}
 
+			}
 		}
 		if (Menu.nbJoueurInt == 0) {
+			Thread.sleep(600);
 			affichageJeu();
 		}
 		nomJoueur.setText("");
+
+	}
+
+	public void handlePartieLoto(ActionEvent Event) {
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+		Affichage a = new Affichage();
+		a.start(stage2);
 
 	}
 
@@ -161,24 +176,21 @@ public class Menu extends Application {
 
 				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu2.fxml"));
 				stage2.setScene(new Scene(this.root));
-				
+
 				break;
 			case 3:
 
 				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu3-4.fxml"));
 				stage2.setScene(new Scene(this.root));
 
-
 				break;
 			case 4:
 				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu3-4.fxml"));
 				stage2.setScene(new Scene(this.root));
 
-
 				break;
 			case 0:
 				System.out.println(Menu.nbJoueurInt);
-
 
 			}
 		} catch (IOException e) {
