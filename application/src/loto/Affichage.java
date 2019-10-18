@@ -31,13 +31,11 @@ public class Affichage extends Application {
         Joueur j2=new Joueur("Patrick");
         Joueur j3=new Joueur("LALALALA");
         Joueur j4=new Joueur("PaEAick");
-        Joueur j5=new Joueur("LALAEAAALA");
 
         listeJoueur.add(j);
         listeJoueur.add(j2);
         listeJoueur.add(j3);
         listeJoueur.add(j4);
-        listeJoueur.add(j5);
 
         Loto l=new Loto(listeJoueur);
         primaryStage.setTitle("Loto :p");
