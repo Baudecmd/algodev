@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import menu.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +27,7 @@ public class Affichage extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		List listeJoueur = new ArrayList<Joueur>();
-		Joueur j = new Joueur("Conrad");
-		Joueur j2 = new Joueur("Patrick");
-		Joueur j3 = new Joueur("LALALALA");
-		Joueur j4 = new Joueur("PaEAick");
-
-		listeJoueur.add(j);
-		listeJoueur.add(j2);
-		listeJoueur.add(j3);
-		listeJoueur.add(j4);
-
-		Loto l = new Loto(listeJoueur);
+		Loto l = new Loto(Menu.nomsJoueurs);
 		primaryStage.setTitle("Loto :p");
 		Pane root = new Pane();
 		Button btn = new Button();
@@ -59,7 +49,7 @@ public class Affichage extends Application {
 				l.tourSuivant();
 				text2.setText(String.valueOf(l.getTirage().getNextToken()));
 
-				afficherTableau(root, l.getListeGrille(), l.getTiree());
+				afficherTableau(root, l.getJoueurs(), l.getTiree());
 
 				if (l.partieFinie())
 					afficherEcranFin(root, l.retournerGagnant());
@@ -69,7 +59,7 @@ public class Affichage extends Application {
 		root.getChildren().add(btn);
 		root.getChildren().add(text);
 
-		afficherTableau(root, l.getListeGrille(), l.getTiree());
+		afficherTableau(root, l.getJoueurs(), l.getTiree());
 		primaryStage.setScene(new Scene(root, 650, 200 * l.getJoueurs().size()));
 		primaryStage.show();
 	}
@@ -83,19 +73,27 @@ public class Affichage extends Application {
 
 	}
 
-	public void afficherTableau(Pane root, List<Grille> lg, List<Integer> tokenDejaTire) {
+	public void afficherTableau(Pane root, List<JoueurLoto> lt, List<Integer> tokenDejaTire) {
 
 		int nbJoueur = 0;
-		for (Grille g : lg) {
+		for (JoueurLoto jl : lt) {
 			int i = 0;
-			for (int[] x : g.getMatrice()) {
+
+
+			Label text = new Label();
+			text.setText(jl.getNom());
+			text.setLayoutX(550);
+			text.setLayoutY(nbJoueur * 200 +150);
+			root.getChildren().add(text);
+
+			for (int[] x : jl.getGrille().getMatrice()) {
 				int j = 0;
 				for (int y : x) {
-					Label text = new Label();
-					text.setText(String.valueOf(y));
-					text.setLayoutX(50 + j * 45);
-					text.setLayoutY(nbJoueur * 200 + 50 + i * 50);
-					root.getChildren().add(text);
+					Label text2 = new Label();
+					text2.setText(String.valueOf(y));
+					text2.setLayoutX(50 + j * 45);
+					text2.setLayoutY(nbJoueur * 200 + 50 + i * 50);
+					root.getChildren().add(text2);
 
 					Rectangle rectangle = new Rectangle(35 + j * 45, nbJoueur * 200 + 35 + i * 50, 45, 50);
 					if (y == 0)
