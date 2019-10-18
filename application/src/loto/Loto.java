@@ -9,23 +9,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Loto implements Partie {
+public class Loto implements Partie { // Le Loto est composé d'une map associant un joueur et une grille, un Tirage et la liste des numéros déjà tiré
     private Map<Joueur, Grille> joueurs;
     private Tirage tirage;
     private List<Integer> tiree;
 
-    public Loto(List<Joueur> L) {
+    public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new HashMap<>();
         for (Joueur j: L){
             joueurs.put(j, new Grille(3,9));
-            joueurs.get(j).initGrid();
+            joueurs.get(j).initGrid2();
         }
         this.tiree = new ArrayList<>();
         this.tirage = new Tirage(L.size(), 0);
         Partie.initialiser("resources/scoreboardLoto.ser");
     }
 
-    public Joueur retournerGagnant() {
+    public Joueur retournerGagnant() { //Renvoie le joueur qui a gagné la partie 
         for (Joueur j : joueurs.keySet())
             if (joueurs.get(j).isContained(tiree)){
                 Partie.ajouterScore("resources/scoreboardLoto.ser",j);
@@ -34,13 +34,13 @@ public class Loto implements Partie {
         return null;
     }
 
-    public Boolean partieFinie() {
+    public Boolean partieFinie() { //Verifie si la partie est finie
         for (Joueur j : joueurs.keySet())
             if (joueurs.get(j).isContained(tiree)) return true;
         return false;
     }
 
-    public void tourSuivant() {
+    public void tourSuivant() { //Passe au tour suivant en tirant un nouveau numéro
         tiree.add(tirage.getTokenToGame());
     }
 
