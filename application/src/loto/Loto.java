@@ -10,22 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Loto implements Partie { // Le Loto est composé d'une map associant un joueur et une grille, un Tirage et la liste des numéros déjà tiré
-    private Map<Joueur, Grille> joueurs;
+    private List<JoueurLoto> joueurs;
     private Tirage tirage;
     private List<Integer> tiree;
 
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
-        this.joueurs = new HashMap<>();
+        this.joueurs = new ArrayList<>();
         for (Joueur j: L){
-            joueurs.put(j, new Grille(3,9));
-            joueurs.get(j).initTab();
+            JoueurLoto jL = (JoueurLoto) j;
+            jL.initGrille();
+            joueurs.add(jL);
         }
         this.tiree = new ArrayList<>();
         this.tirage = new Tirage(L.size(), 0);
         Partie.initialiser("resources/scoreboardLoto.ser");
     }
 
-    public Map<Joueur, Grille> getJoueurs() {
+    public List<JoueurLoto> getJoueurs() {
         return joueurs;
     }
 
@@ -37,18 +38,9 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
         return tiree;
     }
 
-    public List<Grille> getListeGrille(){
-        ArrayList<Grille> list=new ArrayList<Grille>();
-        for(Map.Entry m:joueurs.entrySet()){
-
-            list.add((Grille) m.getValue());
-        }
-        return list;
-    }
-
-    public Joueur retournerGagnant() { //Renvoie le joueur qui a gagné la partie
-        for (Joueur j : joueurs.keySet())
-            if (joueurs.get(j).isContained(tiree)){
+    public JoueurLoto retournerGagnant() { //Renvoie le joueur qui a gagné la partie
+        for (JoueurLoto j : joueurs)
+            if (j.getGrille().isContained(tiree)){
                 Partie.ajouterScore("resources/scoreboardLoto.ser",j);
                 return j;
             }
@@ -56,8 +48,8 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     }
 
     public Boolean partieFinie() { //Verifie si la partie est finie
-        for (Joueur j : joueurs.keySet())
-            if (joueurs.get(j).isContained(tiree)) return true;
+        for (JoueurLoto j : joueurs)
+            if (j.getGrille().isContained(tiree)) return true;
         return false;
     }
 
