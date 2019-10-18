@@ -4,7 +4,11 @@ import java.io.*;
 import java.util.Objects;
 
 public class Joueur implements Serializable, Comparable { //Un Joueur est caracterise par son nom/pseudo et son score
-    private String nom;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2511917305652687589L;
+	private String nom;
     private float score;
 
     public Joueur(String nom) {

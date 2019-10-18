@@ -17,7 +17,8 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new ArrayList<>();
         for (Joueur j: L){
-            JoueurLoto jL = (JoueurLoto) j;
+            //JoueurLoto jL = (JoueurLoto) j;
+        	JoueurLoto jL = new JoueurLoto(j.getNom());
             jL.initGrille();
             joueurs.add(jL);
         }

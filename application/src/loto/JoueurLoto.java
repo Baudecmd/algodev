@@ -6,7 +6,11 @@ import commun.Joueur;
 import java.util.List;
 
 public class JoueurLoto extends Joueur {
-    private Grille grille;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2464103437009606435L;
+	private Grille grille;
     private List<Integer> cochee;
 
     public JoueurLoto(String nom) {
