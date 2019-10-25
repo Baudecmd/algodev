@@ -64,10 +64,8 @@ public class Affichage extends Application {
 				afficherTableau(root, l.getJoueurs(), l.getTiree());
 
 				if (l.partieFinie()){
-					if(l.gagnant())afficherEcranFin(root,l.retournerGagnant());
+					if(l.gagnant()) afficherEcranFin(root,l.retournerGagnant());
 					else afficherPasDeGagnant(root);
-
-
 				}
 			}
 		});
@@ -82,7 +80,6 @@ public class Affichage extends Application {
 	}
 
 	private void afficherPasDeGagnant(Pane root) {
-
 		root.getChildren().clear();
 		Label text = new Label();
 		text.setText(" NO GAGNANT");
@@ -93,8 +90,8 @@ public class Affichage extends Application {
 	}
 
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
-		root=new Pane();
-		Label text = new Label();
+        root.getChildren().clear();
+        Label text = new Label();
 		text.setText(retournerGagnant.toString());
 		text.setLayoutX(250);
 		text.setLayoutY(160);
@@ -107,7 +104,6 @@ public class Affichage extends Application {
 		int nbJoueur = 0;
 		for (JoueurLoto jl : lt) {
 			int i = 0;
-
 
 			Label text = new Label();
 			text.setText(jl.getNom());
@@ -135,7 +131,6 @@ public class Affichage extends Application {
 
 				}
 				i++;
-
 			}
 			nbJoueur++;
 		}
@@ -149,9 +144,6 @@ public class Affichage extends Application {
 			x=(int)x/45;
 			int j=(int)y/185;
 			y=((int)((y%185)/50)-1);
-
-			System.out.println("x "+x+" y "+y+ " j "+j);
-			System.out.println(l.getJoueurs().get(j).getNom());
 			if(l.getJoueurs().get(j).cocher(y,x)){
 
 				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);

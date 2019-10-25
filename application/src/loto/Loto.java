@@ -17,7 +17,6 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new ArrayList<>();
         for (Joueur j: L){
-            //JoueurLoto jL = (JoueurLoto) j;
         	JoueurLoto jL = new JoueurLoto(j.getNom());
             jL.initGrille();
             joueurs.add(jL);
@@ -41,8 +40,8 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
 
     public JoueurLoto retournerGagnant() { //Renvoie le joueur qui a gagné la partie
         for (JoueurLoto j : joueurs)
-            if (j.getGrille().isContained(j.getCochee())){
-                Partie.ajouterScore("resources/scoreboardLoto.ser",j);
+            if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)){
+                Partie.ajouterVictoire("resources/scoreboardLoto.ser",j);
                 return j;
             }
         return null;
@@ -50,14 +49,14 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
 
     public Boolean partieFinie() { //Verifie si la partie est finie
         for (JoueurLoto j : joueurs)
-            if (j.getGrille().isContained(j.getCochee())) return true;
+            if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) return true;
             if(tirage.getUnusedTokens().isEmpty()) return true;
         return false;
     }
 
     public Boolean gagnant() { //Verifie si il y a un gagnant
         for (JoueurLoto j : joueurs)
-            if (j.getGrille().isContained(j.getCochee())) return true;
+            if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) return true;
         if(tirage.getUnusedTokens().isEmpty()) return false;
         return false;
     }

@@ -16,23 +16,15 @@ public class JoueurLoto extends Joueur {
 
     public JoueurLoto(String nom) {
         super(nom);
-        cochee = new ArrayList<Integer>();
+        cochee = new ArrayList<>();
     }
 
     public Grille getGrille() {
         return grille;
     }
 
-    public void setGrille(Grille grille) {
-        this.grille = grille;
-    }
-
     public List<Integer> getCochee() {
         return cochee;
-    }
-
-    public void setCochee(List<Integer> cochee) {
-        this.cochee = cochee;
     }
 
     public void initGrille() {
