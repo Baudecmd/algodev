@@ -93,6 +93,7 @@ public class Affichage extends Application {
 	}
 
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
+	    //gagnant
 	    root.getChildren().clear();
 	    Label text = new Label();
 		text.setText(retournerGagnant.toString());
