@@ -1,9 +1,7 @@
 package loto;
 
-import commun.Grille;
 import commun.Joueur;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,9 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import menu.Menu;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Affichage extends Application {
 
@@ -64,7 +60,7 @@ public class Affichage extends Application {
 				afficherTableau(root, l.getJoueurs(), l.getTiree());
 
 				if (l.partieFinie()){
-					if(l.gagnant()) afficherEcranFin(root,l.retournerGagnant());
+					if(l.gagnant())afficherEcranFin(root,l.retournerGagnant());
 					else afficherPasDeGagnant(root);
 				}
 			}
@@ -86,7 +82,6 @@ public class Affichage extends Application {
 		text.setLayoutX(250);
 		text.setLayoutY(160);
 		root.getChildren().add(text);
-
 	}
 
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
@@ -145,7 +140,6 @@ public class Affichage extends Application {
 			int j=(int)y/185;
 			y=((int)((y%185)/50)-1);
 			if(l.getJoueurs().get(j).cocher(y,x)){
-
 				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
 				c.setFill(Color.TRANSPARENT);
 				c.setStroke(Color.RED);
@@ -153,11 +147,6 @@ public class Affichage extends Application {
 
 			}
 		}
-
-
-
-
-
 	}
 
 }
