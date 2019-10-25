@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -27,8 +28,13 @@ public class Affichage extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		Loto l = new Loto(Menu.nomsJoueurs);
+
+
+
 		primaryStage.setTitle("Loto :p");
+
+
+		Loto l = new Loto(Menu.nomsJoueurs);
 		Pane root = new Pane();
 		Button btn = new Button();
 		Label text = new Label();
@@ -42,20 +48,31 @@ public class Affichage extends Application {
 		btn.setText("Jouer");
 		btn.setLayoutX(540);
 		btn.setLayoutY(80);
-		btn.setOnAction(new EventHandler<ActionEvent>() {
 
+
+		btn.setOnAction(event -> {
+			l.tourSuivant();
+			text2.setText(String.valueOf(l.getTirage().getNextToken()));
+			afficherTableau(root, l.getJoueurs(), l.getTiree());
+		});
+
+
+		primaryStage.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(ActionEvent event) {
-				l.tourSuivant();
-				text2.setText(String.valueOf(l.getTirage().getNextToken()));
-
+			public void handle(MouseEvent mouseEvent) {
+				ajouterCercle(root,l,(int)mouseEvent.getX(),(int)mouseEvent.getY());
 				afficherTableau(root, l.getJoueurs(), l.getTiree());
 
-				if (l.partieFinie())
-					afficherEcranFin(root, l.retournerGagnant());
+				if (l.partieFinie()){
+					if(l.gagnant())afficherEcranFin(root,l.retournerGagnant());
+					else afficherPasDeGagnant(root);
 
+
+				}
 			}
 		});
+
+
 		root.getChildren().add(btn);
 		root.getChildren().add(text);
 
@@ -64,10 +81,22 @@ public class Affichage extends Application {
 		primaryStage.show();
 	}
 
+	private void afficherPasDeGagnant(Pane root) {
+
+		root.getChildren().clear();
+		Label text = new Label();
+		text.setText(" NO GAGNANT");
+		text.setLayoutX(250);
+		text.setLayoutY(160);
+		root.getChildren().add(text);
+
+	}
+
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
+		root=new Pane();
 		Label text = new Label();
 		text.setText(retournerGagnant.toString());
-		text.setLayoutX(550);
+		text.setLayoutX(250);
 		text.setLayoutY(160);
 		root.getChildren().add(text);
 
@@ -94,7 +123,6 @@ public class Affichage extends Application {
 					text2.setLayoutX(50 + j * 45);
 					text2.setLayoutY(nbJoueur * 200 + 50 + i * 50);
 					root.getChildren().add(text2);
-
 					Rectangle rectangle = new Rectangle(35 + j * 45, nbJoueur * 200 + 35 + i * 50, 45, 50);
 					if (y == 0)
 						rectangle.setFill(Color.BLACK);
@@ -103,14 +131,6 @@ public class Affichage extends Application {
 
 					rectangle.setStroke(Color.BLACK);
 					root.getChildren().add(rectangle);
-
-					if (tokenDejaTire.contains(y)) {
-						Circle c = new Circle(55 + j * 45, nbJoueur * 200 + 58 + i * 50, 15);
-						c.setFill(Color.TRANSPARENT);
-						c.setStroke(Color.RED);
-
-						root.getChildren().add(c);
-					}
 					j++;
 
 				}
@@ -119,6 +139,33 @@ public class Affichage extends Application {
 			}
 			nbJoueur++;
 		}
+	}
+
+	public void ajouterCercle(Pane root,Loto l,int x,int y){
+		if(x<500){
+
+
+			x-=50;
+			x=(int)x/45;
+			int j=(int)y/185;
+			y=((int)((y%185)/50)-1);
+
+			System.out.println("x "+x+" y "+y+ " j "+j);
+			System.out.println(l.getJoueurs().get(j).getNom());
+			if(l.getJoueurs().get(j).cocher(y,x)){
+
+				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
+				c.setFill(Color.TRANSPARENT);
+				c.setStroke(Color.RED);
+				root.getChildren().add(c);
+
+			}
+		}
+
+
+
+
+
 	}
 
 }
