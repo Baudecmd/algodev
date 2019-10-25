@@ -38,4 +38,10 @@ public class JoueurLoto extends Joueur {
         this.grille = new Grille(3,9);
         this.grille.initTab();
     }
+
+    public Boolean cocher(int i, int j) {
+        if(grille.getMatrice()[i][j] == 0) return false;
+        cochee.add(grille.getMatrice()[i][j]);
+        return true;
+    }
 }

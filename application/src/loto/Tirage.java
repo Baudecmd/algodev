@@ -25,6 +25,10 @@ public class Tirage {
         this.nextToken = nextToken;
     }
 
+    public ArrayList<Integer> getUnusedTokens() {
+        return unusedTokens;
+    }
+
     public Tirage(int nbPlayers, int nextToken) {
         this.nbPlayers = nbPlayers;
         this.nextToken = nextToken;
