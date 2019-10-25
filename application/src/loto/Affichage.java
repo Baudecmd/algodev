@@ -93,8 +93,8 @@ public class Affichage extends Application {
 	}
 
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
-		root=new Pane();
-		Label text = new Label();
+	    root.getChildren().clear();
+	    Label text = new Label();
 		text.setText(retournerGagnant.toString());
 		text.setLayoutX(250);
 		text.setLayoutY(160);
@@ -153,7 +153,6 @@ public class Affichage extends Application {
 			System.out.println("x "+x+" y "+y+ " j "+j);
 			System.out.println(l.getJoueurs().get(j).getNom());
 			if(l.getJoueurs().get(j).cocher(y,x)){
-
 				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
 				c.setFill(Color.TRANSPARENT);
 				c.setStroke(Color.RED);
