@@ -82,8 +82,8 @@ public class Affichage extends Application {
 
 			Label text = new Label();
 			text.setText(jl.getNom());
-			text.setLayoutX(550);
-			text.setLayoutY(nbJoueur * 200 +150);
+			text.setLayoutX(465);
+			text.setLayoutY(nbJoueur * 200 +102);
 			root.getChildren().add(text);
 
 			for (int[] x : jl.getGrille().getMatrice()) {
@@ -100,6 +100,7 @@ public class Affichage extends Application {
 						rectangle.setFill(Color.BLACK);
 					else
 						rectangle.setFill(Color.TRANSPARENT);
+
 					rectangle.setStroke(Color.BLACK);
 					root.getChildren().add(rectangle);
 
