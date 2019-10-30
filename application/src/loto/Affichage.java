@@ -44,10 +44,10 @@ public class Affichage extends Application {
 		btn.setText("Jouer");
 		btn.setLayoutX(540);
 		btn.setLayoutY(80);
-
+        l.tourSuivant();
 
 		btn.setOnAction(event -> {
-			l.tourSuivant();
+
 			text2.setText(String.valueOf(l.getTirage().getNextToken()));
 			afficherTableau(root, l.getJoueurs(), l.getTiree());
 		});

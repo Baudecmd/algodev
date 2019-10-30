@@ -44,34 +44,15 @@ public interface Partie { //L'interface partie apporte les fonctions necessaire 
         return scores;
     }
 
-    static void ajouterScore(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par plus haut score par partie
-        ArrayList<Joueur> scores = recupererScore(nomFichier);
-        scores.add(j);
-        Collections.sort(scores);
-
-        try {
-            FileOutputStream fO = new FileOutputStream(nomFichier);
-            ObjectOutputStream oO = new ObjectOutputStream(fO);
-            for(int i=0;i<10;i++) {
-                oO.writeObject(scores.get(i));
-            }
-            oO.close();
-            fO.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     static void ajouterVictoire(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par nombre de parties gagnées
         ArrayList<Joueur> scores = recupererScore(nomFichier);
 
         if(scores.contains(j)) {
             scores.get(scores.indexOf(j)).increaseScore(1);
-            System.out.println("fff");
         }
         else {
+            j.increaseScore(1);
             scores.add(j);
-            System.out.println("eee");
         }
         Collections.sort(scores);
 
