@@ -42,7 +42,7 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     public JoueurLoto retournerGagnant() { //Renvoie le joueur qui a gagné la partie
         for (JoueurLoto j : joueurs)
             if (j.getGrille().isContained(j.getCochee())){
-                Partie.ajouterScore("resources/scoreboardLoto.ser",j);
+                //Partie.ajouterScore("resources/scoreboardLoto.ser",j);
                 return j;
             }
         return null;
