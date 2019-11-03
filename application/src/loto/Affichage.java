@@ -1,9 +1,7 @@
 package loto;
 
-import commun.Grille;
 import commun.Joueur;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,9 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import menu.Menu;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Affichage extends Application {
 
@@ -48,10 +44,10 @@ public class Affichage extends Application {
 		btn.setText("Jouer");
 		btn.setLayoutX(540);
 		btn.setLayoutY(80);
-
+        l.tourSuivant();
 
 		btn.setOnAction(event -> {
-			l.tourSuivant();
+
 			text2.setText(String.valueOf(l.getTirage().getNextToken()));
 			afficherTableau(root, l.getJoueurs(), l.getTiree());
 		});
@@ -66,8 +62,6 @@ public class Affichage extends Application {
 				if (l.partieFinie()){
 					if(l.gagnant())afficherEcranFin(root,l.retournerGagnant());
 					else afficherPasDeGagnant(root);
-
-
 				}
 			}
 		});
@@ -82,20 +76,17 @@ public class Affichage extends Application {
 	}
 
 	private void afficherPasDeGagnant(Pane root) {
-
 		root.getChildren().clear();
 		Label text = new Label();
 		text.setText(" NO GAGNANT");
 		text.setLayoutX(250);
 		text.setLayoutY(160);
 		root.getChildren().add(text);
-
 	}
 
 	private void afficherEcranFin(Pane root, Joueur retournerGagnant) {
-	    //gagnant
-	    root.getChildren().clear();
-	    Label text = new Label();
+        root.getChildren().clear();
+        Label text = new Label();
 		text.setText(retournerGagnant.toString());
 		text.setLayoutX(250);
 		text.setLayoutY(160);
@@ -108,7 +99,6 @@ public class Affichage extends Application {
 		int nbJoueur = 0;
 		for (JoueurLoto jl : lt) {
 			int i = 0;
-
 
 			Label text = new Label();
 			text.setText(jl.getNom());
@@ -136,7 +126,6 @@ public class Affichage extends Application {
 
 				}
 				i++;
-
 			}
 			nbJoueur++;
 		}
@@ -150,9 +139,6 @@ public class Affichage extends Application {
 			x=(int)x/45;
 			int j=(int)y/185;
 			y=((int)((y%185)/50)-1);
-
-			System.out.println("x "+x+" y "+y+ " j "+j);
-			System.out.println(l.getJoueurs().get(j).getNom());
 			if(l.getJoueurs().get(j).cocher(y,x)){
 				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
 				c.setFill(Color.TRANSPARENT);
@@ -161,11 +147,6 @@ public class Affichage extends Application {
 
 			}
 		}
-
-
-
-
-
 	}
 
 }
