@@ -23,15 +23,15 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
         Partie.initialiser("resources/scoreboardLoto.ser");
     }
 
-    public List<JoueurLoto> getJoueurs() {
+    List<JoueurLoto> getJoueurs() {
         return joueurs;
     }
 
-    public Tirage getTirage() {
+    Tirage getTirage() {
         return tirage;
     }
 
-    public List<Integer> getTiree() {
+    List<Integer> getTiree() {
         return tiree;
     }
 
@@ -46,12 +46,11 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
 
     public Boolean partieFinie() { //Verifie si la partie est finie
         for (JoueurLoto j : joueurs)
-            if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) return true;
-            if(tirage.getUnusedTokens().isEmpty()) return true;
+            if ( (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) || tirage.getUnusedTokens().isEmpty()) return true;
         return false;
     }
 
-    public Boolean gagnant() { //Verifie si il y a un gagnant
+    Boolean gagnant() { //Verifie si il y a un gagnant
         for (JoueurLoto j : joueurs)
             if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) return true;
         if(tirage.getUnusedTokens().isEmpty()) return false;

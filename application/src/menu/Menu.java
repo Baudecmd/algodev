@@ -8,9 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
@@ -19,7 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import commun.*;
@@ -68,12 +64,12 @@ public class Menu extends Application {
 	}
 
 /////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ici
+//Ajouter les mï¿½thodes pour lancer les parties ici
 
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
@@ -82,7 +78,7 @@ public class Menu extends Application {
 	public void buttonPoker() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
@@ -91,7 +87,7 @@ public class Menu extends Application {
 	public void buttonSudoku() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 		return;
@@ -101,8 +97,8 @@ public class Menu extends Application {
 	@FXML
 	public void handleNbJoueur(ActionEvent event) throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
-		// Vérif
-		System.out.println("Nombre de joueurs entré :" + nbJoueur.getText());
+		// Vï¿½rif
+		System.out.println("Nombre de joueurs entrï¿½ :" + nbJoueur.getText());
 		if (nbJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrer un nombre de joueurs !");
@@ -141,7 +137,7 @@ public class Menu extends Application {
 
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + this.nbJoueurInt + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous ï¿½tes le joueur " + this.nbJoueurInt + "!");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 

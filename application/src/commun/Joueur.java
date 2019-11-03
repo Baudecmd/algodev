@@ -3,9 +3,9 @@ package commun;
 import java.io.*;
 import java.util.Objects;
 
-public class Joueur implements Serializable, Comparable { //Un Joueur est caracterise par son nom/pseudo et son score
+public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur est caracterise par son nom/pseudo et son score
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -2511917305652687589L;
 	private String nom;
@@ -20,16 +20,12 @@ public class Joueur implements Serializable, Comparable { //Un Joueur est caract
         return nom;
     }
 
-    public void setScore(float score) {
-        this.score = score;
-    }
-
-    public void increaseScore(float score) { //Augmente le score du joueur en fonction de l'entrée
-        this.score += score;
+    void increaseScore(float scoreGagne) { //Augmente le score du joueur en fonction de l'entrée
+        this.score += scoreGagne;
     }
 
     @Override
-    public boolean equals(Object o) { //Ici deux Joueur sont les mêmes s'ils ont le même pseudo
+    public boolean equals(Object o) { //Ici deux Joueurs sont les mêmes s'ils ont le même pseudo
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Joueur joueur = (Joueur) o;
@@ -37,8 +33,8 @@ public class Joueur implements Serializable, Comparable { //Un Joueur est caract
     }
 
     @Override
-    public int compareTo(Object o) {
-        return Float.compare( ((Joueur)o).score,score);
+    public int compareTo(Joueur j) {
+        return Float.compare( j.score,score);
     }
 
     @Override

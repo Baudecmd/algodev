@@ -4,10 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public interface Partie { //L'interface partie apporte les fonctions necessaire au deroulement de tous les jeux du projet
+public interface Partie { //L'interface partie apporte les fonctions necessaires au deroulement de tous les jeux du projet
     void tourSuivant();
     Boolean partieFinie();
     Joueur retournerGagnant();
+
     //gestion des scores
     static void initialiser(String nomFichier) { //initialise le tableau des scores a une liste de joueur vide si le fichier est vide
         File f = new File(nomFichier);
@@ -26,10 +27,13 @@ public interface Partie { //L'interface partie apporte les fonctions necessaire 
             e.printStackTrace();
         }
     }
-    static ArrayList<Joueur> recupererScore(String nomFichier) { //renvoie le tableau des scores sous forme de liste de joueur
+
+    static ArrayList<Joueur> recupererScore(String path) { //renvoie le tableau des scores sous forme de liste de joueur
+        File f = new File(path);
         ArrayList<Joueur> scores = new ArrayList<>(10);
+
         try {
-            FileInputStream fI = new FileInputStream(nomFichier);
+            FileInputStream fI = new FileInputStream(f);
             ObjectInputStream oI = new ObjectInputStream(fI);
             for(int i=0;i<10;i++) {
                 Joueur j = (Joueur) oI.readObject();
