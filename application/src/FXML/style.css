@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("../FXML/damierjeu.jpg");
+    -fx-background-color: #8AD6D1;
     -fx-background-repeat: stretch; 
     -fx-font-weight: bold;  
     -fx-background-size: 900 506;

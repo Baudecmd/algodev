@@ -30,6 +30,7 @@ public class Menu extends Application {
 
 	public static int nbJoueurInt;
 	public static int nbJoueurInt2;
+	public static int i = 1 ;
 
 	@FXML
 	private TextField nbJoueur;
@@ -138,10 +139,9 @@ public class Menu extends Application {
 			return;
 		} else {
 			if (Menu.nbJoueurInt > 0) {
-
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + this.nbJoueurInt + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + this.i++ + "!");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
