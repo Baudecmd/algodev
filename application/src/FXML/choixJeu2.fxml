@@ -24,7 +24,7 @@
 				<Button id="record-sales" fx:id="loto" layoutX="146.0"
 					layoutY="200.0" mnemonicParsing="false" text="Loto"
 					onAction="#handlePartieLoto" />
-				<Button id="record-sales" layoutX="455.0" layoutY="200.0"
+				<Button id="record-sales" layoutX="438.0" layoutY="200.0"
 					mnemonicParsing="false" text="Poker" onAction="#buttonPoker" />
 				<Button id="record-sales" layoutX="272.0" layoutY="200.0"
 					mnemonicParsing="false" text="Bataille Navale "
