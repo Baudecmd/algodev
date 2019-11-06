@@ -23,8 +23,15 @@
 				</Label>
 				<Button id="record-sales" fx:id="loto" layoutX="146.0"
 					layoutY="200.0" mnemonicParsing="false" text="Loto"
-					onAction="#handlePartieLoto" />
-				<Button id="record-sales" layoutX="438.0" layoutY="200.0"
+					onAction="#handlePartieLoto" >
+					<graphic>
+                  <ImageView fitHeight="19.0" fitWidth="39.0">
+                     <image>
+                        <Image url="@piece.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+				<Button id="record-sales" layoutX="429.0" layoutY="200.0"
 					mnemonicParsing="false" text="Poker" onAction="#buttonPoker" />
 			</children>
 		</AnchorPane>
