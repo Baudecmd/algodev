@@ -12,15 +12,16 @@ public class Sudoku {
 
 	public Sudoku(ArrayList<Joueur> lj, int difficulty) {
 		this.joueur = new JoueurSudoku(lj.get(0));
+		templateSudoku.setCouple(difficulty);
 		switch (difficulty) {
 		case 1:
-			Sudoku.grille.setMatrice(templateSudoku.facile1);
+			Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
 			break;
 		case 2:
-			Sudoku.grille.setMatrice(templateSudoku.moyen1);
+			Sudoku.grille.setMatrice(templateSudoku.moyen1.getTemplate().getMatrice());
 			break;
 		case 3:
-			Sudoku.grille.setMatrice(templateSudoku.difficile1);
+			Sudoku.grille.setMatrice(templateSudoku.difficile1.getTemplate().getMatrice());
 			break;
 		}
 
@@ -166,6 +167,16 @@ public class Sudoku {
 		}
 		if (!poss.contains(this.joueur.getCoutCourant().getValeurRentree())) {
 			return false;
+		}
+		return true;
+	}
+	
+	public boolean verification(coupleSudoku sudo) {
+		for(int i = 0;i<9;i++) {
+			for(int j=0;j<9;j++) {
+				if(sudo.getSolution().getMatrice()[i][j]!= sudo.getTemplate().getMatrice()[i][j])
+					return false;
+			}
 		}
 		return true;
 	}
