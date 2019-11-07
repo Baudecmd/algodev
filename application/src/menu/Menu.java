@@ -14,6 +14,7 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
+import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -88,13 +89,15 @@ public class Menu extends Application {
 
 	}
 
+	//Fini
 	public void buttonSudoku() {
-		Window w = loto.getScene().getWindow();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
-		alert.initOwner(w);
-		alert.show();
-		return;
+		Stage temp = (Stage) this.loto.getScene().getWindow();
+		MenuSudoku m = new MenuSudoku();
+		try {
+			m.start(temp);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 /////////////////////////////////////////
 
