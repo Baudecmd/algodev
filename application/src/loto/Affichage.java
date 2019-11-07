@@ -24,7 +24,7 @@ public class Affichage extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		primaryStage.setTitle("Loto :p");
+		primaryStage.setTitle("Loto");
 
 		Loto l = new Loto(Menu.nomsJoueurs);
 		Pane root = new Pane();
@@ -67,7 +67,10 @@ public class Affichage extends Application {
 		root.getChildren().add(text);
 
 		afficherTableau(root, l.getJoueurs(), l.getTiree());
-		primaryStage.setScene(new Scene(root, 650, 200 * l.getJoueurs().size()));
+
+		var scene=new Scene(root, 650, 200 * l.getJoueurs().size());
+		scene.getStylesheets().add(getClass().getResource("../FXML/loto.css").toExternalForm());
+		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
@@ -110,7 +113,7 @@ public class Affichage extends Application {
 				for (int y : x) {
 					Label text2 = new Label();
 					text2.setText(String.valueOf(y));
-					text2.setLayoutX(50 + j * 45);
+					text2.setLayoutX(47 + j * 45);
 					text2.setLayoutY(nbJoueur * 200 + 50 + i * 50);
 					root.getChildren().add(text2);
 					Rectangle rectangle = new Rectangle(35 + j * 45, nbJoueur * 200 + 35 + i * 50, 45, 50);
@@ -133,19 +136,19 @@ public class Affichage extends Application {
 
 	public void ajouterCercle(Pane root,Loto l,int x,int y){
 		if(x<500){
-			x-=50;
-			x=(int)x/45;
-			int j=(int)y/185;
-			y=((int)((y%185)/50)-1);
-
+			x=(x-35)/45;
+			int j=(y-35)/200;
+			y=((y-35)-200*j)/50;
 			System.out.println("x "+x+" y "+y+ " j "+j);
 			System.out.println(l.getJoueurs().get(j).getNom());
-			if(l.getJoueurs().get(j).cocher(y,x)){
-				Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
-				c.setFill(Color.TRANSPARENT);
-				c.setStroke(Color.RED);
-				root.getChildren().add(c);
+			if(x<=7 && x>=0 && y<4) {
+				if (l.getJoueurs().get(j).cocher(y, x)) {
+					Circle c = new Circle(55 + x * 45, j * 200 + 58 + y * 50, 15);
+					c.setFill(Color.TRANSPARENT);
+					c.setStroke(Color.RED);
+					root.getChildren().add(c);
 
+				}
 			}
 		}
 	}
