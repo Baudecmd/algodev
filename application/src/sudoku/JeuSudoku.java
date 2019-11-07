@@ -1,6 +1,9 @@
 package sudoku;
 
 import javafx.animation.KeyFrame;
+import commun.Grille;
+import commun.Joueur;
+import commun.Partie;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import commun.Popups;
@@ -21,6 +24,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -60,24 +64,42 @@ public class JeuSudoku extends Application implements Initializable {
 	Parent root;
 	@FXML
 	Text text;
+	
+	public static ArrayList<Joueur> nomsJoueurs;
+
 
 	int player_selected_row;
 	int player_selected_col;
+	
+	public static Sudoku game;
 
-	int[][] initial = new int[][] { { 0, 0, 0, 4, 0, 0, 0, 9, 0 }, { 6, 0, 7, 0, 0, 0, 8, 0, 4 },
-			{ 0, 1, 0, 7, 0, 9, 0, 0, 3 }, { 9, 0, 1, 0, 7, 0, 0, 3, 0 }, { 0, 0, 2, 0, 0, 0, 9, 0, 0 },
-			{ 0, 5, 0, 0, 4, 0, 1, 0, 7 }, { 3, 0, 0, 5, 0, 2, 0, 7, 0 }, { 4, 0, 6, 0, 0, 0, 3, 0, 1 },
-			{ 0, 7, 0, 0, 0, 4, 0, 0, 0 } };// remplacer la matrice pour importer
+	static Grille initial = new Grille(9,9,new int[][]{ { 0, 0, 0, 8, 0, 0, 0, 7, 0 }, { 0, 0, 0, 0, 0, 0, 8, 0, 0 },
+		{ 0, 3, 0, 7, 5, 0, 0, 0, 4 }, { 0, 0, 9, 0, 2, 0, 0, 3, 0 }, { 0, 8, 0, 4, 1, 9, 0, 0, 0 },
+		{ 0, 5, 0, 0, 0, 0, 4, 0, 0 }, { 3, 0, 0, 0, 0, 0, 5, 0, 6 }, { 0, 0, 0, 0, 9, 0, 7, 0, 8 },
+		{ 0, 1, 6, 0, 8, 0, 0, 0, 0 } });// remplacer la matrice pour importer
+	static Grille grilleJoueur = recopie(initial);
+	static Grille grilleComplete = new Grille(9,9);
 
-	int[][] grilleJoueur = recopie(initial);
+	public static void setInitial(Grille _initial) {
+		initial = _initial;
+		grilleJoueur = recopie(initial);
+	}
+
+	
+
+	public static void setGrilleComplete(Grille grilleComplete) {
+		JeuSudoku.grilleComplete = grilleComplete;
+	}
+
+
 
 	// Fonction recopie à remplacer lorsque j'aurai trouvé la solution du probléme
-	public static int[][] recopie(int[][] a) {
+	public static Grille recopie(Grille a) {
 		if (a != null) {
-			int[][] temp = new int[a.length][a.length];
-			for (int i = 0; i < a.length; i++) {
-				for (int j = 0; j < a.length; j++) {
-					temp[i][j] = a[i][j];
+			Grille temp = new Grille(a.getNbLignes(),a.getNbLignes());
+			for (int i = 0; i < a.getNbLignes(); i++) {
+				for (int j = 0; j < a.getNbLignes(); j++) {
+					temp.getMatrice()[i][j] = a.getMatrice()[i][j];
 				}
 			}
 			return temp;
@@ -85,21 +107,28 @@ public class JeuSudoku extends Application implements Initializable {
 			return null;
 	}
 
-	public JeuSudoku() {
+	public JeuSudoku(Sudoku s) {
+		this.initial = Sudoku.getGrille();
+		this.grilleJoueur = recopie(initial);
 	}
 
-	public JeuSudoku(int[][] _initial) {
+	public JeuSudoku(Grille _initial) {
 		this.initial = _initial;
 		this.grilleJoueur = recopie(_initial);
 	}
+	
+	public JeuSudoku() {
+	}
+
 
 	public void actualiserGrille(int val, int row, int col) {
-		if ((val >= 0 && val <= 9) && (initial[row][col] == 0))
-			grilleJoueur[row][col] = val;
-		else // Si le joueur essaye de modifier une valeur de base de la grille ou si on sort
+		if ((val >= 0 && val <= 9) && (initial.getMatrice()[row][col] == 0)) {
+			game.getJoueur().setCoutCourant(new Coup(row,col,val));
+			if(game.possibilite())grilleJoueur.getMatrice()[row][col] = val;
+		}else // Si le joueur essaye de modifier une valeur de base de la grille ou si on sort
 				// de la grille
 			System.out.println("Valeur en dehors de la grille ou valeur inchangeable ");
-		verifWin();
+		PartieFinie();
 	}
 
 	@Override
@@ -141,8 +170,8 @@ public class JeuSudoku extends Application implements Initializable {
 				context.setFill(Color.BLACK);
 				context.setFont(new Font("Courier New"/* ,FontWeight.BOLD */, 20));
 				// affiche uniquement les valeurs non nulles de la grille
-				if (grilleJoueur[row][col] != 0) {
-					context.fillText(grilleJoueur[row][col] + "", position_x, position_y);
+				if (grilleJoueur.getMatrice()[row][col] != 0) {
+					context.fillText(grilleJoueur.getMatrice()[row][col] + "", position_x, position_y);
 				}
 			}
 		}
@@ -153,8 +182,8 @@ public class JeuSudoku extends Application implements Initializable {
 				int position_x = col * 50 + 20;
 				context.setFill(Color.PURPLE);
 				context.setFont(new Font("Courier New"/* ,FontWeight.BOLD */, 20));
-				if (initial[row][col] != 0) {
-					context.fillText(initial[row][col] + "", position_x, position_y);
+				if (initial.getMatrice()[row][col] != 0) {
+					context.fillText(initial.getMatrice()[row][col] + "", position_x, position_y);
 				}
 			}
 		}
@@ -170,7 +199,6 @@ public class JeuSudoku extends Application implements Initializable {
 						3 * position_y + 3 * coteCase, 10, 10);
 			}
 		}
-		verifWin();
 	}
 
 	public void canvasMouseClicked() {
@@ -249,20 +277,31 @@ public class JeuSudoku extends Application implements Initializable {
 		}
 	}
 
-	public void verifWin() {
-		if (grilleJoueur.equals(null)) {// remplacer null par solution de la grille
+	public void PartieFinie() {
+		if (verification(grilleJoueur,grilleComplete)) {
 			try {
-				Popups.nom = "Joueur 1"; // Nom du Joueur
-				Popups.score = "123456";// Score du Joueur
+				Popups.nom = nomsJoueurs.get(0).getNom(); // Nom du Joueur
+				Popups.score = text.getText();// Score du Joueur
 				Popups.victoire((Stage) this.buttonUN.getScene().getWindow());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	public static boolean verification(Grille a,Grille b) {
+		for(int i = 0;i<9;i++) {
+			for(int j=0;j<9;j++) {
+				if(a.getMatrice()[i][j]!= b.getMatrice()[i][j])
+					return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		System.out.println("Welcome" + nomsJoueurs.get(0).getNom());
 		this.root = FXMLLoader.load(getClass().getResource("fenetre.fxml"));
 		Scene scene = new Scene(root, 800, 600);
 		primaryStage.setTitle("Sudoku");

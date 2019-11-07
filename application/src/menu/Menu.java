@@ -14,6 +14,7 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
+import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -69,7 +70,20 @@ public class Menu extends Application {
 	}
 
 /////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ici
+//Ajouter les méthodes pour lancer les parties ic
+	
+	public void buttonLoto() {
+		
+	}
+	
+
+	public void handlePartieLoto(ActionEvent Event) {
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+		Affichage a = new Affichage();
+		a.start(stage2);
+
+	}
+
 
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
@@ -92,6 +106,7 @@ public class Menu extends Application {
 	//Fini
 	public void buttonSudoku() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
+		JeuSudoku.nomsJoueurs = nomsJoueurs;
 		MenuSudoku m = new MenuSudoku();
 		try {
 			m.start(temp);
@@ -155,13 +170,6 @@ public class Menu extends Application {
 			affichageJeu();
 		}
 		nomJoueur.setText("");
-
-	}
-
-	public void handlePartieLoto(ActionEvent Event) {
-		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		Affichage a = new Affichage();
-		a.start(stage2);
 
 	}
 

@@ -18,7 +18,7 @@
         </Label>
             <Button id="green" fx:id="entrerNbJoueur" layoutX="386.0" layoutY="194.0" mnemonicParsing="false" text="Entrer" onAction="#handleNbJoueur" textFill="#ab0000" />
             <TextField id="nbJoueur" fx:id="nbJoueur" layoutX="153.0" layoutY="194.0" />
-            <Label alignment="CENTER" layoutX="152.0" layoutY="149.0" style="&#10;" text="Entrez le nombre de joueurs !" textAlignment="CENTER" wrapText="false" />
+            <Label  id="label1" alignment="CENTER" layoutX="152.0" layoutY="149.0" style="&#10;" text="Entrez le nombre de joueurs !" textAlignment="CENTER" wrapText="false" />
       </children>
     </AnchorPane>
   </children>

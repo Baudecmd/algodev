@@ -13,6 +13,8 @@ public class coupleSudoku {
 	}
 
 	public coupleSudoku(int[][] template, int[][] solution) {
+		this.template = new Grille(9, 9);
+		this.solution = new Grille(9, 9);
 		this.solution.setMatrice(solution);
 		this.template.setMatrice(template);
 	}

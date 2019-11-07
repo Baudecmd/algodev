@@ -11,11 +11,12 @@ public class Sudoku {
 	private JoueurSudoku joueur;
 
 	public Sudoku(ArrayList<Joueur> lj, int difficulty) {
-		this.joueur = new JoueurSudoku(lj.get(0));
+		if(lj !=null) this.joueur = new JoueurSudoku(lj.get(0)); else this.joueur = null;
 		templateSudoku.setCouple(difficulty);
 		switch (difficulty) {
 		case 1:
-			Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
+			//Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.test());
 			break;
 		case 2:
 			Sudoku.grille.setMatrice(templateSudoku.moyen1.getTemplate().getMatrice());
@@ -26,6 +27,31 @@ public class Sudoku {
 		}
 
 	}
+	
+	
+
+	public JoueurSudoku getJoueur() {
+		return joueur;
+	}
+
+
+
+	public void setJoueur(JoueurSudoku joueur) {
+		this.joueur = joueur;
+	}
+
+
+
+	public static Grille getGrille() {
+		return grille;
+	}
+
+
+	public static void setGrille(Grille grille) {
+		Sudoku.grille = grille;
+	}
+
+
 
 	public int getXCC() {
 		return this.joueur.getCoutCourant().getX();
@@ -170,16 +196,7 @@ public class Sudoku {
 		}
 		return true;
 	}
-	
-	public boolean verification(coupleSudoku sudo) {
-		for(int i = 0;i<9;i++) {
-			for(int j=0;j<9;j++) {
-				if(sudo.getSolution().getMatrice()[i][j]!= sudo.getTemplate().getMatrice()[i][j])
-					return false;
-			}
-		}
-		return true;
-	}
+
 
 	public static void main(String[] args) {
 		Joueur j = new Joueur("joueur1");

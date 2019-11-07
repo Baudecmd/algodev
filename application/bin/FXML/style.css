@@ -11,6 +11,18 @@
     -fx-font-weight: bold;
     -fx-font-size: 25;
 }
+
+#label1 {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+#label2 {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
 #green {
     -fx-background-color:
         linear-gradient(#194004, #2f7808),

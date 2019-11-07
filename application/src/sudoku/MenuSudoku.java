@@ -1,8 +1,11 @@
 package sudoku;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
+import commun.Grille;
+import commun.Joueur;
 import commun.Popups;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +27,17 @@ public class MenuSudoku extends Application {
 	@FXML
 	Parent root;
 
+	
 	public MenuSudoku() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void buttonFACILEPressed() {
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
 		JeuSudoku m = new JeuSudoku();
+		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,1);
+		JeuSudoku.setInitial(Sudoku.getGrille());
+		JeuSudoku.setGrilleComplete(new Grille(9,9,templateSudoku.test2()));
 		try {
 			m.start(stage2);
 		} catch (Exception e) {
@@ -40,7 +47,8 @@ public class MenuSudoku extends Application {
 
 	public void buttonMOYENPressed() {
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
-		JeuSudoku m = new JeuSudoku();
+		Sudoku s = new Sudoku(null,2);
+		JeuSudoku m = new JeuSudoku(Sudoku.getGrille());
 		try {
 			m.start(stage2);
 		} catch (Exception e) {
@@ -50,7 +58,8 @@ public class MenuSudoku extends Application {
 
 	public void buttonDIFFICILEPressed() {
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
-		JeuSudoku m = new JeuSudoku();
+		Sudoku s = new Sudoku(null,3);
+		JeuSudoku m = new JeuSudoku(Sudoku.getGrille());
 		try {
 			m.start(stage2);
 		} catch (Exception e) {

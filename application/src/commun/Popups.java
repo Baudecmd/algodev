@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
+import menu.Menu;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,8 +63,8 @@ public class Popups implements Initializable {
 			resetTimer();
 			if (timeline != null)
 				timeline.stop();
-			// Remplacer MenuSudoku par MenuPrincipal
-			MenuSudoku m = new MenuSudoku();
+			// Retour au menu principal
+			Menu m = new Menu();
 			try {
 				m.start(stage);
 			} catch (Exception a) {
@@ -132,7 +132,7 @@ public class Popups implements Initializable {
 
 	public void menuPrincipalPressed() {
 		Stage stage = (Stage) menuPrincipal.getScene().getWindow();
-		MenuSudoku m = new MenuSudoku();
+		Menu m = new Menu();
 		try {
 			m.start(stage);
 		} catch (Exception a) {

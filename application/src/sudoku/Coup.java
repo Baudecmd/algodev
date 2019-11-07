@@ -13,6 +13,15 @@ public class Coup {
 		this.valeurRentree = 0;
 		coupSuivant();
 	}
+	
+	public Coup(int _x, int _y, int _val) {
+		super();
+		this.x = _x;
+		this.y = _y;
+		this.valeurRentree = _val;
+		coupSuivant();
+	}
+
 
 	public void coupSuivant() {
 		Coup.num++;
