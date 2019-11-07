@@ -148,7 +148,6 @@ public class Menu extends Application {
 			}
 		}
 		if (Menu.nbJoueurInt == 0) {
-			Thread.sleep(600);
 			affichageJeu();
 		}
 		nomJoueur.setText("");
