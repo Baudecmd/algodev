@@ -14,6 +14,8 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
+import sudoku.JeuSudoku;
+import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -69,7 +71,20 @@ public class Menu extends Application {
 	}
 
 /////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ici
+//Ajouter les méthodes pour lancer les parties ic
+	
+	public void buttonLoto() {
+		
+	}
+	
+
+	public void handlePartieLoto(ActionEvent Event) {
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+		Affichage a = new Affichage();
+		a.start(stage2);
+
+	}
+
 
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
@@ -89,13 +104,16 @@ public class Menu extends Application {
 
 	}
 
+	//Fini
 	public void buttonSudoku() {
-		Window w = loto.getScene().getWindow();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
-		alert.initOwner(w);
-		alert.show();
-		return;
+		Stage temp = (Stage) this.loto.getScene().getWindow();
+		JeuSudoku.nomsJoueurs = nomsJoueurs;
+		MenuSudoku m = new MenuSudoku();
+		try {
+			m.start(temp);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 /////////////////////////////////////////
 
@@ -154,13 +172,6 @@ public class Menu extends Application {
 
 	}
 
-	public void handlePartieLoto(ActionEvent Event) {
-		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		Affichage a = new Affichage();
-		a.start(stage2);
-
-	}
-
 	public void affichageJeu() {
 		try {
 			Stage stage2 = (Stage) nomJoueur.getScene().getWindow();
@@ -199,6 +210,7 @@ public class Menu extends Application {
 	}
 
 	public void start(Stage stage) throws IOException {
+		Popups.resetTimer();
 		this.stage = stage;
 		this.root = FXMLLoader.load(getClass().getResource("../FXML/styleMenu.fxml"));
 		this.scene = new Scene(root);

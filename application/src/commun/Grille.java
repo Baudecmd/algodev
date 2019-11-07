@@ -13,7 +13,14 @@ public class Grille {
         return nbLignes;
     }
 
-    public void setNbLignes(int nbLignes) {
+    public Grille(int nbLignes, int nbColonnes, int[][] matrice) {
+		super();
+		this.nbLignes = nbLignes;
+		this.nbColonnes = nbColonnes;
+		this.matrice = matrice;
+	}
+
+	public void setNbLignes(int nbLignes) {
         this.nbLignes = nbLignes;
     }
 
