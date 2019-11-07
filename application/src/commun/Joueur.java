@@ -15,6 +15,11 @@ public class Joueur implements Serializable, Comparable { //Un Joueur est caract
         this.nom = nom;
         this.score = 0;
     }
+    
+    public String getNom() {
+        return nom;
+    }
+
 
     public String getNom() {
         return nom;

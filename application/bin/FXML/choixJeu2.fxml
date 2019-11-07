@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox stylesheets="@style.css" fx:controller="menu.Menu" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+        <Label alignment="CENTER" layoutX="219.0" layoutY="64.0" style="&#10;" text="Choisissez votre jeu :" textAlignment="CENTER" wrapText="false">
+          <font>
+            <Font size="22.0" />
+          </font>
+        </Label>
+            <Button id="record-sales" fx:id="loto" layoutX="146.0" layoutY="200.0" mnemonicParsing="false" text="Loto" onAction="#buttonLoto"/>
+            <Button id="record-sales" layoutX="455.0" layoutY="200.0" mnemonicParsing="false" text="Poker" onAction="#buttonPoker"/>
+            <Button id="record-sales" layoutX="272.0" layoutY="200.0" mnemonicParsing="false" text="Bataille Navale " onAction="#buttonBataille"/>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
