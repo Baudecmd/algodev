@@ -37,7 +37,7 @@ public class MenuSudoku extends Application {
 		JeuSudoku m = new JeuSudoku();
 		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,1);
 		JeuSudoku.setInitial(Sudoku.getGrille());
-		JeuSudoku.setGrilleComplete(new Grille(9,9,templateSudoku.test2()));
+		JeuSudoku.setGrilleComplete(Sudoku.getGrilleSolution());
 		try {
 			m.start(stage2);
 		} catch (Exception e) {
@@ -47,8 +47,10 @@ public class MenuSudoku extends Application {
 
 	public void buttonMOYENPressed() {
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
-		Sudoku s = new Sudoku(null,2);
-		JeuSudoku m = new JeuSudoku(Sudoku.getGrille());
+		JeuSudoku m = new JeuSudoku();
+		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,2);
+		JeuSudoku.setInitial(Sudoku.getGrille());
+		JeuSudoku.setGrilleComplete(Sudoku.getGrilleSolution());
 		try {
 			m.start(stage2);
 		} catch (Exception e) {
@@ -58,8 +60,10 @@ public class MenuSudoku extends Application {
 
 	public void buttonDIFFICILEPressed() {
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
-		Sudoku s = new Sudoku(null,3);
-		JeuSudoku m = new JeuSudoku(Sudoku.getGrille());
+		JeuSudoku m = new JeuSudoku();
+		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,3);
+		JeuSudoku.setInitial(Sudoku.getGrille());
+		JeuSudoku.setGrilleComplete(Sudoku.getGrilleSolution());
 		try {
 			m.start(stage2);
 		} catch (Exception e) {

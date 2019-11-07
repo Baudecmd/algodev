@@ -65,6 +65,7 @@ public class Popups implements Initializable {
 				timeline.stop();
 			// Retour au menu principal
 			Menu m = new Menu();
+			Menu.nomsJoueurs.clear();
 			try {
 				m.start(stage);
 			} catch (Exception a) {
@@ -133,6 +134,7 @@ public class Popups implements Initializable {
 	public void menuPrincipalPressed() {
 		Stage stage = (Stage) menuPrincipal.getScene().getWindow();
 		Menu m = new Menu();
+		Menu.nomsJoueurs.clear();
 		try {
 			m.start(stage);
 		} catch (Exception a) {

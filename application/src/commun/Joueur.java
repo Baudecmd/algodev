@@ -1,6 +1,7 @@
 package commun;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Joueur implements Serializable, Comparable { //Un Joueur est caracterise par son nom/pseudo et son score
@@ -47,5 +48,9 @@ public class Joueur implements Serializable, Comparable { //Un Joueur est caract
                 "nom='" + nom + '\'' +
                 ", score=" + score +
                 '}';
+    }
+    
+    public void vider(ArrayList<Joueur> j) {
+    	j.clear();
     }
 }

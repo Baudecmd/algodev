@@ -8,21 +8,25 @@ import commun.Joueur;
 
 public class Sudoku {
 	private static Grille grille = new Grille(9, 9);
+	private static Grille grilleSolution = new Grille(9, 9);
 	private JoueurSudoku joueur;
 
 	public Sudoku(ArrayList<Joueur> lj, int difficulty) {
 		if(lj !=null) this.joueur = new JoueurSudoku(lj.get(0)); else this.joueur = null;
-		templateSudoku.setCouple(difficulty);
+		//templateSudoku.setCouple(difficulty);
 		switch (difficulty) {
 		case 1:
 			//Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
 			Sudoku.grille.setMatrice(templateSudoku.test());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.test2());
 			break;
 		case 2:
-			Sudoku.grille.setMatrice(templateSudoku.moyen1.getTemplate().getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.facile().template.getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.facile().solution.getMatrice());
 			break;
 		case 3:
-			Sudoku.grille.setMatrice(templateSudoku.difficile1.getTemplate().getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.facile().getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.facile().getTemplate().getMatrice());
 			break;
 		}
 
@@ -49,6 +53,18 @@ public class Sudoku {
 
 	public static void setGrille(Grille grille) {
 		Sudoku.grille = grille;
+	}
+
+
+
+	public static Grille getGrilleSolution() {
+		return grilleSolution;
+	}
+
+
+
+	public static void setGrilleSolution(Grille grilleSolution) {
+		Sudoku.grilleSolution = grilleSolution;
 	}
 
 
@@ -196,7 +212,7 @@ public class Sudoku {
 		}
 		return true;
 	}
-
+	
 
 	public static void main(String[] args) {
 		Joueur j = new Joueur("joueur1");

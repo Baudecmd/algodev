@@ -4,7 +4,7 @@ import commun.Grille;
 
 public class coupleSudoku {
 	public Grille template;
-	private Grille solution;
+	protected Grille solution;
 
 	public coupleSudoku() {
 		super();
