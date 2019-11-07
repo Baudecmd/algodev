@@ -210,6 +210,7 @@ public class Menu extends Application {
 	}
 
 	public void start(Stage stage) throws IOException {
+		Popups.resetTimer();
 		this.stage = stage;
 		this.root = FXMLLoader.load(getClass().getResource("../FXML/styleMenu.fxml"));
 		this.scene = new Scene(root);

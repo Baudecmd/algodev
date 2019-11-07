@@ -33,6 +33,7 @@ public class MenuSudoku extends Application {
 	}
 
 	public void buttonFACILEPressed() {
+		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
 		JeuSudoku m = new JeuSudoku();
 		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,1);
@@ -46,6 +47,7 @@ public class MenuSudoku extends Application {
 	}
 
 	public void buttonMOYENPressed() {
+		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
 		JeuSudoku m = new JeuSudoku();
 		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,2);
@@ -59,6 +61,7 @@ public class MenuSudoku extends Application {
 	}
 
 	public void buttonDIFFICILEPressed() {
+		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
 		JeuSudoku m = new JeuSudoku();
 		JeuSudoku.game = new Sudoku(JeuSudoku.nomsJoueurs,3);
