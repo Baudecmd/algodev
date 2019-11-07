@@ -3,7 +3,7 @@ package sudoku;
 import javafx.animation.KeyFrame;
 import commun.Grille;
 import commun.Joueur;
-import commun.Partie;
+//import commun.Partie;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import commun.Popups;
