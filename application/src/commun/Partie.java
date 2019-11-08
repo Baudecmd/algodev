@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public interface Partie { //L'interface partie apporte les fonctions necessaires au deroulement de tous les jeux du projet
-    void tourSuivant();
     Boolean partieFinie();
-    Joueur retournerGagnant();
 
     //gestion des scores
     static void initialiser(String nomFichier) { //initialise le tableau des scores a une liste de joueur vide si le fichier est vide

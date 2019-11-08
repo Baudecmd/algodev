@@ -302,7 +302,7 @@ public class JeuSudoku extends Application implements Initializable {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		System.out.println("Welcome" + nomsJoueurs.get(0).getNom());
-		this.root = FXMLLoader.load(getClass().getResource("fenetre.fxml"));
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/fenetre.fxml"));
 		Scene scene = new Scene(root, 800, 600);
 		primaryStage.setTitle("Sudoku");
 		primaryStage.setScene(scene);

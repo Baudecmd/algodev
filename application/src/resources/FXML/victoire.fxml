@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="500.0" fitWidth="791.0" layoutX="5.0">
          <image>
-            <Image url="@victoire1.png" />
+            <Image url="@../image/victoire1.png" />
          </image>
       </ImageView>
       <Label layoutX="197.0" layoutY="90.0" prefHeight="134.0" prefWidth="409.0" style="-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 )dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );" text="Victoire" textFill="#a83f1d">

@@ -80,7 +80,7 @@ public class MenuSudoku extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		this.root = FXMLLoader.load(getClass().getResource("choixdifficultes.fxml"));
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/choixdifficultes.fxml"));
 		Scene scene = new Scene(root, 800, 600);
 		primaryStage.setTitle("Sudoku");
 		primaryStage.setScene(scene);

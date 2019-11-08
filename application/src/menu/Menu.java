@@ -133,7 +133,7 @@ public class Menu extends Application {
 			Menu.nbJoueurInt2 = stringtoint2(nbJoueur.getText());
 			// creation d'un stage car l'attribut se perd dans l'espace
 			Stage stage2 = (Stage) nbJoueur.getScene().getWindow();
-			this.root = FXMLLoader.load(getClass().getResource("../FXML/nomsJoueurs.fxml"));
+			this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/nomsJoueurs.fxml"));
 			stage2.setScene(new Scene(this.root));
 
 		}
@@ -178,24 +178,24 @@ public class Menu extends Application {
 			switch (Menu.nbJoueurInt2) {
 			case 1:
 
-				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu1.fxml"));
+				this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/choixJeu1.fxml"));
 				stage2.setScene(new Scene(this.root));
 
 				break;
 			case 2:
 
-				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu2.fxml"));
+				this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/choixJeu2.fxml"));
 				stage2.setScene(new Scene(this.root));
 
 				break;
 			case 3:
 
-				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu3-4.fxml"));
+				this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/choixJeu3-4.fxml"));
 				stage2.setScene(new Scene(this.root));
 
 				break;
 			case 4:
-				this.root = FXMLLoader.load(getClass().getResource("../FXML/choixJeu3-4.fxml"));
+				this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/choixJeu3-4.fxml"));
 				stage2.setScene(new Scene(this.root));
 
 				break;
@@ -212,7 +212,7 @@ public class Menu extends Application {
 	public void start(Stage stage) throws IOException {
 		Popups.resetTimer();
 		this.stage = stage;
-		this.root = FXMLLoader.load(getClass().getResource("../FXML/styleMenu.fxml"));
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/styleMenu.fxml"));
 		this.scene = new Scene(root);
 		this.stage.setTitle("Menu Projet !");
 		this.stage.setScene(this.scene);

@@ -144,7 +144,7 @@ public class Popups implements Initializable {
 
 	public static void victoire(Stage primaryStage) throws Exception {
 		try {
-			Parent root = FXMLLoader.load(Popups.class.getResource("victoire.fxml"));
+			Parent root = FXMLLoader.load(Popups.class.getResource("../resources/FXML/victoire.fxml"));
 			Scene scene = new Scene(root, 800, 600);
 			primaryStage.setTitle("Victoire");
 			primaryStage.setScene(scene);

@@ -24,7 +24,7 @@
          <graphic>
             <ImageView fitHeight="31.0" fitWidth="29.0">
                <image>
-                  <Image url="@../commun/option.png" />
+                  <Image url="@../image/option.png" />
                </image>
             </ImageView>
          </graphic>

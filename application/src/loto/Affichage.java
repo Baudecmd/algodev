@@ -112,7 +112,7 @@ public class Affichage extends Application {
 		afficherTableau(root, l.getJoueurs(), l.getTiree());
 
 		Scene scene = new Scene(root, 800, 10+	200 * l.getJoueurs().size());
-		scene.getStylesheets().add(getClass().getResource("../FXML/loto.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("../resources/FXML/loto.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
