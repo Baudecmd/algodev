@@ -4,10 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public interface Partie { //L'interface partie apporte les fonctions necessaire au deroulement de tous les jeux du projet
+public interface Partie { //L'interface partie apporte les fonctions necessaires au deroulement de tous les jeux du projet
     void tourSuivant();
     Boolean partieFinie();
     Joueur retournerGagnant();
+
     //gestion des scores
     static void initialiser(String nomFichier) { //initialise le tableau des scores a une liste de joueur vide si le fichier est vide
         File f = new File(nomFichier);
@@ -26,10 +27,13 @@ public interface Partie { //L'interface partie apporte les fonctions necessaire 
             e.printStackTrace();
         }
     }
-    static ArrayList<Joueur> recupererScore(String nomFichier) { //renvoie le tableau des scores sous forme de liste de joueur
+
+    static ArrayList<Joueur> recupererScore(String path) { //renvoie le tableau des scores sous forme de liste de joueur
+        File f = new File(path);
         ArrayList<Joueur> scores = new ArrayList<>(10);
+
         try {
-            FileInputStream fI = new FileInputStream(nomFichier);
+            FileInputStream fI = new FileInputStream(f);
             ObjectInputStream oI = new ObjectInputStream(fI);
             for(int i=0;i<10;i++) {
                 Joueur j = (Joueur) oI.readObject();
@@ -44,34 +48,15 @@ public interface Partie { //L'interface partie apporte les fonctions necessaire 
         return scores;
     }
 
-    static void ajouterScore(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par plus haut score par partie
-        ArrayList<Joueur> scores = recupererScore(nomFichier);
-        scores.add(j);
-        Collections.sort(scores);
-
-        try {
-            FileOutputStream fO = new FileOutputStream(nomFichier);
-            ObjectOutputStream oO = new ObjectOutputStream(fO);
-            for(int i=0;i<10;i++) {
-                oO.writeObject(scores.get(i));
-            }
-            oO.close();
-            fO.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     static void ajouterVictoire(String nomFichier,Joueur j) { //Ajout du score dans le cas d'un classement par nombre de parties gagnées
         ArrayList<Joueur> scores = recupererScore(nomFichier);
 
         if(scores.contains(j)) {
             scores.get(scores.indexOf(j)).increaseScore(1);
-            System.out.println("fff");
         }
         else {
+            j.increaseScore(1);
             scores.add(j);
-            System.out.println("eee");
         }
         Collections.sort(scores);
 
