@@ -127,7 +127,7 @@ public class JeuSudoku extends Application implements Initializable {
 			if(game.possibilite())grilleJoueur.getMatrice()[row][col] = val;
 		}else // Si le joueur essaye de modifier une valeur de base de la grille ou si on sort
 				// de la grille
-			System.out.println("Valeur en dehors de la grille ou valeur inchangeable ");
+			System.out.println("Valeur en dehors de la grille ou valeur inchangeable !");
 		PartieFinie();
 	}
 
