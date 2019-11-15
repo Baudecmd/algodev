@@ -1,30 +1,31 @@
 package bataille;
 
-import commun.Joueur;
 import commun.Partie;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Bataille implements Partie {
+    private JoueurBataille j1,j2;
+    private boolean firstTurn=true;
 
-    JoueurBataille2 j1,j2;
-    boolean firstTurn=true;
+    public Bataille(JoueurBataille j1, JoueurBataille j2) {
+        this.j1 = j1;
+        this.j2 = j2;
+    }
 
-    public JoueurBataille2 getJ1() {
+    public JoueurBataille getJ1() {
         return j1;
     }
 
-    public void setJ1(JoueurBataille2 j1) {
+    public void setJ1(JoueurBataille j1) {
         this.j1 = j1;
     }
 
-    public JoueurBataille2 getJ2() {
+    public JoueurBataille getJ2() {
         return j2;
     }
 
-    public void setJ2(JoueurBataille2 j2) {
+    public void setJ2(JoueurBataille j2) {
         this.j2 = j2;
     }
 
@@ -36,12 +37,7 @@ public class Bataille implements Partie {
         this.firstTurn = firstTurn;
     }
 
-    public Bataille(JoueurBataille2 j1, JoueurBataille2 j2) {
-        this.j1 = j1;
-        this.j2 = j2;
-    }
-
-    public JoueurBataille2 retournerGagnant(){
+    public JoueurBataille retournerGagnant(){
         if(j1.getListeBateaux().isEmpty())  //si la liste des bateaux du joueur 1 est vide...
             return j2;    //...c'est l'autre joueur qui gagne
         return j1;
@@ -70,7 +66,7 @@ public class Bataille implements Partie {
 
     // *** Tests *** //
 
-    public void tourSuivantTest(JoueurBataille2 j3,JoueurBataille2 j4){
+    public void tourSuivantTest(JoueurBataille j3, JoueurBataille j4){
         int i,j;
         Scanner sc=new Scanner(System.in);
         if(firstTurn){
@@ -100,15 +96,15 @@ public class Bataille implements Partie {
         }
     }
 
-    public void afficheGagnant(JoueurBataille2 joueur){
+    public void afficheGagnant(JoueurBataille joueur){
         System.out.println("Le gagnant est:" + joueur.getNom());
     }
 
     public static void main(String[] args) {
         //Pour le test, on ne placera qu'un seul bateau
-        JoueurBataille2 j3=new JoueurBataille2("Joffrey");
-        JoueurBataille2 j4=new JoueurBataille2("Conrad");
-        JoueurBataille2 j5;
+        JoueurBataille j3=new JoueurBataille("Joffrey");
+        JoueurBataille j4=new JoueurBataille("Conrad");
+        JoueurBataille j5;
         Scanner sc=new Scanner(System.in);
         Bataille bataille=new Bataille(j3,j4);
         do{     //il faut rentrer obligatoirement au moins une fois dans la boucle, car au début, la liste des bateaux de chaque joueur est vide également
@@ -118,4 +114,3 @@ public class Bataille implements Partie {
         bataille.afficheGagnant(j5);
     }
 }
-
