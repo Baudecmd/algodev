@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/application/src/poker/Carte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/Hauteurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Hauteurs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/Pot.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +71,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Menu">
+  <component name="RunManager" selected="Application.PartiePoker">
     <configuration name="Bataille" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bataille.Bataille" />
       <module name="projet-algodev" />
@@ -108,8 +112,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PartiePoker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="poker.PartiePoker" />
+      <module name="projet-algodev" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="poker.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PartiePoker" />
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.Bataille" />
         <item itemvalue="Application.JoueurBataille2" />
@@ -143,7 +161,15 @@
       <workItem from="1573144220819" duration="8839000" />
       <workItem from="1573157879698" duration="7204000" />
       <workItem from="1573200389052" duration="6841000" />
-      <workItem from="1573207558023" duration="1806000" />
+      <workItem from="1573207558023" duration="2684000" />
+      <workItem from="1573215857223" duration="2192000" />
+      <workItem from="1573238928098" duration="3926000" />
+      <workItem from="1573559244222" duration="6169000" />
+      <workItem from="1573581798675" duration="2832000" />
+      <workItem from="1573649609871" duration="1894000" />
+      <workItem from="1573667653567" duration="8762000" />
+      <workItem from="1573743763007" duration="20099000" />
+      <workItem from="1573805649770" duration="7179000" />
     </task>
     <servers />
   </component>
