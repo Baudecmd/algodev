@@ -1,5 +1,7 @@
 package poker;
 
+import java.util.Objects;
+
 public class Carte {
 
     private Couleurs couleur;
@@ -26,8 +28,21 @@ public class Carte {
         this.hauteur = hauteur;
     }
 
-    public int compareTo(Carte autre){
-        return getHauteur().compareTo(autre.getHauteur());    //est-ce que ça prend en compte la valeur déjà définie?
+//    public int compareTo(Carte autre){
+//        return getHauteur().compareTo(autre.getHauteur());
+//    }
+
+    public int compareTo(Carte other){
+        return getHauteur().compareTo(other.getHauteur())+getCouleur().compareTo(other.getCouleur());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carte carte = (Carte) o;
+        return couleur == carte.couleur &&
+                hauteur == carte.hauteur;
     }
 
 }

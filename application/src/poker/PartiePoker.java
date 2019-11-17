@@ -2,6 +2,7 @@ package poker;
 
 import commun.Joueur;
 import commun.Partie;
+import javafx.css.converter.LadderConverter;
 
 import java.util.*;
 
@@ -61,6 +62,8 @@ public class PartiePoker implements Partie {
     public void setListeJoueurs(ArrayList<JoueurPoker> listeJoueurs) {
         this.listeJoueurs = listeJoueurs;
     }
+
+    public void addPlayer(JoueurPoker player){ this.listeJoueurs.add(player); }
 
     public PartiePoker(int blinde){
         this.blinde=blinde;
@@ -297,8 +300,8 @@ public class PartiePoker implements Partie {
             communityCards.add(pile.pop());     //turn ou river: on n'ajoute qu'une carte
     }
 
-    public void showCommunityCards(ArrayList<Carte>communityCards){
-        for(Carte carte:communityCards)
+    public void showCards(ArrayList<Carte>Cards){
+        for(Carte carte:Cards)
             System.out.println(carte.getHauteur() + " de " + carte.getCouleur());
     }
 
@@ -313,12 +316,63 @@ public class PartiePoker implements Partie {
     }
 
     public static void main(String[] args) {
+        int nbTurns=1;
+        Combinaisons bestCombination;
+        ArrayList<JoueurPoker>winners=new ArrayList<>();
+        JoueurPoker player1=new JoueurPoker("Joffrey", 500);
+        JoueurPoker player2=new JoueurPoker("Gaby", 500);
+        ArrayList<Carte>communityCards=new ArrayList<>();
         //partie à blinde constante ou non? On suppose que oui
         Scanner sc=new Scanner(System.in);
         System.out.println("Quelle est la mise de la grosse blinde?");
         PartiePoker partie=new PartiePoker(sc.nextInt());
-        partie.afficherPile();
-        System.out.println(partie.getPile().size());
+//        partie.afficherPile();
+//        System.out.println(partie.getPile().size());
+        partie.addPlayer(player1);
+        partie.addPlayer(player2);
+        while(!partie.partieFinie() || nbTurns<5){
+            if(nbTurns==1){
+                partie.addCommunityCards(communityCards);
+                partie.nextTurn(true);
+                nbTurns++;
+            }
+            else{
+                if(nbTurns==4){
+                    System.out.println("C'est le Showdown!");       //A traiter
+                    for(JoueurPoker player:partie.listeJoueurs){
+                        player.setCombinationHand(player.createAllCombinations(communityCards));    //on assigne à chaque joueur sa meilleure main
+                        System.out.println(player.getNom() + ", vous avez la main suivante:" );
+                        player.showHand();
+                        System.out.println("Vous avez la combinaison: " + player.getCombinaison());
+                        System.out.println();
+                    }
+                    bestCombination=partie.listeJoueurs.get(0).getCombinaison();
+                    for(JoueurPoker current:partie.listeJoueurs){
+                        if(current.getCombinaison().getValue()>bestCombination.getValue()){
+                            winners.clear();
+                            winners.add(current);
+                            bestCombination=current.getCombinaison();
+                        }
+                        else{
+                            if(current.getCombinaison().getValue()==bestCombination.getValue()){
+                                winners.add(current);
+                            }
+                        }
+                    }
+                    if(winners.size()>1){
+                        for(int i=0;i<winners.size()-2;i++){
+                            //faire une fonction de tournoi pour déterminer le vainqueur
+                        }
+                    }
+                    nbTurns++;
+                }
+                else {
+                    partie.nextTurn(false);
+                    partie.addCommunityCards(communityCards);
+                    nbTurns++;
+                }
+            }
+        }
 
         //les joueurs, à la fin de chaque manche, doivent avoir le droit de quitter la partie.
     }

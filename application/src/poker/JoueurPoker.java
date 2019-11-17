@@ -2,10 +2,8 @@ package poker;
 
 import commun.Joueur;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.*;
 
 public class JoueurPoker extends Joueur {
 
@@ -60,6 +58,14 @@ public class JoueurPoker extends Joueur {
         this.smallBlind = smallBlind;
     }
 
+    public JoueurPoker(String nom, int somme){
+        super(nom);
+        this.somme=somme;
+        this.smallBlind=false;
+        this.mise=0;
+        this.tapis=false;
+    }
+
     public JoueurPoker(String nom, ArrayList<Carte> mainJoueur, int somme) {
         super(nom);
         this.mainJoueur = mainJoueur;
@@ -108,44 +114,45 @@ public class JoueurPoker extends Joueur {
         return choix;
     }
 
-    private boolean memeCouleur(){
-        Carte temp=mainJoueur.get(0);
-        for(Carte a:mainJoueur){
+    private boolean memeCouleur(ArrayList<Carte>hand){
+        Carte temp=hand.get(0);
+        for(Carte a:hand){
             if(a.getCouleur()!=temp.getCouleur())
                 return false;
         }
         return true;
     }
 
-    private int nbCartesMemeHauteur(){
+    private int nbCartesMemeHauteur(ArrayList<Carte>hand){
         int total=-1;   //on a une itération de trop
-        Carte temp=mainJoueur.get(0);
-        for(Carte a:mainJoueur){
+        Carte temp=hand.get(0);
+        for(Carte a:hand){
             if(a.getHauteur()==temp.getHauteur())
                 total+=1;
         }
         return total;
     }
 
-    private void sortByValue(){
-        Collections.sort(mainJoueur, Carte::compareTo);
-        Collections.reverse(mainJoueur);
+    private void sortByValue(ArrayList<Carte>hand){
+        Collections.sort(hand, Carte::compareTo);
+        Collections.reverse(hand);
     }
 
-    private boolean suite(){
+    private boolean suite(ArrayList<Carte>hand){
         int i=0;
-        sortByValue();
-        while(i!=(mainJoueur.size()-2)){
-            if(!(mainJoueur.get(i).getHauteur().getValue()==(mainJoueur.get(i+1).getHauteur().getValue()+1)))
+        sortByValue(hand);
+        while(i!=(hand.size()-2)){
+            if(!(hand.get(i).getHauteur().getValue()==(hand.get(i+1).getHauteur().getValue()+1)))
                 return false;
+            i++;
         }
         return true;
     }
 
-    private boolean checkFull(){
-        ArrayList<Carte>temp=mainJoueur;
+    private boolean checkFull(ArrayList<Carte>hand){
+        ArrayList<Carte>temp=new ArrayList<>(hand);
         ArrayList<Carte>triple=new ArrayList<>();
-        sortByValue();
+        sortByValue(hand);
         for(int i=0;i<temp.size();i++){
             if(temp.get(i).getHauteur()==temp.get(i+1).getHauteur() && temp.get(i).getHauteur()==temp.get(i+2).getHauteur()){
                 triple.add(temp.get(i));
@@ -157,14 +164,15 @@ public class JoueurPoker extends Joueur {
                 break;
             }
         }
+        if(temp.isEmpty())      //sécurité
+            return false;
         return temp.get(0).getHauteur() == temp.get(1).getHauteur();
     }
 
-    private boolean checkDouble(){
-        ArrayList<Carte>temp=mainJoueur;
+    private boolean checkDouble(ArrayList<Carte>hand){
+        ArrayList<Carte>temp=new ArrayList<>(hand);
         ArrayList<Carte>paire=new ArrayList<>();
-        ArrayList<Carte>autres=new ArrayList<>();
-        sortByValue();
+        sortByValue(hand);
         for(int i=0;i<temp.size();i++){
             if(temp.get(i).getHauteur()==temp.get(i+1).getHauteur()){
                 paire.add(temp.get(i));
@@ -178,56 +186,376 @@ public class JoueurPoker extends Joueur {
         return temp.get(0).getHauteur() == temp.get(1).getHauteur() || temp.get(1).getHauteur() == temp.get(2).getHauteur();
     }
 
-    public void combinaisonMain(){
-        int memeHauteur=nbCartesMemeHauteur();
-        if(memeCouleur()){  //cas des quinte flush ou d'une couleur
-            if(suite()){    //quinte flush
-                for(Carte a:mainJoueur){
-                    if(a.getHauteur()==Hauteurs.as){     //il y a un as: quinte flush royale
-                        combinaison=Combinaisons.quinte_flush_royale;
-                        break;
+    public void setCombinationHand(ArrayList<ArrayList<Carte>>listCombinations){
+        Combinaisons result=Combinaisons.plus_haute;
+        ArrayList<Carte>newHand=new ArrayList<>();
+        int memeHauteur;
+        for(ArrayList<Carte>temp:listCombinations){
+            if(!result.isGreater(getCombinationHand(temp))){
+                result=getCombinationHand(temp);
+                newHand=temp;
+            }
+        }
+        combinaison=result;
+        mainJoueur=newHand;
+    }
+
+    public Combinaisons getCombinationHand(ArrayList<Carte>hand){
+        Combinaisons result=Combinaisons.plus_haute;
+        int memeHauteur=nbCartesMemeHauteur(hand);
+        if(memeCouleur(hand)){      //cas des quinte flush ou d'une couleur
+            if(suite(hand)){        //quinte flush
+                for(Carte a:hand){
+                    if(a.getHauteur()==Hauteurs.as){
+                        return Combinaisons.quinte_flush_royale;
                     }
                 }
-                if(combinaison!=Combinaisons.quinte_flush_royale)
-                    combinaison=Combinaisons.quinte_flush;
+                return Combinaisons.quinte_flush;
             }
             else
-                combinaison=Combinaisons.couleur;
+                result=Combinaisons.couleur;
         }
         else{
             if(memeHauteur==3){     //cas d'un carré
-                combinaison=Combinaisons.carre;
+                return Combinaisons.carre;
             }
             else{
-                if(memeHauteur==2){
-                    if(checkFull()){
-                        combinaison=Combinaisons.full;
+                if(memeHauteur==2){     //cas d'un full ou d'un brelan
+                    if(checkFull(hand))
+                        return Combinaisons.full;
+                    else{
+                        if(result!=Combinaisons.couleur)
+                            return Combinaisons.brelan;
+                        else
+                            return Combinaisons.couleur;
                     }
-                    else
-                        combinaison=Combinaisons.brelan;
                 }
                 else{
-                    if(suite())
-                        combinaison=Combinaisons.quinte;
+                    if(suite(hand)){
+                            return Combinaisons.quinte;
+                    }
                     else{
-                        if(memeHauteur==1){ //au moins une paire
-                            if(checkDouble())
-                                combinaison=Combinaisons.deux_paires;
+                        if(memeHauteur==1){     //au moins une paire
+                            if(checkDouble(hand)){
+                                return Combinaisons.deux_paires;
+                            }
                             else
-                                combinaison=Combinaisons.une_paire;
+                                return Combinaisons.une_paire;
                         }
-                        else
-                            combinaison=Combinaisons.plus_haute;
                     }
                 }
             }
         }
+        return result;
     }
 
-    public ArrayList<ArrayList<Carte>> getAllCombinaisons(ArrayList<Carte>communityCards){
-        ArrayList<ArrayList<Carte>>listeCombinaisons=new ArrayList<>();
-        
-        return listeCombinaisons;
+    public int hasBetterHand(JoueurPoker player){       //positif si le joueur de cette instanciation a une meilleure main, négatif si player en a une meilleure, 0 si main égale
+        int result;
+        ArrayList<Carte>secondHand=player.getMainJoueur();
+        if(combinaison==Combinaisons.quinte_flush_royale)   //dans le cas d'une quinte flush royale, il n'y a pas de comparaison à faire, car les cartes sont les mêmes
+            return 0;
+        if(combinaison==Combinaisons.quinte_flush || combinaison==Combinaisons.couleur || combinaison==Combinaisons.quinte || combinaison==Combinaisons.plus_haute){
+            if(mainJoueur.get(0).getHauteur().getValue()>secondHand.get(0).getHauteur().getValue())
+                return 1;
+            else
+                if(mainJoueur.get(0).getHauteur().getValue()<secondHand.get(0).getHauteur().getValue())
+                    return -1;
+                else
+                    return 0;
+        }
+        if(combinaison==Combinaisons.carre){    //les cartes étant triées, la deuxième carte fait forcément partie du carré. On compare donc celle-ci
+            if(mainJoueur.get(1).getHauteur().getValue()>secondHand.get(1).getHauteur().getValue())
+                return 1;
+            else
+                if(mainJoueur.get(1).getHauteur().getValue()<secondHand.get(1).getHauteur().getValue())
+                    return -1;
+                else{   //même carré: on compare selon la dernière carte. Celle-ci étant triée, elle peut précéder le carré ou être à la fin de la liste, il faut donc la trouver
+                    if(mainJoueur.get(0).getHauteur()==mainJoueur.get(1).getHauteur()){     //la carte seule est en fin de liste du joueur 1
+                        if(secondHand.get(0).getHauteur()==secondHand.get(1).getHauteur())     //pareil pour le joueur 2
+                            return Integer.compare(mainJoueur.get(4).getHauteur().getValue(),secondHand.get(4).getHauteur().getValue());
+                        else
+                            return Integer.compare(mainJoueur.get(4).getHauteur().getValue(),secondHand.get(0).getHauteur().getValue());
+                    }
+                    else
+                        if(secondHand.get(0).getHauteur()==secondHand.get(1).getHauteur())
+                            return Integer.compare(mainJoueur.get(0).getHauteur().getValue(),secondHand.get(4).getHauteur().getValue());
+                        else
+                            return Integer.compare(mainJoueur.get(0).getHauteur().getValue(),secondHand.get(0).getHauteur().getValue());
+                }
+        }
+        if(combinaison==Combinaisons.full || combinaison==Combinaisons.brelan){     //grâce au tri, la troisième carte fait forcément partie du groupe de 3
+            if(mainJoueur.get(2).getHauteur().getValue()>secondHand.get(2).getHauteur().getValue())
+                return 1;
+            else
+                if(mainJoueur.get(2).getHauteur().getValue()<secondHand.get(2).getHauteur().getValue())
+                    return -1;
+                else{
+                    if(combinaison==Combinaisons.full){
+                        if(mainJoueur.get(1).getHauteur()==mainJoueur.get(2).getHauteur()){     //les deux cartes restantes sont à la fin
+                            if(secondHand.get(1).getHauteur()==secondHand.get(2).getHauteur())  //même situation pour la seconde liste
+                                return Integer.compare(mainJoueur.get(3).getHauteur().getValue(), secondHand.get(3).getHauteur().getValue());   //on compare par rapport à la quatrième carte car la cinquième est forcément moins ou aussi forte que la quatrième
+                            else
+                                return Integer.compare(mainJoueur.get(3).getHauteur().getValue(), secondHand.get(0).getHauteur().getValue());   //si les deux dernière cartes sont devant, la première est forcément au moins aussi bonne que la seconde, on compare donc la première carte
+                        }
+                        else{   //elles sont au début
+                            if(secondHand.get(1).getHauteur()==secondHand.get(2).getHauteur())
+                                return Integer.compare(mainJoueur.get(0).getHauteur().getValue(),secondHand.get(3).getHauteur().getValue());
+                            else
+                                return Integer.compare(mainJoueur.get(0).getHauteur().getValue(), secondHand.get(0).getHauteur().getValue());
+                        }
+                    }
+                    else{   //brelan. Trois possibilités: AAABC, BAAAC, BCAAA
+                        return checkBestBrelan(secondHand);
+                    }
+                }
+        }
+        else{   //cas des paires simples et doubles
+            return checkBestPairs(secondHand);
+        }
+    }
+
+    public int checkBestBrelan(ArrayList<Carte>checkedList){
+        ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
+        ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        ArrayList<Carte>brelan1=new ArrayList<>();
+        ArrayList<Carte> brelan2=new ArrayList<>();
+        ArrayList<Carte>otherCards1=new ArrayList<>();
+        ArrayList<Carte>otherCards2=new ArrayList<>();
+        for(int i=0;i<checkedList.size()-3;i++){
+            if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur() && temp1.get(i).getHauteur()==temp1.get(i+2).getHauteur()){
+                brelan1.add(temp1.get(i));
+                brelan1.add(temp1.get(i+1));
+                brelan1.add(temp1.get(i+2));
+                temp1.remove(brelan1.get(0));
+                temp1.remove(brelan1.get(1));
+                temp1.remove(brelan1.get(2));
+            }
+            otherCards1.add(temp1.get(0));
+            otherCards1.add(temp1.get(1));
+            if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur() && temp2.get(i).getHauteur()==temp2.get(i+2).getHauteur()){
+                brelan2.add(temp2.get(i));
+                brelan2.add(temp2.get(i+1));
+                brelan2.add(temp2.get(i+2));
+                temp2.remove(brelan2.get(0));
+                temp2.remove(brelan2.get(1));
+                temp2.remove(brelan2.get(2));
+            }
+            otherCards2.add(temp2.get(0));
+            otherCards2.add(temp2.get(1));
+        }
+        if(Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue())==0){
+            sortByValue(otherCards1);
+            sortByValue(otherCards2);
+            if(Integer.compare(otherCards1.get(0).getHauteur().getValue(), otherCards2.get(0).getHauteur().getValue())==0){
+                return Integer.compare(otherCards1.get(1).getHauteur().getValue(), otherCards2.get(1).getHauteur().getValue());
+            }
+            else
+                return Integer.compare(otherCards1.get(0).getHauteur().getValue(), otherCards2.get(0).getHauteur().getValue());
+        }
+        else
+            return Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue());
+    }
+
+    public int checkBestPairs(ArrayList<Carte>checkedList){
+        int i;
+        ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
+        ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        ArrayList<Carte>firstPair1=new ArrayList<>();
+        ArrayList<Carte>firstPair2=new ArrayList<>();
+        ArrayList<Carte>secondPair1=new ArrayList<>();
+        ArrayList<Carte>secondPair2=new ArrayList<>();
+        for(i=0;i<temp1.size()-2;i++){
+            if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur()){
+                firstPair1.add(temp1.get(i));
+                firstPair1.add(temp1.get(i+1));
+                temp1.remove(firstPair1.get(0));
+                temp1.remove(firstPair1.get(1));
+                break;
+            }
+            if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur()){
+                firstPair2.add(temp2.get(i));
+                firstPair2.add(temp2.get(i+1));
+                temp2.remove(firstPair2.get(0));
+                temp2.remove(firstPair2.get(1));
+                break;
+            }
+        }
+        if(combinaison==Combinaisons.deux_paires){
+            for(i=0;i<temp1.size()-2;i++){
+                if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur()){
+                    secondPair1.add(temp1.get(i));
+                    secondPair1.add(temp1.get(i+1));
+                    temp1.remove(secondPair1.get(0));
+                    temp1.remove(secondPair2.get(1));
+                    break;
+                }
+                if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur()){
+                    secondPair2.add(temp2.get(i));
+                    secondPair2.add(temp2.get(i+1));
+                    temp2.remove(secondPair2.get(0));
+                    temp2.remove(secondPair2.get(1));
+                    break;
+                }
+            }
+        }
+        if(Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue())==0){
+            if(combinaison==Combinaisons.deux_paires){
+                if(Integer.compare(secondPair1.get(0).getHauteur().getValue(), secondPair2.get(0).getHauteur().getValue())==0){
+                    return Integer.compare(temp1.get(0).getHauteur().getValue(),temp2.get(0).getHauteur().getValue());
+                }
+                else
+                    return Integer.compare(secondPair1.get(0).getHauteur().getValue(), secondPair2.get(0).getHauteur().getValue());
+            }
+            else
+                return Integer.compare(temp1.get(0).getHauteur().getValue(),temp2.get(0).getHauteur().getValue());
+        }
+        else
+            return Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue());
+    }
+
+//    public void combinaisonMain(){
+//        int memeHauteur=nbCartesMemeHauteur();
+//        if(memeCouleur()){  //cas des quinte flush ou d'une couleur
+//            if(suite()){    //quinte flush
+//                for(Carte a:mainJoueur){
+//                    if(a.getHauteur()==Hauteurs.as){     //il y a un as: quinte flush royale
+//                        combinaison=Combinaisons.quinte_flush_royale;
+//                        break;
+//                    }
+//                }
+//                if(combinaison!=Combinaisons.quinte_flush_royale)
+//                    combinaison=Combinaisons.quinte_flush;
+//            }
+//            else
+//                combinaison=Combinaisons.couleur;
+//        }
+//        else{
+//            if(memeHauteur==3){     //cas d'un carré
+//                combinaison=Combinaisons.carre;
+//            }
+//            else{
+//                if(memeHauteur==2){
+//                    if(checkFull()){
+//                        combinaison=Combinaisons.full;
+//                    }
+//                    else
+//                        combinaison=Combinaisons.brelan;
+//                }
+//                else{
+//                    if(suite())
+//                        combinaison=Combinaisons.quinte;
+//                    else{
+//                        if(memeHauteur==1){ //au moins une paire
+//                            if(checkDouble())
+//                                combinaison=Combinaisons.deux_paires;
+//                            else
+//                                combinaison=Combinaisons.une_paire;
+//                        }
+//                        else
+//                            combinaison=Combinaisons.plus_haute;
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    public ArrayList<ArrayList<Carte>> createAllCombinations(ArrayList<Carte>communityCards){
+        ArrayList<ArrayList<Carte>>listCombinations=new ArrayList<>();
+        ArrayList<Carte>listeCartes;
+        ArrayList<Carte>tempList=new ArrayList<>(communityCards);
+        listCombinations.add(tempList);      //le joueur peut très bien utiliser toutes les cartes communes
+        for(Carte i:tempList){
+            for(Carte j:tempList){
+                for(Carte k:tempList){
+                    if(!(i.equals(j) || i.equals(k) || j.equals(k))){
+                        listeCartes = new ArrayList<>();
+                        listeCartes.add(mainJoueur.get(0));
+                        listeCartes.add(mainJoueur.get(1));
+                        listeCartes.add(i);
+                        listeCartes.add(j);
+                        listeCartes.add(k);
+                        listCombinations.add(listeCartes);
+                        for(Carte l:tempList){
+                            if(!(l.equals(i) || l.equals(j) || l.equals(k))){
+                                listeCartes=new ArrayList<>();
+                                listeCartes.add(mainJoueur.get(0));
+                                listeCartes.add(i);
+                                listeCartes.add(j);
+                                listeCartes.add(k);
+                                listeCartes.add(l);
+                                listCombinations.add(listeCartes);
+                                listeCartes=new ArrayList<>();
+                                listeCartes.add(mainJoueur.get(1));
+                                listeCartes.add(i);
+                                listeCartes.add(j);
+                                listeCartes.add(k);
+                                listeCartes.add(l);
+                                listCombinations.add(listeCartes);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        listCombinations=eliminateDuplicates(listCombinations);
+        //showAllCombinations(listCombinations);
+        return listCombinations;
+    }
+
+    private ArrayList<ArrayList<Carte>> eliminateDuplicates(ArrayList<ArrayList<Carte>>listCombinations){
+        Set<ArrayList<Carte>>noDuplicates;
+        ArrayList<ArrayList<Carte>>result;
+        for(ArrayList<Carte>temp:listCombinations){
+            Collections.sort(temp, Carte::compareTo);
+            Collections.reverse(temp);
+        }
+        noDuplicates=new HashSet<>(listCombinations);
+        result=new ArrayList<>(noDuplicates);
+        return result;
+    }
+
+    private void showAllCombinations(ArrayList<ArrayList<Carte>>listCombinations){
+        for(ArrayList<Carte>firstList:listCombinations){
+            for(Carte card:firstList){
+                System.out.println(card.getHauteur() + " de " + card.getCouleur());
+            }
+            System.out.println();
+        }
+    }
+
+    public void showHand(){
+        for(Carte current:mainJoueur)
+            System.out.println(current.getHauteur() + " de " + current.getCouleur());
+    }
+
+    public static void main(String[] args) {
+
+        ArrayList<ArrayList<Carte>>result;
+        ArrayList<Carte>communityCards=new ArrayList<>();
+        ArrayList<Carte>mainJoueur=new ArrayList<>();
+
+        Carte asCoeur=new Carte(Couleurs.coeur,Hauteurs.as);
+        Carte dixCarreau=new Carte(Couleurs.carreau,Hauteurs.dix);
+        Carte asPique=new Carte(Couleurs.pique,Hauteurs.as);
+        Carte deuxTrefle=new Carte(Couleurs.trefle,Hauteurs.deux);
+        Carte septCoeur=new Carte(Couleurs.coeur,Hauteurs.sept);
+
+        Carte asCarreau=new Carte(Couleurs.carreau,Hauteurs.as);
+        Carte dixPique=new Carte(Couleurs.pique,Hauteurs.dix);
+
+        communityCards.add(asCoeur);
+        communityCards.add(dixCarreau);
+        communityCards.add(asPique);
+        communityCards.add(deuxTrefle);
+        communityCards.add(septCoeur);
+
+        mainJoueur.add(asCarreau);
+        mainJoueur.add(dixPique);
+
+        JoueurPoker player=new JoueurPoker("Robert", mainJoueur, 100);
+
+        result=player.createAllCombinations(communityCards);
+
     }
 
 }
