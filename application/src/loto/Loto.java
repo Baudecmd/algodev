@@ -3,13 +3,19 @@ package loto;
 import commun.Joueur;
 import commun.Partie;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class    Loto implements Partie { // Le Loto est composé d'une map associant un joueur et une grille, un Tirage et la liste des numéros déjà tiré
+public class Loto implements Partie { // Le Loto est composé d'une map associant un joueur et une grille, un Tirage et la liste des numéros déjà tiré
     private List<JoueurLoto> joueurs;
     private Tirage tirage;
     private List<Integer> tiree;
+    private final String fileName = "scoreboardLoto.ser";
+
+    public String getFileName() {
+        return fileName;
+    }
 
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new ArrayList<>();
@@ -20,7 +26,7 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
         }
         this.tiree = new ArrayList<>();
         this.tirage = new Tirage(L.size(), 0);
-        Partie.initialiser("resources/scoreboardLoto.ser");
+        Partie.initialiser(fileName);
     }
 
     List<JoueurLoto> getJoueurs() {
@@ -38,7 +44,7 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
     public JoueurLoto retournerGagnant() { //Renvoie le joueur qui a gagné la partie
         for (JoueurLoto j : joueurs)
             if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)){
-                Partie.ajouterVictoire("resources/scoreboardLoto.ser",new Joueur(j.getNom()));
+                Partie.ajouterVictoire(fileName ,new Joueur(j.getNom()));
                 return j;
             }
         return null;
@@ -62,7 +68,9 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
     }
 
     public static void main(String[] args) { //Test de la gestion des scores
-        ArrayList<Joueur> L = Partie.recupererScore("resources/scoreboardLoto.ser");
+        Loto l = new Loto(new ArrayList<Joueur>());
+        Partie.ajouterVictoire(l.fileName, new Joueur("grr"));
+        ArrayList<Joueur> L = Partie.recupererScore(l.fileName);
         System.out.println(L.toString());
     }
 }
