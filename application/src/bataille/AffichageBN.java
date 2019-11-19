@@ -26,6 +26,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sudoku.JeuSudoku;
+import sudoku.MenuSudoku;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,28 +129,120 @@ public class AffichageBN extends Application implements Initializable {
 			j2.add(img, i, j);
 	}
 
-	public void placer(MouseEvent event) {
-		ImageView source = (ImageView) event.getSource();
-		Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-		// Put ImageView on dragboard
-		ClipboardContent cbContent = new ClipboardContent();
-		cbContent.putImage(source.getImage());
-		// cbContent.put(DataFormat.)
-		db.setContent(cbContent);
-		source.setVisible(false);
-		event.consume();
+	//Actualise les listes des coordonnées des bateaux des joueurs
+	ArrayList<Case> bJ1 = new ArrayList<Case>();
+	ArrayList<Case> bJ2 = new ArrayList<Case>();
+	public void placementBateaux(int joueur, int i, int j, int taille, int rotation) {
+		if(joueur == 1) {
+		bJ1.addAll(ajoutBateaux(i, j, taille, rotation));	
+		} else {
+		bJ2.addAll(ajoutBateaux(i, j, taille, rotation));
+		}
+	}
+	
+	//Retourne une liste de cases occupées par un bateau
+	public ArrayList<Case> ajoutBateaux(int i, int j, int taille, int rotation) {
+		ArrayList<Case> temp = new ArrayList<Case>();
+		if(rotation == 90){
+			switch(taille) {
+			case 2 :
+				temp.add(new Case(i,j));
+				temp.add(new Case(i,j+1));
+				break;
+			case 3 :
+				temp.add(new Case(i,j-1));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i,j+1));
+				break;
+			case 4 :
+				temp.add(new Case(i,j-1));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i,j+1));
+				temp.add(new Case(i,j+2));
+				break;
+			case 5 :
+			temp.add(new Case(i,j-2));
+			temp.add(new Case(i,j-1));
+			temp.add(new Case(i,j));
+			temp.add(new Case(i,j+1));
+			temp.add(new Case(i,j+2));
+				break;
+			}
+		}else {
+			switch(taille) {
+			case 2 :
+				temp.add(new Case(i,j));
+				temp.add(new Case(i+1,j));
+				break;
+			case 3 :
+				temp.add(new Case(i-1,j));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i+1,j));
+				break;
+			case 4 :
+				temp.add(new Case(i-1,j));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i+1,j));
+				temp.add(new Case(i+2,j));
+				break;
+			case 5 :
+			temp.add(new Case(i-2,j-2));
+			temp.add(new Case(i-1,j-1));
+			temp.add(new Case(i,j));
+			temp.add(new Case(i+1,j));
+			temp.add(new Case(i+2,j));
+				break;
+			}
+		}
+		System.out.println("Ajout du bateau sur les cases: " + temp.toString());
+		return temp;
+	}
+	
+	//Gére la fin du remplissage de la grille des bateaux des deux joueurs
+	static boolean turn1 = true;
+	public void entrerBateaux() {
+		if(turn1) {
+			placementBateaux(1,0,0,2,(int)torpilleur.getRotate());
+			placementBateaux(1,0,0,3,(int)destroyer1.getRotate());
+			placementBateaux(1,0,0,3,(int)destroyer2.getRotate());
+			placementBateaux(1,0,0,4,(int)cuirasse.getRotate());
+			placementBateaux(1,0,0,5,(int)porteAvions.getRotate());
+			turn1 = false;
+			Stage temp = (Stage) this.tab1.getScene().getWindow();
+			AffichageBN m = new AffichageBN();
+			try {
+				m.start(temp);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			placementBateaux(2,0,0,2,(int)torpilleur.getRotate());
+			placementBateaux(2,0,0,3,(int)destroyer1.getRotate());
+			placementBateaux(2,0,0,3,(int)destroyer2.getRotate());
+			placementBateaux(2,0,0,4,(int)cuirasse.getRotate());
+			placementBateaux(2,0,0,5,(int)porteAvions.getRotate());
+		}
 	}
 
-	// Fonction rotation avec clic droit
+	// Fonction rotation avec clic droit, gére les rotations des bateaux pairs
 	@FXML
 	protected void rotate(MouseEvent event) {
 		if (event.getButton() == MouseButton.SECONDARY) {
+			boolean pair = ((((ImageView) event.getSource()).getFitHeight() / 40 == 2) || (((ImageView) event.getSource()).getFitHeight() / 40 == 4));
 			double current = ((ImageView) event.getSource()).getRotate();
-			if (current + 90 == 360)
+			if (current + 90 == 180) {
 				((ImageView) event.getSource()).setRotate(0);
-			else
+				if(pair) {
+				((ImageView) event.getSource()).setTranslateX(0);
+				((ImageView) event.getSource()).setTranslateY(20);
+				}
+			}else {
 				((ImageView) event.getSource()).setRotate(current + 90);
+				if(pair) {
+				((ImageView) event.getSource()).setTranslateY(0);
+				((ImageView) event.getSource()).setTranslateX(20);
+				}
+			}
 		}
 	}
 
@@ -173,10 +267,9 @@ public class AffichageBN extends Application implements Initializable {
 		event.consume();
 	}
 
-	//Inutile atm
 	public void dragDone(DragEvent event) {
 		if (event.getTransferMode() == TransferMode.MOVE) {
-
+			//Modifier le tab pour mettre à jourle nolbre de bateaux
 		}
 		event.consume();
 	}
@@ -204,7 +297,7 @@ public class AffichageBN extends Application implements Initializable {
 	public int g(int a, int tailleBateau) {
 		// cas horizontal
 		switch (tailleBateau) {
-		case 2:
+		case 0:
 			if (a < 80)
 				return 1;
 			if (a < 120)
@@ -225,6 +318,25 @@ public class AffichageBN extends Application implements Initializable {
 				return 9;
 			if (a < 440)
 				return 10;
+		case 2:
+			if (a < 80)
+				return 1;
+			if (a < 120)
+				return 2;
+			if (a < 160)
+				return 3;
+			if (a < 200)
+				return 4;
+			if (a < 240)
+				return 5;
+			if (a < 280)
+				return 6;
+			if (a < 320)
+				return 7;
+			if (a < 360)
+				return 8;
+			if (a > 360)
+				return 9;
 			else
 				return 5;
 		case 3:
@@ -298,26 +410,28 @@ public class AffichageBN extends Application implements Initializable {
 			System.out.println("Taille du bateau: " + bateau.getFitHeight() + "- " + bateau.getFitWidth());
 			// Si le bateau est de taille paire il faut faire des choses pour empecher les
 			// bugs
-			if ((bateau.getFitHeight() / 40 == 2) || ((bateau.getFitHeight() / 40 == 4)))
-				System.out.println("Bateau de taille paire, orientation :" + bateau.getRotate());
+			if (((bateau.getFitHeight() / 40 == 2) || ((bateau.getFitHeight() / 40 == 4)))&& ((int) bateau.getRotate()) == 90)bateau.setTranslateX(20);
 
 			int taille = (int) (bateau.getFitHeight() / 40);
+			//if((taille == 2)||(taille==4)) x++;
 			switch ((int) bateau.getRotate()) {
 			case 90:
-				tab1.add(bateau, g(x, taille), g(y, 2));
+				tab1.add(bateau, g(x, taille), g(y, 0));
+				System.out.println(ajoutBateaux(g(x, taille),g(y, 0),taille,(int)bateau.getRotate()));
 				break;
 			case 270:
-				tab1.add(bateau, g(x, taille), g(y, 2));
+				tab1.add(bateau, g(x, taille), g(y, 0));
 				break;
 			case 0:
-				tab1.add(bateau, g(x, 2), g(y, taille));
+				tab1.add(bateau, g(x, 0), g(y, taille));
 				break;
 			case 180:
-				tab1.add(bateau, g(x, 2), g(y, taille));
+				tab1.add(bateau, g(x, 0), g(y, taille));
 				break;
 			}
 			success = true;
 		}
+
 		event.setDropCompleted(success);
 
 		event.consume();
