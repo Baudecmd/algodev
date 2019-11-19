@@ -105,7 +105,7 @@ public class Popups implements Initializable {
 					secs = 0;
 				}
 				text.setText((((mins / 10) == 0) ? "0" : "") + mins + ":" + (((secs / 10) == 0) ? "0" : "") + secs + ":"
-						+ (((millis / 10) == 0) ? "00" : (((millis / 100) == 0) ? "0" : "")) + millis++);
+						+ (((millis / 100) == 0) ? "0" : "") + (millis++/10));
 			}
 		}));
 		timeline.setCycleCount(Timeline.INDEFINITE);

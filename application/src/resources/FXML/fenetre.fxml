@@ -29,7 +29,12 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text fx:id="text" layoutX="660.0" layoutY="100.0" onMouseClicked="#textSet" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:000" textAlignment="CENTER" wrappingWidth="110.6708984375">
+      <Text fx:id="text" layoutX="659.0" layoutY="146.0" onMouseClicked="#textSet" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" textAlignment="CENTER" wrappingWidth="110.6708984375">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="643.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temps de Jeu : ">
          <font>
             <Font size="21.0" />
          </font>
