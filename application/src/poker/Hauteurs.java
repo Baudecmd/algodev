@@ -1,7 +1,6 @@
 package poker;
 
 public enum Hauteurs {
-    un(1),
     deux(2),
     trois(3),
     quatre(4),

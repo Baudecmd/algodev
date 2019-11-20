@@ -1,5 +1,7 @@
 package poker;
 
+import java.util.Objects;
+
 public class Carte {
 
     private Couleurs couleur;
@@ -26,8 +28,30 @@ public class Carte {
         this.hauteur = hauteur;
     }
 
-    public int compareTo(Carte autre){
-        return getHauteur().compareTo(autre.getHauteur());    //est-ce que ça prend en compte la valeur déjà définie?
+//    public int compareTo(Carte autre){
+//        return getHauteur().compareTo(autre.getHauteur());
+//    }
+
+    public int compareTo(Carte other){      //pour faire le tri en fonction de la hauteur ET de la couleur; nécessaire à la fonction d'élimination des doublons
+        return getHauteur().compareTo(other.getHauteur())+getCouleur().compareTo(other.getCouleur());
+    }
+
+    public int compareTo2(Carte other){     //pour faire le tri en fonction de la hauteur uniquement, pour permettre un affichage lisible
+        return getHauteur().compareTo(other.getHauteur());
+    }
+
+    @Override
+    public String toString() {
+        return hauteur.name()+couleur.name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carte carte = (Carte) o;
+        return couleur == carte.couleur &&
+                hauteur == carte.hauteur;
     }
 
 }

@@ -21,4 +21,9 @@ public enum Combinaisons {
     public int getValue(){
         return value;
     }
+
+    public boolean isGreater(Combinaisons other){
+        return value > other.getValue();
+    }
+
 }
