@@ -1,5 +1,6 @@
 package poker;
 
+import bataille.JoueurBataille;
 import commun.Joueur;
 import commun.Partie;
 import javafx.css.converter.LadderConverter;
@@ -104,7 +105,7 @@ public class PartiePoker implements Partie {
 
     //version finale de la fonction de tour suivant
     public void nextTurn(boolean preFlop) {     //effectue un tour de table des joueurs en lice
-        boolean check = true, loop = true, terminated;
+        boolean check = true, loop = true, terminated,lastPlayer=false;
         int choix, mise;
         Scanner sc = new Scanner(System.in);
         ArrayList<JoueurPoker> turnTable = new ArrayList<>(listeJoueurs);
@@ -169,6 +170,8 @@ public class PartiePoker implements Partie {
                         case 3:     //Se Coucher
                             joueursCouches.add(joueur);
                             terminated = true;
+                            if(turnTable.size()==joueursCouches.size()+1)   //vérifie qu'il reste plus d'un joueur en lice. Si ce n'est pas le cas, on quittera la boucle pour prématurément
+                                lastPlayer=true;
                             break;
                         case 4:     //Check
                             terminated = true;
@@ -190,8 +193,11 @@ public class PartiePoker implements Partie {
                             break;
                     }
                 }
+                if(lastPlayer)  //s'il ne reste qu'un joueur en lice, il ne sert à rien de demander au dernier joueur ce qu'il veut faire
+                    break;
             }
-        }while (!sameBet());        //tant que les joueurs n'ont pas tous mis la même mise dans le pot, le tour de mises ne s'arrête pas
+            turnTable.removeAll(joueursCouches);    //on doit le refaire une fois dans le while pour que le tour s'arrête si trop de joueurs se sont couchés
+        }while (!sameBet() && turnTable.size()!=1);        //tant que les joueurs n'ont pas tous mis la même mise dans le pot, le tour de mises ne s'arrête pas. Si tous les joueurs se sont couchés sauf un, il est, par défaut, le gagnant
     }
 
     private boolean searchPlayerInAllIn(ArrayList<JoueurPoker>allPlayers){       //indique si un joueur précédent a fait tapis
@@ -283,7 +289,7 @@ public class PartiePoker implements Partie {
         }
     }
 
-    public void giveCardsToPlayer(){     //donne deux cartes à chaque joueur
+    private void giveCardsToPlayer(){     //donne deux cartes à chaque joueur
         int i;
         for(JoueurPoker joueur:listeJoueurs){
             for(i=0;i<2;i++)
@@ -291,7 +297,7 @@ public class PartiePoker implements Partie {
         }
     }
 
-    public void addCommunityCards(ArrayList<Carte>communityCards){
+    private void addCommunityCards(ArrayList<Carte>communityCards){
         if(communityCards.isEmpty()){   //flop
             for(int i=0;i<3;i++)
                 communityCards.add(pile.pop());
@@ -300,44 +306,46 @@ public class PartiePoker implements Partie {
             communityCards.add(pile.pop());     //turn ou river: on n'ajoute qu'une carte
     }
 
-    public void showCards(ArrayList<Carte>Cards){
-        for(Carte carte:Cards)
-            System.out.println(carte.getHauteur() + " de " + carte.getCouleur());
+    private void showCommunityCards(ArrayList<Carte>communityCards){
+        System.out.println("Les cartes communes sont:");
+        for(Carte card:communityCards)
+            System.out.println(card.getHauteur() + " de " + card.getCouleur());
     }
 
     public Boolean partieFinie(){
         //partie terminée s'il ne reste plus qu'un joueur
-        return listeJoueurs.size() == 1;
-    }
-
-    private void afficherPile(){
-        for(Carte c:pile)
-            System.out.println(c.getHauteur() + " de " + c.getCouleur());
+        return listeJoueurs.size() <= 1;
     }
 
     public static void main(String[] args) {
         int nbTurns=1;
-        Combinaisons bestCombination;
-        ArrayList<JoueurPoker>winners=new ArrayList<>();
+        int total=0;
+        ArrayList<JoueurPoker>winners;
+        ArrayList<JoueurPoker>finalPlayers;
+        ArrayList<JoueurPoker>quit;     //liste permettant de demander aux joueurs si ils souhaitent quitter la partie
         JoueurPoker player1=new JoueurPoker("Joffrey", 500);
         JoueurPoker player2=new JoueurPoker("Gaby", 500);
         ArrayList<Carte>communityCards=new ArrayList<>();
-        //partie à blinde constante ou non? On suppose que oui
         Scanner sc=new Scanner(System.in);
+        int choice;
         System.out.println("Quelle est la mise de la grosse blinde?");
         PartiePoker partie=new PartiePoker(sc.nextInt());
-//        partie.afficherPile();
-//        System.out.println(partie.getPile().size());
         partie.addPlayer(player1);
         partie.addPlayer(player2);
-        while(!partie.partieFinie() || nbTurns<5){
+        while(!partie.partieFinie()){
             if(nbTurns==1){
+                partie.giveCardsToPlayer();
+                for(JoueurPoker player:partie.listeJoueurs){
+                    System.out.println(player.getNom() + ", vous avez les cartes suivantes:");
+                    player.showHand();
+                }
                 partie.addCommunityCards(communityCards);
+                partie.showCommunityCards(communityCards);
                 partie.nextTurn(true);
                 nbTurns++;
             }
             else{
-                if(nbTurns==4){
+                if(nbTurns==5){
                     System.out.println("C'est le Showdown!");       //A traiter
                     for(JoueurPoker player:partie.listeJoueurs){
                         player.setCombinationHand(player.createAllCombinations(communityCards));    //on assigne à chaque joueur sa meilleure main
@@ -346,25 +354,52 @@ public class PartiePoker implements Partie {
                         System.out.println("Vous avez la combinaison: " + player.getCombinaison());
                         System.out.println();
                     }
-                    bestCombination=partie.listeJoueurs.get(0).getCombinaison();
-                    for(JoueurPoker current:partie.listeJoueurs){
-                        if(current.getCombinaison().getValue()>bestCombination.getValue()){
-                            winners.clear();
-                            winners.add(current);
-                            bestCombination=current.getCombinaison();
-                        }
-                        else{
-                            if(current.getCombinaison().getValue()==bestCombination.getValue()){
-                                winners.add(current);
+                    finalPlayers=new ArrayList<>(partie.getListeJoueurs());
+                    winners=new ArrayList<>();
+                    Collections.sort(finalPlayers, JoueurPoker::compareCombination);      //on trie en fonction de la meilleure combinaison
+                    Collections.reverse(finalPlayers);
+                    winners.add(finalPlayers.get(0));   //c'est forcément un gagnant
+                    for(JoueurPoker player:finalPlayers){
+                        if(player.getCombinaison()==winners.get(0).getCombinaison() && !winners.contains(player)) {    //la deuxième condition permet d'éviter que le premier joueur, qui est déjà dans la liste, soit placé deux fois dedans
+                            if (player.hasBetterHand(winners.get(0)) == 0)
+                                winners.add(player);
+                            else{
+                                if (player.hasBetterHand(winners.get(0)) > 0) {
+                                    winners.clear();
+                                    winners.add(player);
+                                }
                             }
                         }
                     }
                     if(winners.size()>1){
-                        for(int i=0;i<winners.size()-2;i++){
-                            //faire une fonction de tournoi pour déterminer le vainqueur
+                        System.out.println("Les joueurs:");
+                        for(JoueurPoker player:winners){
+                            System.out.println(player.getNom());
                         }
+                        System.out.println(" gagnent la manche!");
+                        total=partie.getPot()/winners.size();
+                        for(JoueurPoker player:winners)
+                            player.setSomme(player.getSomme()+total);
                     }
-                    nbTurns++;
+                    else{
+                        System.out.println(winners.get(0).getNom() + " gagne la manche!");
+                        winners.get(0).setSomme(winners.get(0).getSomme()+total);
+                    }
+                    partie.setPots(0);      //on réinitialise les variables en vue d'une prochaine manche
+                    nbTurns=1;
+                    total=0;
+                    communityCards=new ArrayList<>();
+                    partie.joueursCouches=new ArrayList<>();
+                    System.out.println("Y a-t-il des joueurs qui souhaitent quitter la partie? Tapez 1 pour oui");
+                    quit=new ArrayList<>(partie.getListeJoueurs());
+                    for(JoueurPoker joueur:quit){
+                        System.out.println(joueur.getNom() + ", souhaitez-vous partir?");
+                        choice=sc.nextInt();
+                        if(choice==1)
+                            partie.listeJoueurs.remove(joueur);
+                        if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
+                            break;
+                    }
                 }
                 else {
                     partie.nextTurn(false);
@@ -372,9 +407,31 @@ public class PartiePoker implements Partie {
                     nbTurns++;
                 }
             }
+            finalPlayers=new ArrayList<>(partie.getListeJoueurs());
+            finalPlayers.removeAll(partie.getJoueurCouches());
+            if(finalPlayers.size()==1){     //tous les joueurs se sont couchés sauf un
+                System.out.println("Tous les joueurs se sont couchés sauf " + finalPlayers.get(0).getNom());
+                System.out.println("C'est donc le vainqueur de cette manche!");
+                total=partie.getPot();
+                finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+total);
+                total=0;
+                partie.setPots(0);
+                nbTurns=1;
+                communityCards=new ArrayList<>();
+                partie.joueursCouches=new ArrayList<>();
+                System.out.println("Y a-t-il des joueurs qui souhaitent quitter la partie? Tapez 1 pour oui");
+                quit=new ArrayList<>(partie.getListeJoueurs());
+                for(JoueurPoker joueur:quit){
+                    System.out.println(joueur.getNom() + ", souhaitez-vous partir?");
+                    choice=sc.nextInt();
+                    if(choice==1)
+                        partie.listeJoueurs.remove(joueur);
+                    if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
+                        break;
+                }
+            }
         }
-
-        //les joueurs, à la fin de chaque manche, doivent avoir le droit de quitter la partie.
+        System.out.println("La partie est terminée! Trop de joueurs ont quitté la partie");
     }
 
 }

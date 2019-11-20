@@ -23,8 +23,7 @@ public enum Combinaisons {
     }
 
     public boolean isGreater(Combinaisons other){
-        return value >= other.getValue();
+        return value > other.getValue();
     }
-
 
 }

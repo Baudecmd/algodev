@@ -72,7 +72,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.JoueurPoker">
+  <component name="RunManager" selected="Application.PartiePoker">
     <configuration name="Bataille" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bataille.Bataille" />
       <module name="projet-algodev" />
@@ -141,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JoueurPoker" />
         <item itemvalue="Application.PartiePoker" />
+        <item itemvalue="Application.JoueurPoker" />
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.Bataille" />
         <item itemvalue="Application.JoueurBataille2" />
@@ -189,6 +189,8 @@
       <workItem from="1573920786004" duration="7594000" />
       <workItem from="1573999918338" duration="12555000" />
       <workItem from="1574018480558" duration="4915000" />
+      <workItem from="1574186214386" duration="11026000" />
+      <workItem from="1574279476724" duration="8448000" />
     </task>
     <servers />
   </component>

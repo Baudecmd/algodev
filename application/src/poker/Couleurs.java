@@ -15,4 +15,5 @@ public enum Couleurs {
     public int getValue(){
         return value;
     }
+
 }
