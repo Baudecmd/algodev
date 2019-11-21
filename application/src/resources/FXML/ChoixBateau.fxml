@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TitledPane collapsible="false" prefHeight="819.0" prefWidth="507.0" text="Choix" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bataille.AffichageBN">
+<TitledPane fx:id="pane" collapsible="false" prefHeight="819.0" prefWidth="507.0" text="Choix" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bataille.AffichageBN">
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="463.0">
          <children>
@@ -86,7 +86,7 @@
                                     <Font name="Amiri Quran" size="20.0" />
                                  </font>
                               </Text>
-                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
+                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#entrerBateaux" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -114,7 +114,7 @@
                                     <Font name="Amiri Quran" size="20.0" />
                                  </font>
                               </Text>
-                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
+                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#entrerBateaux" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -137,7 +137,7 @@
                                     <Font name="Amiri Quran" size="20.0" />
                                  </font>
                               </Text>
-                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
+                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#entrerBateaux" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -160,7 +160,7 @@
                                     <Font name="Amiri Quran" size="20.0" />
                                  </font>
                               </Text>
-                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
+                              <Button layoutX="28.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#entrerBateaux" text="Valider le choix du placement de vos bateaux" textAlignment="CENTER" textFill="#525050">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

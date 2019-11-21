@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -34,6 +35,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import commun.Popups;
+
 import static java.lang.Integer.parseInt;
 
 public class AffichageBN extends Application implements Initializable {
@@ -46,13 +49,16 @@ public class AffichageBN extends Application implements Initializable {
 	private Parent root;
 
 	@FXML
+	TitledPane pane;
+	
+	@FXML
 	private Stage stage;
 
 	@FXML // GridPane choix placement bateau
 	private GridPane tab1;
 
-	@FXML
-	private GridPane tab2;
+	//@FXML
+	//private GridPane tab2;
 
 	@FXML
 	private ImageView[] bateaux;
@@ -73,37 +79,6 @@ public class AffichageBN extends Application implements Initializable {
 	private ImageView porteAvions;
 	@FXML
 	private TabPane tabPane;
-
-	public void tirer(MouseEvent event) {
-		Button button = (Button) event.getSource();
-		GridPane tab = (GridPane) button.getParent();
-		GridPane nextTab;
-		JoueurBataille joueur;
-		int i = GridPane.getColumnIndex(button);
-		int j = GridPane.getRowIndex(button);
-		boolean touche;
-
-		if (tab.equals(tab1)) {
-			nextTab = tab2;
-			joueur = bataille.getJ1();
-		} else {
-			nextTab = tab1;
-			joueur = bataille.getJ2();
-		}
-		tab.setDisable(true);
-		nextTab.setDisable(false);
-		button.setDisable(true);
-		touche = joueur.tir(i, j);
-
-		Alert a = new Alert(Alert.AlertType.INFORMATION);
-		actualise(joueur, i, j, touche);
-		if (touche)
-			a.setContentText("TouchÃ© !");
-		else
-			a.setContentText("RatÃ© !");
-		a.show();
-		event.consume();
-	}
 
 	@FXML
 	private GridPane j1;
@@ -198,29 +173,38 @@ public class AffichageBN extends Application implements Initializable {
 		return temp;
 	}
 	
+	public int getColBateau(int i) {
+		return GridPane.getColumnIndex(tab1.getChildren().get(i));
+	}
+	
+	public int getRowBateau(int i) {
+		return GridPane.getRowIndex(tab1.getChildren().get(i));
+	}
+	
 	//Gére la fin du remplissage de la grille des bateaux des deux joueurs
 	static boolean turn1 = true;
 	public void entrerBateaux() {
-		if(turn1) {
-			placementBateaux(1,0,0,2,(int)torpilleur.getRotate());
-			placementBateaux(1,0,0,3,(int)destroyer1.getRotate());
-			placementBateaux(1,0,0,3,(int)destroyer2.getRotate());
-			placementBateaux(1,0,0,4,(int)cuirasse.getRotate());
-			placementBateaux(1,0,0,5,(int)porteAvions.getRotate());
+		if(turn1) {//ajouter try catch
+			placementBateaux(1,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
+			placementBateaux(1,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
+			placementBateaux(1,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
+			placementBateaux(1,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
+			placementBateaux(1,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
 			turn1 = false;
-			Stage temp = (Stage) this.tab1.getScene().getWindow();
-			AffichageBN m = new AffichageBN();
+			Stage temp = (Stage) this.pane.getScene().getWindow();
+			//AffichageBN m = new AffichageBN();
 			try {
-				m.start(temp);
+				//m.start(temp);
+				Popups.joueurDeux(temp, "Joueur 2", "A vous de jouer !");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else {
-			placementBateaux(2,0,0,2,(int)torpilleur.getRotate());
-			placementBateaux(2,0,0,3,(int)destroyer1.getRotate());
-			placementBateaux(2,0,0,3,(int)destroyer2.getRotate());
-			placementBateaux(2,0,0,4,(int)cuirasse.getRotate());
-			placementBateaux(2,0,0,5,(int)porteAvions.getRotate());
+			placementBateaux(2,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
+			placementBateaux(2,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
+			placementBateaux(2,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
+			placementBateaux(2,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
+			placementBateaux(2,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
 		}
 	}
 
@@ -416,16 +400,20 @@ public class AffichageBN extends Application implements Initializable {
 			//if((taille == 2)||(taille==4)) x++;
 			switch ((int) bateau.getRotate()) {
 			case 90:
+				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
 				tab1.add(bateau, g(x, taille), g(y, 0));
-				System.out.println(ajoutBateaux(g(x, taille),g(y, 0),taille,(int)bateau.getRotate()));
+				//System.out.println(ajoutBateaux(g(x, taille),g(y, 0),taille,(int)bateau.getRotate()));
 				break;
 			case 270:
+				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
 				tab1.add(bateau, g(x, taille), g(y, 0));
 				break;
 			case 0:
+				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
 				tab1.add(bateau, g(x, 0), g(y, taille));
 				break;
 			case 180:
+				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
 				tab1.add(bateau, g(x, 0), g(y, taille));
 				break;
 			}
@@ -433,7 +421,6 @@ public class AffichageBN extends Application implements Initializable {
 		}
 
 		event.setDropCompleted(success);
-
 		event.consume();
 	}
 
@@ -473,6 +460,8 @@ public class AffichageBN extends Application implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 	}
+	
+
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
@@ -481,9 +470,9 @@ public class AffichageBN extends Application implements Initializable {
 		this.scene = new Scene(root);
 		this.stage.setTitle("Bataille navale !");
 		this.stage.setScene(this.scene);
-		JoueurBataille j1 = new JoueurBataille("Gabriel");
-		JoueurBataille j2 = new JoueurBataille("Romane");
-		AffichageBN.bataille = new Bataille(j1, j2);
+		//JoueurBataille j1 = new JoueurBataille("Gabriel");
+		//JoueurBataille j2 = new JoueurBataille("Romane");
+		//AffichageBN.bataille = new Bataille(j1, j2);
 
 		this.stage.show();
 	}
