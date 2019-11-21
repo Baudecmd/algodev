@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import bataille.AffichageBN;
 import commun.*;
 
 public class Menu extends Application {
@@ -88,14 +87,12 @@ public class Menu extends Application {
 
 
 	public void buttonBataille() {
-		Stage temp = (Stage) this.loto.getScene().getWindow();
-		//JeuSudoku.nomsJoueurs = nomsJoueurs;
-		AffichageBN m = new AffichageBN();
-		try {
-			m.start(temp);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		Window w = loto.getScene().getWindow();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText("Jeu encore en développement");
+		alert.initOwner(w);
+		alert.show();
+
 	}
 
 	public void buttonPoker() {

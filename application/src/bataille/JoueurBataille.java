@@ -3,28 +3,28 @@ package bataille;
 import commun.Joueur;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
-public class JoueurBataille extends Joueur {
-    //version sans tabCases
-    private ArrayList<Bateau>listeBateaux = new ArrayList<>();
-    private ArrayList<Case>alreadyChecked = new ArrayList<>();
+public class JoueurBataille extends Joueur{
 
-    public JoueurBataille(String nom) {
-        super(nom);
+    private Case[][]tabCases=new Case[10][10];
+    private ArrayList<Bateau>tabBateaux=new ArrayList<>();
+    private ArrayList<Case>alreadyChecked=new ArrayList<>();    //liste des cases sur lesquelles le joueur a déjà tiré
+
+    public Case[][] getTabCases() {
+        return tabCases;
     }
 
-    public JoueurBataille(String nom, ArrayList<Bateau> listeBateaux) {
-        super(nom);
-        this.listeBateaux = listeBateaux;
+    public void setTabCases(Case[][] tabCases) {
+        this.tabCases = tabCases;
     }
 
-    public ArrayList<Bateau> getListeBateaux() {
-        return listeBateaux;
+    public ArrayList<Bateau> getTabBateaux() {
+        return tabBateaux;
     }
 
-    public void setListeBateaux(ArrayList<Bateau> listeBateaux) {
-        this.listeBateaux = listeBateaux;
+    public void setTabBateaux(ArrayList<Bateau> tabBateaux) {
+        this.tabBateaux = tabBateaux;
     }
 
     public ArrayList<Case> getAlreadyChecked() {
@@ -35,194 +35,172 @@ public class JoueurBataille extends Joueur {
         this.alreadyChecked = alreadyChecked;
     }
 
-    private boolean canBePlacedByBoat(ArrayList<Case> listeCases, ArrayList<Bateau>listeBateauxCrees) {
-        for (Bateau b : listeBateauxCrees) {
-            for (Case c : b.getTabCases()) {
-                if (listeCases.contains(c))
+    public JoueurBataille(String nom, Case[][] tabCases, ArrayList<Bateau> tabBateaux) {
+        super(nom);
+        this.tabCases = tabCases;
+        this.tabBateaux=tabBateaux;
+    }
+
+    public JoueurBataille(String nom) {
+        super(nom);
+        initCases();
+    }
+
+    private void initCases(){
+        int i,j;
+        Case newCase=new Case(-1, -1);
+        for(i=0;i<10;i++){
+            for(j=0;j<10;j++){
+                newCase.setI(i);
+                newCase.setJ(j);
+                tabCases[i][j]=newCase;
+            }
+        }
+    }
+
+    private void updateGrid(List<Bateau> listeBateauxCrees){
+        for(Bateau b:listeBateauxCrees){
+            for(Case c:b.getTabCases()){
+                for(int i=0;i<10;i++){
+                    for(int j=0;j<10;j++){
+                        if(tabCases[i][j].equals(c))
+                            tabCases[i][j].setContains(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean canBePlacedByBoat(List<Case> listeCases, List<Bateau>listeBateauxCrees){
+        for(Bateau b:listeBateauxCrees){
+            for(Case c:b.getTabCases()){
+                if(listeCases.contains(c))
                     return false;
             }
         }
         return true;
     }
 
-    private boolean coherentValues(ArrayList<Case> listeCases){
-        for(Case c:listeCases){
-            if(!(0<=c.getI()) || !(c.getI()<10) || !(0<=c.getJ()) || !(c.getJ()<10))
-                return false;
-        }
-        return true;
-    }
-
-    private ArrayList<Case> getCases(int nbCases, ArrayList<Bateau>listeBateauxCrees){
-        ArrayList<Case>tabCases=new ArrayList<>();
-        Case origin=new Case(-1,-1);
-        Case temp;
+    private boolean canBePlaced(Case origin, boolean horizontal, boolean direction, int nbCases){
         int i;
-        boolean horizontal=true;    //false: bateau placé verticalement
-        boolean direction=true;     //true: droite ou haut, false: gauche ou bas
-        //récupération de l'origine via l'interface : temp=...
-        tabCases.add(origin);
-        //récupération de l'orientation du bateau
+        if(tabCases[origin.getI()][origin.getJ()].isContains()){
+            return false;
+        }
         for(i=1;i<nbCases;i++){
             if(horizontal){
                 if(direction){
-                    temp=new Case(origin.getI()+i, origin.getJ());
+                    if(tabCases[origin.getI()+i][origin.getJ()].isContains())
+                        return false;
                 }
                 else{
-                    temp=new Case(origin.getI()-i, origin.getJ());
+                    if(tabCases[origin.getI()-i][origin.getJ()].isContains())
+                        return false;
                 }
             }
             else{
                 if(direction){
-                    temp=new Case (origin.getI(), origin.getJ()+i);
+                    if(tabCases[origin.getI()][origin.getJ()+i].isContains())
+                        return false;
                 }
                 else{
-                    temp=new Case(origin.getI(), origin.getJ()-i);
+                    if(tabCases[origin.getI()-i][origin.getJ()].isContains())
+                        return false;
                 }
             }
-            tabCases.add(temp);
         }
-        return tabCases;
+        return true;
     }
 
-    public void placement(){        //placement des bateaux sur la grille
-        Bateau temp;
-        ArrayList<Case>listeCases;      //liste des cases où doit être placé le bateau
-        ArrayList<Bateau>listeBateauxCrees=new ArrayList<>();
-        int count=5;
-        while(count > 0){
-            if(count == 2 || count ==3)
-                listeCases=getCases(3,listeBateauxCrees);   //destroyer
-            else {
-                if (count == 1)
-                    listeCases = getCases(2, listeBateauxCrees);    //torpilleur
-                else
-                    listeCases=getCases(count,listeBateauxCrees);   //porte-avions ou croiseur
+    private ArrayList<Case> getCases(int nbCases){       //on place d'abord la première case, puis on choisit l'orientation, et le programme se charge de mettre les cases restantes
+        ArrayList<Case>listeCases=new ArrayList<>();
+        Case origin=new Case(-1,-1);
+        Case temp=new Case(-1,-1);
+        int i=nbCases;
+        boolean horizontal=true;     //false : le bateau est placé à la verticale
+        boolean direction=true;      //true : droite ou haut, sinon gauche ou bas
+        //récupération des Cases via l'interface : temp=...
+        listeCases.add(origin);
+        //récupération de l'orientation du bateau
+        //if(canBePlaced(origin, horizontal, direction, nbCases)){
+            for(i=1;i<nbCases;i++){     //1 car la première case est déjà connue
+                if(horizontal){
+                    if(direction){
+                        temp.setI(origin.getI()+i);
+                    }
+                    else{
+                        temp.setI(origin.getI()-i);
+                    }
+                }
+                else{
+                    if(direction){
+                        temp.setJ(origin.getJ()+i);
+                    }
+                    else{
+                        temp.setJ(origin.getJ()-i);
+                    }
+                }
+                listeCases.add(temp);
             }
-            if(canBePlacedByBoat(listeCases,listeBateauxCrees) && coherentValues(listeCases)){
+            return listeCases;
+       // }
+        //else
+            //return null;      //on ne renvoie rien si le bateau n'a pas pu être placé
+    }
+
+    public void placement(){        //placement sur une grille
+        Bateau temp;
+        ArrayList<Case>listeCases;    //liste des cases où doit être placé le bateau
+        List<Bateau>listeBateauxCrees=new ArrayList<>();
+        int count = 5;
+        while(count>0){
+            if(count == 5)
+                listeCases=getCases(5);     //porte-avions
+            else{
+                if(count == 4)
+                    listeCases=getCases(4);     //croiseur
+                else{
+                    if(count == 3 || count == 2)
+                        listeCases=getCases(3);     //destroyer
+                    else
+                        listeCases=getCases(2);     //torpilleur
+                }
+            }
+            if(canBePlacedByBoat(listeCases, listeBateauxCrees)){
                 temp=new Bateau(listeCases, this);
                 listeBateauxCrees.add(temp);
-                listeBateaux.add(temp);
+                tabBateaux.add(new Bateau(listeCases,this));
                 count--;
             }
-            //Sinon, indiquer au joueur que son placement est impossible
         }
+        updateGrid(listeBateauxCrees);
     }
 
-    public boolean tir(int i,int j){    //booléen pour indiquer si un bateau a été touché ou non
-        boolean touche=false;           // ATTENTION! Cette fonction n'effectue pas un tir CONTRE le joueur adverse (sinon, celui-ci serait passé en paramètre). C'est au joueur 2 de faire appel à cette fonction du joueur 1 pour effectuer son tir contre celui-ci.
-        Bateau removed=null;
-        Case temp=new Case(i,j);
+    public boolean tir(int i, int j){       //vérifie si le tir du joueur a touché ou non, et effectue les actions qui en découlent
+        boolean touche=false;
+        Case temp=new Case(i, j);
         if(alreadyChecked.contains(temp)){
             System.out.println("Case déjà vérifiée");
             return touche;
         }
-        if(0<=i && i<10 && 0<=j && j<10){
-            for(Bateau b:listeBateaux){   //la case est existante
+        for(Bateau b:tabBateaux){
+            if(0<=i && i<10 && 0<=j && j<10){   //la case est existante
                 for(Case c:b.getTabCases()){
                     if(c.getI()==i && c.getJ()==j){
                         touche=true;
-                        System.out.println("Bateau touché!");
                         b.getTabCases().remove(c);
                         if(b.getTabCases().isEmpty())
-                            removed=b;
+                            this.getTabBateaux().remove(b);
                         break;  //pas la peine de vérifier les cases restantes
                     }
                 }
                 this.alreadyChecked.add(temp);
             }
-            if(removed!=null){
-                this.getListeBateaux().remove(removed);
-                System.out.println("Bateau coulé!");
-            }
+            else
+                System.out.println("Case invalide");
         }
-        else
-            System.out.println("Case invalide");
         return touche;
     }
 
-    // *** Tests *** //
+    //optimisation possible: supprimer tabCases. Pour le placement, vérifier si les cases choisies par le joueur sont contenues dans un des navires, sinon, on peut les placer. Voir si ça ne gêne pas du côté de l'interface pour faciliter le code
 
-    private ArrayList<Case> getCasesTest(int i, int j){
-        ArrayList<Case>tabCases=new ArrayList<>();
-        int nbCases=3;
-        int k;
-        Case origin=new Case(i,j);
-        Case temp;
-        boolean horizontal=true;    //false: bateau placé verticalement
-        boolean direction=true;     //true: droite ou haut, false: gauche ou bas
-        tabCases.add(origin);
-        for(k=1;k<nbCases;k++){
-            if(horizontal){
-                if(direction){
-                    temp=new Case(origin.getI()+k, origin.getJ());
-                }
-                else{
-                    temp=new Case(origin.getI()-k, origin.getJ());
-                }
-            }
-            else{
-                if(direction){
-                    temp=new Case (origin.getI(), origin.getJ()+k);
-                }
-                else{
-                    temp=new Case(origin.getI(), origin.getJ()-k);
-                }
-            }
-            tabCases.add(temp);
-        }
-        return tabCases;
-    }
-
-    public void placementTest(int i,int j){        //placement des bateaux sur la grille
-        Bateau temp;
-        Scanner sc=new Scanner(System.in);
-        ArrayList<Case>listeCases;      //liste des cases où doit être placé le bateau
-        ArrayList<Bateau>listeBateauxCrees=new ArrayList<>();
-        int count=1;
-        while(count > 0){
-            listeCases=getCasesTest(i,j);
-            if(canBePlacedByBoat(listeCases,listeBateauxCrees) && coherentValuesTest(listeCases)){
-                temp=new Bateau(listeCases, this);
-                listeBateauxCrees.add(temp);
-                listeBateaux.add(temp);
-                count--;
-            }
-            else{
-                i=sc.nextInt();
-                j=sc.nextInt();
-            }
-        }
-    }
-
-    public void afficherBateau(){
-        for(Bateau b:listeBateaux){
-            for(Case c:b.getTabCases()){
-                System.out.println(c.getI() + " " + c.getJ());
-            }
-        }
-    }
-
-    private boolean coherentValuesTest(ArrayList<Case> listeCases){
-        for(Case c:listeCases){
-            if(!(0<=c.getI()) || !(c.getI()<10) || !(0<=c.getJ()) || !(c.getJ()<10)){
-                System.out.println("Valeurs incoherentes");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        JoueurBataille joueur = new JoueurBataille("germain");
-        joueur.placementTest(9,3);
-        joueur.afficherBateau();
-        joueur.tir(6,9);
-        System.out.println();
-        joueur.afficherBateau();
-        joueur.tir(5, 9);
-        System.out.println();
-        joueur.afficherBateau();
-        joueur.tir(7, 9);
-    }
 }
