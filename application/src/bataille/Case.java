@@ -46,4 +46,8 @@ public class Case {
         this.j=j;
         this.contains=false;     //par défaut, aucune pièce n'est présente sur la case
     }
+    
+    public String toString() {
+    	return "H = "+i+" B = "+j;
+    }
 }
