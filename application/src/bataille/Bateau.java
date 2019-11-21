@@ -5,9 +5,8 @@ import commun.Joueur;
 import java.util.ArrayList;
 
 public class Bateau {
-
     private String name;
-    private ArrayList<Case> tabCases = new ArrayList<Case>();     //tableau des cases sur lesquelles est placé le bateau
+    private ArrayList<Case> tabCases;     //tableau des cases sur lesquelles est placé le bateau
     private boolean status;     //false si détruit
     private Joueur joueur;
 
