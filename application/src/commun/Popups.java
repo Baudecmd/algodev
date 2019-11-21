@@ -171,7 +171,7 @@ public class Popups implements Initializable {
 		Label label = new Label();
 		label.setText(message);
 
-		Button parti = new Button("C'est parti !");
+		Button parti = new Button("C'est fait !");
 		parti.setOnAction(e -> {
 			window.close();
 			AffichageBN m = new AffichageBN();

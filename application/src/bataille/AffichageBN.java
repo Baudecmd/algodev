@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -27,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
 
@@ -80,33 +82,17 @@ public class AffichageBN extends Application implements Initializable {
 	@FXML
 	private TabPane tabPane;
 
+	//Les gridpanes ci dessous correspondent aux grilles des joueurs à afficher.
 	@FXML
-	private GridPane j1;
+	protected static GridPane j1;
 
 	@FXML
-	private GridPane j2;
-
-	public void actualise(JoueurBataille joueur, int i, int j, boolean touche) {
-		String path;
-		ImageView img;
-
-		System.out.println(i + " " + " " + j);
-		if (touche)
-			path = "resources/image/touche.png";
-		else
-			path = "resources/image/rate.png";
-		img = new ImageView(path);
-		img.setPreserveRatio(true);
-		img.setFitHeight(70);
-		if (joueur.equals(bataille.getJ1()))
-			j1.add(img, i, j);
-		else
-			j2.add(img, i, j);
-	}
+	protected static GridPane j2;
 
 	//Actualise les listes des coordonnées des bateaux des joueurs
-	ArrayList<Case> bJ1 = new ArrayList<Case>();
-	ArrayList<Case> bJ2 = new ArrayList<Case>();
+	protected static ArrayList<Case> bJ1 = new ArrayList<Case>();
+	protected static ArrayList<Case> bJ2 = new ArrayList<Case>();
+	
 	public void placementBateaux(int joueur, int i, int j, int taille, int rotation) {
 		if(joueur == 1) {
 		bJ1.addAll(ajoutBateaux(i, j, taille, rotation));	
@@ -136,11 +122,11 @@ public class AffichageBN extends Application implements Initializable {
 				temp.add(new Case(i,j+2));
 				break;
 			case 5 :
-			temp.add(new Case(i,j-2));
-			temp.add(new Case(i,j-1));
-			temp.add(new Case(i,j));
-			temp.add(new Case(i,j+1));
-			temp.add(new Case(i,j+2));
+				temp.add(new Case(i,j-2));
+				temp.add(new Case(i,j-1));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i,j+1));
+				temp.add(new Case(i,j+2));
 				break;
 			}
 		}else {
@@ -161,11 +147,11 @@ public class AffichageBN extends Application implements Initializable {
 				temp.add(new Case(i+2,j));
 				break;
 			case 5 :
-			temp.add(new Case(i-2,j-2));
-			temp.add(new Case(i-1,j-1));
-			temp.add(new Case(i,j));
-			temp.add(new Case(i+1,j));
-			temp.add(new Case(i+2,j));
+				temp.add(new Case(i-2,j-2));
+				temp.add(new Case(i-1,j-1));
+				temp.add(new Case(i,j));
+				temp.add(new Case(i+1,j));
+				temp.add(new Case(i+2,j));
 				break;
 			}
 		}
@@ -181,31 +167,46 @@ public class AffichageBN extends Application implements Initializable {
 		return GridPane.getRowIndex(tab1.getChildren().get(i));
 	}
 	
+	public void verifError(int a, int b) {
+		
+	}
+	
 	//Gére la fin du remplissage de la grille des bateaux des deux joueurs
 	static boolean turn1 = true;
 	public void entrerBateaux() {
-		if(turn1) {//ajouter try catch
+		if(turn1) {
+			try {
 			placementBateaux(1,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
 			placementBateaux(1,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
 			placementBateaux(1,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
 			placementBateaux(1,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
 			placementBateaux(1,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+			System.out.println(bJ1);
+			j1 = tab1;
 			turn1 = false;
 			Stage temp = (Stage) this.pane.getScene().getWindow();
-			//AffichageBN m = new AffichageBN();
-			try {
-				//m.start(temp);
-				Popups.joueurDeux(temp, "Joueur 2", "A vous de jouer !");
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			Popups.joueurDeux(temp, "Joueur 1", "L'ordinateur passe au Joueur 2");
+			}catch(Exception e) { erreurBN(); }
 		}else {
+			try {
 			placementBateaux(2,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
 			placementBateaux(2,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
 			placementBateaux(2,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
 			placementBateaux(2,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
 			placementBateaux(2,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+			System.out.println(bJ2);
+			j2 = tab1;
+			}catch(Exception e) { erreurBN(); }
 		}
+	}
+	
+	public void erreurBN() {
+		Window w = pane.getScene().getWindow();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText("Erreur dans le placement de vos bateaux, il vous manque peut-être un bateau ou un de vos bateaux sort de la grille");
+		alert.initOwner(w);
+		alert.show();
+
 	}
 
 	// Fonction rotation avec clic droit, gére les rotations des bateaux pairs
@@ -343,8 +344,6 @@ public class AffichageBN extends Application implements Initializable {
 			else
 				return 5;
 		case 4:
-			if (a < 80)
-				return 1;
 			if (a < 120)
 				return 2;
 			if (a < 160)
@@ -359,10 +358,8 @@ public class AffichageBN extends Application implements Initializable {
 				return 7;
 			if (a < 360)
 				return 8;
-			if (a < 400)
-				return 9;
-			if (a < 440)
-				return 10;
+			if (a > 360)
+				return 8;
 			else
 				return 5;
 		case 5:
@@ -397,24 +394,26 @@ public class AffichageBN extends Application implements Initializable {
 			if (((bateau.getFitHeight() / 40 == 2) || ((bateau.getFitHeight() / 40 == 4)))&& ((int) bateau.getRotate()) == 90)bateau.setTranslateX(20);
 
 			int taille = (int) (bateau.getFitHeight() / 40);
-			//if((taille == 2)||(taille==4)) x++;
 			switch ((int) bateau.getRotate()) {
 			case 90:
 				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
-				tab1.add(bateau, g(x, taille), g(y, 0));
-				//System.out.println(ajoutBateaux(g(x, taille),g(y, 0),taille,(int)bateau.getRotate()));
+				try{tab1.add(bateau, g(x, taille), g(y, 0));}
+				catch(Exception e) {tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, taille), g(y, 0));}
 				break;
 			case 270:
 				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
-				tab1.add(bateau, g(x, taille), g(y, 0));
+				try{tab1.add(bateau, g(x, taille), g(y, 0));}
+				catch(Exception e) {tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, taille), g(y, 0));}
 				break;
 			case 0:
 				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
-				tab1.add(bateau, g(x, 0), g(y, taille));
+				try{tab1.add(bateau, g(x, 0), g(y, taille));}
+				catch(Exception e){tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, 0), g(y, taille));}
 				break;
 			case 180:
 				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
-				tab1.add(bateau, g(x, 0), g(y, taille));
+				try{tab1.add(bateau, g(x, 0), g(y, taille));}
+				catch(Exception e){tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, 0), g(y, taille));}
 				break;
 			}
 			success = true;
@@ -465,7 +464,8 @@ public class AffichageBN extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		this.stage = primaryStage;
+		primaryStage.close();
+		this.stage = new Stage();
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixBateau.fxml"));
 		this.scene = new Scene(root);
 		this.stage.setTitle("Bataille navale !");
