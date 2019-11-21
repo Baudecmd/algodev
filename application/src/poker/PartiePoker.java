@@ -98,19 +98,17 @@ public class PartiePoker implements Partie {
         }
     }
 
-    public void rotation(){
+    private void rotation(){
         //la petite blinde a déjà été placée en tête de liste
         Collections.rotate(listeJoueurs, 1);    //pas besoin de vérifier si il y a plus d'un joueur car le poker ne peut pas être joué seul
     }
 
-    //version finale de la fonction de tour suivant
-    public void nextTurn(boolean preFlop) {     //effectue un tour de table des joueurs en lice
-        boolean check = true, loop = true, terminated,lastPlayer=false;
+    private void nextTurn(boolean preFlop) {     //effectue un tour de table des joueurs en lice
+        boolean check = true, loop, terminated,lastPlayer=false;
         int choix, mise;
         Scanner sc = new Scanner(System.in);
         ArrayList<JoueurPoker> turnTable = new ArrayList<>(listeJoueurs);
         turnTable.removeAll(joueursCouches);    //si des joueurs se sont couchés dans les tours précédents, ils n'ont toujours pas le droit de jouer
-        ArrayList<JoueurPoker>allPlayers=new ArrayList<>(turnTable);
         if (preFlop) {
             verifyBlinds(turnTable);
             Collections.rotate(turnTable, 2);   //le premier joueur est celui à gauche de la grosse blinde
@@ -118,6 +116,9 @@ public class PartiePoker implements Partie {
         }
         do{      //il faut utiliser un do while, sinon la boucle ne commencera jamais! Tous les joueurs ont une mise initiale de 0!
             for (JoueurPoker joueur : turnTable) {
+                loop=true;  //on permet au joueur de miser
+                if(joueur.isTapis())    //un joueur qui a fait tapis n'effectue plus d'action
+                    continue;
                 terminated = false;
                 while (!terminated) {
                     choix = joueur.actionJoueur(check);
@@ -130,7 +131,7 @@ public class PartiePoker implements Partie {
                                 if(joueur.canPlay(miseEnCours)){
                                     if(mise<joueur.getSomme()){
                                         if(mise>=(miseEnCours*2)){
-                                            if(searchPlayerInAllIn(allPlayers)){    //surmiser un tapis revient simplement à suivre ce tapis
+                                            if(searchPlayerInAllIn(turnTable)){    //surmiser un tapis revient simplement à suivre ce tapis
                                                 pot+=miseEnCours-joueur.getMise();
                                                 joueur.setSomme(joueur.getSomme()-(miseEnCours-joueur.getMise()));
                                                 joueur.setMise(miseEnCours);
@@ -145,7 +146,7 @@ public class PartiePoker implements Partie {
                                             }
                                         }
                                         else
-                                            System.out.println("La mise doit être au moins supérieure à deux fois la blinde, qui est de " + blinde);
+                                            System.out.println("La mise doit être au moins supérieure à deux fois la mise actuelle, qui est de " + miseEnCours);
                                     }
                                     else
                                         System.out.println("Vous n'avez pas les moyens de miser autant! Vous avez " + joueur.getSomme());
@@ -158,9 +159,15 @@ public class PartiePoker implements Partie {
                             break;
                         case 2:     //Suivre
                             if(joueur.canPlay(miseEnCours)){
-                                pot+=miseEnCours-joueur.getMise();
-                                joueur.setSomme(joueur.getSomme()-(miseEnCours-joueur.getMise()));
-                                joueur.setMise(miseEnCours);    //le joueur se contente de miser suffisamment pour atteindre la mise en cours
+                                if(joueur.getMise()==miseEnCours){      //le joueur a déjà suivi la mise en cours, il n'y a pas d'équilibrage à faire
+                                    pot+=miseEnCours;
+                                    joueur.setSomme(joueur.getSomme()-miseEnCours);
+                                }
+                                else{       //il y a un équilibrage à faire
+                                    pot+=(miseEnCours-joueur.getMise());
+                                    joueur.setSomme(joueur.getSomme()-(miseEnCours-joueur.getMise()));
+                                    joueur.setMise(miseEnCours);    //le joueur se contente de miser suffisamment pour atteindre la mise en cours
+                                }
                                 check = false;
                                 terminated=true;
                             }
@@ -177,17 +184,18 @@ public class PartiePoker implements Partie {
                             terminated = true;
                             break;
                         case 5:     //Tapis
-                            if(searchPlayerInAllIn(allPlayers)){    //un joueur a déjà fait tapis
-                                handleAllIn(joueur,allPlayers);
-                                turnTable.remove(joueur);
+                            if(searchPlayerInAllIn(turnTable)){    //un joueur a déjà fait tapis
+                                handleAllIn(joueur,turnTable);
                             }
                             else{
+                                pot+=joueur.getSomme();
                                 joueur.setMise(joueur.getMise()+joueur.getSomme());
                                 joueur.setSomme(0);
                                 miseEnCours=joueur.getMise();
-                                turnTable.remove(joueur);   //on doit le retirer, sinon les mises ne seront plus équilibrées et le round ne s'arrêtera jamais
                                 joueur.setTapis(true);
                             }
+                            terminated=true;
+                            check=false;
                             break;
                         default:        //par sécurité, si une mauvaise valeur est entrée, le joueur recommence son tour
                             break;
@@ -209,25 +217,34 @@ public class PartiePoker implements Partie {
     }
 
     private void handleAllIn(JoueurPoker player,ArrayList<JoueurPoker>allPLayers){     //si deux joueurs font tapis, garde le tapis le plus faible et rend la somme superflue à l'autre joueur
+        int temp=player.getSomme();
         player.setMise(player.getMise()+player.getSomme());
         player.setSomme(0);
         for(JoueurPoker alreadyAllIn:allPLayers){
-            if(alreadyAllIn.isTapis()){
+            if(alreadyAllIn.isTapis() && alreadyAllIn.getSomme()==0){       //on compare bien par rapport au joueur en all-in ACTUEL. Il peut y avoir plusieurs joueurs en all-in, mais c'est celui au tapis le plus bas (et donc la somme est égale à 0) qui indique le tapis actuel
+                player.setTapis(true);
                 if(player.getMise()>alreadyAllIn.getMise()){
                     player.setSomme(player.getMise()-alreadyAllIn.getMise());
+                    pot+=temp-player.getSomme();    //le pot récupère la valeur de la somme totale du joueur, à laquelle on soustrait la somme qu'il récupère
                     player.setMise(alreadyAllIn.getMise());
                     System.out.println("Un joueur a déjà fait tapis avec une somme plus faible que vous. Vous récupérez " + player.getSomme());
                 }
                 else{  // <=
-                    player.setTapis(true);
-                    alreadyAllIn.setTapis(false);
-                    player.setMise(player.getMise());
-                    alreadyAllIn.setSomme(miseEnCours-player.getMise());
-                    miseEnCours=player.getMise();
-                    alreadyAllIn.setMise(miseEnCours);
-                    player.setSomme(0);
-                    System.out.println(alreadyAllIn.getNom() + ", " + player.getNom() + " a fait tapis avec une somme moins importante que la vôtre. Vous récupérez " + alreadyAllIn.getSomme());
+                    if(alreadyAllIn.getMise()==player.getMise()){
+                        player.setTapis(true);
+                        pot+=temp;
+                    }
+                    else {
+                        //le joueur étant déjà en all-in, même si ce n'est plus le cas, doit quand même attendre la fin de la manche!
+                        alreadyAllIn.setSomme(alreadyAllIn.getMise() - player.getMise());
+                        pot -= alreadyAllIn.getSomme();
+                        miseEnCours = player.getMise();
+                        alreadyAllIn.setMise(miseEnCours);
+                        player.setSomme(0);
+                        System.out.println(alreadyAllIn.getNom() + ", " + player.getNom() + " a fait tapis avec une somme moins importante que la vôtre. Vous récupérez " + alreadyAllIn.getSomme());
+                    }
                 }
+                break;  //on a trouvé le bon joueur en tapis actuel, il n'est donc plus nécessaire de parcourir la liste
             }
         }
     }
@@ -266,6 +283,9 @@ public class PartiePoker implements Partie {
             if(small.isTapis()){     //si la petite blinde ET la grosse blinde font tapis au même tour
                 if(miseEnCours>big.getMise()){
                     big.setTapis(true);
+                    pot+=big.getSomme();
+                    big.setMise(big.getSomme());
+                    big.setSomme(0);
                     small.setTapis(false);
                     small.setMise(big.getMise());
                     small.setSomme(miseEnCours-big.getMise());
@@ -339,8 +359,6 @@ public class PartiePoker implements Partie {
                     System.out.println(player.getNom() + ", vous avez les cartes suivantes:");
                     player.showHand();
                 }
-                partie.addCommunityCards(communityCards);
-                partie.showCommunityCards(communityCards);
                 partie.nextTurn(true);
                 nbTurns++;
             }
@@ -382,6 +400,7 @@ public class PartiePoker implements Partie {
                             player.setSomme(player.getSomme()+total);
                     }
                     else{
+                        total=partie.pot;
                         System.out.println(winners.get(0).getNom() + " gagne la manche!");
                         winners.get(0).setSomme(winners.get(0).getSomme()+total);
                     }
@@ -390,10 +409,18 @@ public class PartiePoker implements Partie {
                     total=0;
                     communityCards=new ArrayList<>();
                     partie.joueursCouches=new ArrayList<>();
-                    System.out.println("Y a-t-il des joueurs qui souhaitent quitter la partie? Tapez 1 pour oui");
+                    partie.rotation();  //en vue de la prochaine manche
                     quit=new ArrayList<>(partie.getListeJoueurs());
                     for(JoueurPoker joueur:quit){
-                        System.out.println(joueur.getNom() + ", souhaitez-vous partir?");
+                        joueur.setTapis(false);     //on en profite pour réinitialiser le tapis des joueurs
+                        joueur.setMise(0);
+                        if(joueur.getSomme()==0){
+                            partie.listeJoueurs.remove(joueur);
+                            System.out.println(joueur.getNom() + " n'a plus assez d'argent pour continuer! Il est éliminé!");
+                            if(partie.listeJoueurs.size()==1)
+                                break;
+                        }
+                        System.out.println(joueur.getNom() + ", souhaitez-vous partir? Tapez 1 pour dire oui");
                         choice=sc.nextInt();
                         if(choice==1)
                             partie.listeJoueurs.remove(joueur);
@@ -401,34 +428,48 @@ public class PartiePoker implements Partie {
                             break;
                     }
                 }
-                else {
-                    partie.nextTurn(false);
+                else {  //étapes de flop, turn ou river
                     partie.addCommunityCards(communityCards);
+                    partie.showCommunityCards(communityCards);
+                    partie.nextTurn(false);
                     nbTurns++;
                 }
             }
             finalPlayers=new ArrayList<>(partie.getListeJoueurs());
             finalPlayers.removeAll(partie.getJoueurCouches());
-            if(finalPlayers.size()==1){     //tous les joueurs se sont couchés sauf un
-                System.out.println("Tous les joueurs se sont couchés sauf " + finalPlayers.get(0).getNom());
-                System.out.println("C'est donc le vainqueur de cette manche!");
-                total=partie.getPot();
-                finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+total);
-                total=0;
-                partie.setPots(0);
-                nbTurns=1;
-                communityCards=new ArrayList<>();
-                partie.joueursCouches=new ArrayList<>();
-                System.out.println("Y a-t-il des joueurs qui souhaitent quitter la partie? Tapez 1 pour oui");
-                quit=new ArrayList<>(partie.getListeJoueurs());
-                for(JoueurPoker joueur:quit){
-                    System.out.println(joueur.getNom() + ", souhaitez-vous partir?");
-                    choice=sc.nextInt();
-                    if(choice==1)
-                        partie.listeJoueurs.remove(joueur);
-                    if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
-                        break;
+            if(finalPlayers.size()==1){
+                if(partie.getJoueurCouches().size()>0){     //tous les joueurs se sont couchés sauf un
+                    System.out.println("Tous les joueurs se sont couchés sauf " + finalPlayers.get(0).getNom());
+                    System.out.println("C'est donc le vainqueur de cette manche!");
+                    total=partie.getPot();
+                    finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+total);
+                    total=0;
+                    partie.setPots(0);
+                    nbTurns=1;
+                    communityCards=new ArrayList<>();
+                    partie.joueursCouches=new ArrayList<>();
+                    partie.rotation();
+                    quit=new ArrayList<>(partie.getListeJoueurs());
+                    for(JoueurPoker joueur:quit){
+                        if(joueur.getSomme()==0){
+                            partie.listeJoueurs.remove(joueur);
+                            System.out.println(joueur.getNom() + " n'a plus assez d'argent pour continuer! Il est éliminé!");
+                            if(partie.listeJoueurs.size()==1)
+                                break;
+                        }
+                        joueur.setTapis(false);
+                        joueur.setMise(0);
+                        System.out.println(joueur.getNom() + ", souhaitez-vous partir? Tapez 1 pour dire oui");
+                        choice=sc.nextInt();
+                        if(choice==1)
+                            partie.listeJoueurs.remove(joueur);
+                        if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
+                            break;
+                    }
                 }
+                else    //il ne reste qu'un joueur en lice
+                    if(finalPlayers.size()==1)
+                        break;
             }
         }
         System.out.println("La partie est terminée! Trop de joueurs ont quitté la partie");
