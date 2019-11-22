@@ -120,11 +120,14 @@ public class JeuSudoku extends Application implements Initializable {
 	public JeuSudoku() {
 	}
 
-
+	int valErr,rowErr,colErr;
 	public void actualiserGrille(int val, int row, int col) {
 		if ((val >= 0 && val <= 9) && (initial.getMatrice()[row][col] == 0)) {
 			game.getJoueur().setCoutCourant(new Coup(row,col,val));
-			if(game.possibilite())grilleJoueur.getMatrice()[row][col] = val;
+			if(game.possibilite()) grilleJoueur.getMatrice()[row][col] = val;
+			else {
+				valErr = val; rowErr = row; colErr = col;
+			}
 		}else // Si le joueur essaye de modifier une valeur de base de la grille ou si on sort
 				// de la grille
 			System.out.println("Valeur en dehors de la grille ou valeur inchangeable !");
@@ -140,6 +143,20 @@ public class JeuSudoku extends Application implements Initializable {
 		// Dessine sur le canvas
 		drawOnCanvas(context);
 
+	}
+	
+	//here
+	public void afficherErreur(int val,int row,int col) {
+		int position_y = row * coteCase + 2;
+		int position_x = col * coteCase + 2;
+		int width = 30;
+		grille.getGraphicsContext2D().setFill(Color.WHITE);
+		grille.getGraphicsContext2D().fillRoundRect(position_x+10, position_y+10, width, width, 10, 10);
+		position_y = row * coteCase + 30;
+		position_x = col * coteCase + 20;
+		grille.getGraphicsContext2D().setFill(Color.RED);
+		grille.getGraphicsContext2D().setFont(new Font("Courier New"/* ,FontWeight.BOLD */, 20));
+		grille.getGraphicsContext2D().fillText(val + "", position_x, position_y);
 	}
 
 	public void drawOnCanvas(GraphicsContext context) {
@@ -178,8 +195,8 @@ public class JeuSudoku extends Application implements Initializable {
 		// recopie la grille de base en violet
 		for (int row = 0; row < 9; row++) {
 			for (int col = 0; col < 9; col++) {
-				int position_y = row * 50 + 30;
-				int position_x = col * 50 + 20;
+				int position_y = row * coteCase + 30;
+				int position_x = col * coteCase + 20;
 				context.setFill(Color.PURPLE);
 				context.setFont(new Font("Courier New"/* ,FontWeight.BOLD */, 20));
 				if (initial.getMatrice()[row][col] != 0) {
@@ -198,6 +215,10 @@ public class JeuSudoku extends Application implements Initializable {
 				context.strokeRoundRect(position_x, position_y, 3 * position_x + 3 * coteCase,
 						3 * position_y + 3 * coteCase, 10, 10);
 			}
+		}
+		if(valErr != 0) {
+			afficherErreur(valErr,rowErr,colErr);
+			valErr = 0;
 		}
 	}
 
