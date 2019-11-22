@@ -10,6 +10,8 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
     private List<JoueurLoto> joueurs;
     private Tirage tirage;
     private List<Integer> tiree;
+    private final String fileName = "scoreboardLoto.ser";
+
 
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new ArrayList<>();

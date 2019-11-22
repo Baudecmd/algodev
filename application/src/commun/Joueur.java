@@ -7,8 +7,9 @@ public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur es
     /**
 	 *
 	 */
-	private static final long serialVersionUID = -2511917305652687589L;
-	private String nom;
+    private static final long serialVersionUID = -2488455393584687176L;
+
+    private String nom;
     private float score;
 
     public Joueur(String nom) {
@@ -43,5 +44,9 @@ public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur es
                 "nom='" + nom + '\'' +
                 ", score=" + score +
                 '}';
+    }
+
+    public float getScore() {
+        return score;
     }
 }
