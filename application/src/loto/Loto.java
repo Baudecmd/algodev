@@ -68,7 +68,7 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     }
 
     public static void main(String[] args) { //Test de la gestion des scores
-        Loto l = new Loto(new ArrayList<Joueur>());
+        Loto l = new Loto(new ArrayList<>());
         Partie.ajouterVictoire(l.fileName, new Joueur("grr"));
         ArrayList<Joueur> L = Partie.recupererScore(l.fileName);
         System.out.println(L.toString());

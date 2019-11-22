@@ -180,6 +180,24 @@ public class AffichageBN extends Application implements Initializable {
     }
 
 	public void placementBateaux(int joueur, int i, int j, int taille, int rotation) {
+    	int i2 = i, j2 = j;
+    	switch (taille){
+			case 2:
+				break;
+			case 3:
+			case 4:
+				if(rotation==90){
+					j2=j-1;
+				}
+				else i2=i-1;
+				break;
+			case 5:
+				if(rotation==90){
+					j2=j-2;
+				}
+				else i2=i-2;
+				break;
+		}
 		if(joueur == 1) {
 			ArrayList<Bateau> bateaux = bataille.getJ1().getListeBateaux();
 			bateaux.add(new Bateau(ajoutBateaux(i-1, j-1, taille, rotation),bataille.getJ1()));
@@ -270,27 +288,27 @@ public class AffichageBN extends Application implements Initializable {
 	public void entrerBateaux() {
 		if(turn1) {
 			try {
-			placementBateaux(1,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
-			placementBateaux(1,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
-			placementBateaux(1,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
-			placementBateaux(1,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
-			placementBateaux(1,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
-			System.out.println(bJ1);
-			j1 = tab1;
-			turn1 = false;
-			Stage temp = (Stage) this.pane.getScene().getWindow();
-			Popups.joueurDeux(temp, "Joueur 1", "L'ordinateur passe au Joueur 2");
+				placementBateaux(1,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
+				placementBateaux(1,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
+				placementBateaux(1,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
+				placementBateaux(1,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
+				placementBateaux(1,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+				System.out.println(bJ1);
+				j1 = tab1;
+				turn1 = false;
+				Stage temp = (Stage) this.pane.getScene().getWindow();
+				Popups.joueurDeux(temp, "Joueur 1", "L'ordinateur passe au Joueur 2");
 			}catch(Exception e) { erreurBN(); }
 		}else {
 			try {
-			placementBateaux(2,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
-			placementBateaux(2,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
-			placementBateaux(2,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
-			placementBateaux(2,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
-			placementBateaux(2,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
-			System.out.println(bJ2);
-			j2 = tab1;
-			partie();
+				placementBateaux(2,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
+				placementBateaux(2,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
+				placementBateaux(2,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
+				placementBateaux(2,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
+				placementBateaux(2,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+				System.out.println(bJ2);
+				j2 = tab1;
+				partie();
 			}catch(Exception e) { erreurBN();e.printStackTrace(); }
 		}
 	}
