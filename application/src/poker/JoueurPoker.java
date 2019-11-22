@@ -93,7 +93,7 @@ public class JoueurPoker extends Joueur {
         boolean correctValue=true;
         Scanner sc=new Scanner(System.in);
         while(correctValue){
-            System.out.println(this.getNom() + ", quelle action souhaitez-vous faire?");  //on met le nom du joueur pour améliorer la lisibilité
+            System.out.println(this.getNom() + ", vous avez " + this.getSomme() + ", quelle action souhaitez-vous faire?");  //on met le nom du joueur pour améliorer la lisibilité
             System.out.print("1.Miser 2.Suivre 3.Se Coucher");
             if(hasChecked){
                 System.out.print(" 4.Check");
@@ -507,10 +507,6 @@ public class JoueurPoker extends Joueur {
         player.mainJoueur.add(dixPique);
 
         result=player.createAllCombinations(communityCards);
-        int total=0;
-        for(ArrayList<Carte>nb:result)
-            total++;
-        System.out.println(total);
         player.setCombinationHand(result);
         System.out.println(player.combinaison);
         player.showHand();
