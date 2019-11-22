@@ -5,9 +5,8 @@ import commun.Joueur;
 import java.util.ArrayList;
 
 public class Bateau {
-
     private String name;
-    private ArrayList<Case> tabCases = new ArrayList<Case>();     //tableau des cases sur lesquelles est placé le bateau
+    private ArrayList<Case> tabCases;     //tableau des cases sur lesquelles est placé le bateau
     private boolean status;     //false si détruit
     private Joueur joueur;
 
@@ -15,24 +14,8 @@ public class Bateau {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ArrayList<Case> getTabCases() {
         return tabCases;
-    }
-
-    public void setTabCases(ArrayList<Case> tabCases) {
-        this.tabCases = tabCases;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public Joueur getJoueur() {

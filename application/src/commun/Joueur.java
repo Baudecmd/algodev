@@ -19,6 +19,8 @@ public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur es
     public String getNom() {
         return nom;
     }
+    public float getScore() { return score; }
+
 
     void increaseScore(float scoreGagne) { //Augmente le score du joueur en fonction de l'entrée
         this.score += scoreGagne;

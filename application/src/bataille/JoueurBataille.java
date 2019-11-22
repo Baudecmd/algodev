@@ -14,6 +14,10 @@ public class JoueurBataille extends Joueur {
         super(nom);
     }
 
+    public JoueurBataille(Joueur joueur) {
+        super(joueur.getNom());
+    }
+
     public JoueurBataille(String nom, ArrayList<Bateau> listeBateaux) {
         super(nom);
         this.listeBateaux = listeBateaux;

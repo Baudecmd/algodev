@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Bataille implements Partie {
     private JoueurBataille j1,j2;
     private boolean firstTurn=true;
+    private final String fileName = "scoreboardBataille.ser";
 
     public Bataille(JoueurBataille j1, JoueurBataille j2) {
         this.j1 = j1;
@@ -27,6 +28,10 @@ public class Bataille implements Partie {
 
     public void setJ2(JoueurBataille j2) {
         this.j2 = j2;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public boolean isFirstTurn() {

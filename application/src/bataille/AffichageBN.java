@@ -1,5 +1,8 @@
 package bataille;
 
+import commun.Joueur;
+import commun.Partie;
+import commun.Popups;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +26,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -31,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
+import menu.Menu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +45,7 @@ import commun.Popups;
 import static java.lang.Integer.parseInt;
 
 public class AffichageBN extends Application implements Initializable {
-	private static Bataille bataille;
+    public static Bataille bataille;
 
 	@FXML
 	private Scene scene;
@@ -52,56 +55,166 @@ public class AffichageBN extends Application implements Initializable {
 
 	@FXML
 	TitledPane pane;
-	
+
 	@FXML
 	private Stage stage;
 
 	@FXML // GridPane choix placement bateau
 	private GridPane tab1;
 
-	//@FXML
-	//private GridPane tab2;
+    @FXML
+    private GridPane tab2;
 
-	@FXML
-	private ImageView[] bateaux;
+    @FXML
+    private ImageView[] bateaux;
 
 	@FXML
 	private ImageView torpilleur;
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        primaryStage.close();
+        ArrayList<Joueur> joueurs = Menu.nomsJoueurs;
+        this.stage = new Stage();
+        this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixBateau.fxml"));
+        this.scene = new Scene(root);
+        this.stage.setTitle("Bataille navale !");
+        this.stage.setScene(this.scene);
+        bataille = new Bataille(new JoueurBataille(joueurs.get(0)), new JoueurBataille(joueurs.get(1)));
+        partie();
+        stage.setResizable(false);
+        this.stage.show();
+    }
+
+    private void partie() {
+        Partie.initialiser(bataille.getFileName());
+        root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixTire.fxml"));
+        stage.setHeight(800);
+        stage.setWidth(800);
+    }
+
+
+
+    private void partieFinie() {
+        Joueur gagnant = bataille.retournerGagnant();
+        Partie.ajouterVictoire(bataille.getFileName(), gagnant);
+        ArrayList<Joueur> scores = Partie.recupererScore(bataille.getFileName());
+        Popups.nom = gagnant.getNom();
+        Popups.score = "Vous avez gagnÃ© "+ (int)(scores.get(scores.indexOf(gagnant)).getScore()) + " parties.";
+        try {
+            Popups.victoire((Stage) this.j1.getScene().getWindow());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	@FXML
 	private ImageView destroyer1;
 
-	@FXML
-	private ImageView destroyer2;
+    @FXML
+    private ImageView destroyer2;
 
-	@FXML
-	private ImageView cuirasse;
+    @FXML
+    private ImageView cuirasse;
+
+    public void tirer(MouseEvent event) {
+        Button button = (Button)event.getSource();
+        GridPane tab = (GridPane) button.getParent();
+        GridPane nextTab;
+        JoueurBataille joueur;
+        int i = GridPane.getColumnIndex(button);
+        int j = GridPane.getRowIndex(button);
+        boolean touche;
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+
+
+        if(tab.equals(tab1)) {
+            nextTab = tab2;
+            joueur = bataille.getJ1();
+        }
+        else {
+            nextTab = tab1;
+            joueur = bataille.getJ2();
+        }
+        tab.setDisable(true);
+        nextTab.setDisable(false);
+        button.setDisable(true);
+        touche = joueur.tir(i, j);
+        actualiseTir(joueur, i, j, touche);
+        if(touche) a.setContentText("TouchÃ© !");
+        else a.setContentText("RatÃ© !");
+        if(bataille.partieFinie()) partieFinie();
+        a.show();
+        event.consume();
+    }
 
 	@FXML
 	private ImageView porteAvions;
 	@FXML
 	private TabPane tabPane;
 
-	//Les gridpanes ci dessous correspondent aux grilles des joueurs à afficher.
+	//Les gridpanes ci dessous correspondent aux grilles des joueurs ï¿½ afficher.
 	@FXML
 	protected static GridPane j1;
+    public void actualiseBateau(MouseEvent event){
+        ArrayList<Case> cases = new ArrayList<>();
+        ArrayList<Bateau> bateaux = new ArrayList<>();
+        String path;
+        ImageView img;
+
+        cases.add(new Case(2,3));
+        bateaux.add(new Bateau("Torpilleur", cases,bataille.getJ1()));
+        bataille.getJ1().setListeBateaux(bateaux);
+        bataille.getJ2().setListeBateaux(bateaux);
+        for (Bateau bateau : bataille.getJ1().getListeBateaux()) {
+            path = "resources/image/"+bateau.getName()+".png";
+            img = new ImageView(path);
+            img.setPreserveRatio(true);
+            img.setFitHeight(tab1.getHeight()/10);
+            j1.add(img, bateau.getTabCases().get(0).getI(), bateau.getTabCases().get(0).getJ());
+        }
+        for (Bateau bateau : bataille.getJ2().getListeBateaux()) {
+            path = "resources/image/"+bateau.getName()+".png";
+            img = new ImageView(path);
+            img.setPreserveRatio(true);
+            img.setFitHeight(tab1.getHeight()/10);
+            j2.add(img, bateau.getTabCases().get(0).getI(), bateau.getTabCases().get(0).getJ());
+        }
+        event.consume();
+    }
+
+    private void actualiseTir(JoueurBataille joueur, int i, int j, boolean touche){
+        String path;
+        ImageView img;
+
+        if(touche) path="resources/image/touche.png";
+        else path="resources/image/rate.png";
+        img=new ImageView(path);
+        img.setPreserveRatio(true);
+        img.setFitHeight(tab1.getHeight()/10);
+        if(joueur.equals(bataille.getJ1())) j1.add(img,i,j);
+        else j2.add(img,i,j);
+    }
 
 	@FXML
 	protected static GridPane j2;
 
-	//Actualise les listes des coordonnées des bateaux des joueurs
+	//Actualise les listes des coordonnï¿½es des bateaux des joueurs
 	protected static ArrayList<Case> bJ1 = new ArrayList<Case>();
 	protected static ArrayList<Case> bJ2 = new ArrayList<Case>();
-	
+
 	public void placementBateaux(int joueur, int i, int j, int taille, int rotation) {
 		if(joueur == 1) {
-		bJ1.addAll(ajoutBateaux(i, j, taille, rotation));	
+		bJ1.addAll(ajoutBateaux(i, j, taille, rotation));
 		} else {
 		bJ2.addAll(ajoutBateaux(i, j, taille, rotation));
 		}
 	}
-	
-	//Retourne une liste de cases occupées par un bateau
+
+	//Retourne une liste de cases occupï¿½es par un bateau
 	public ArrayList<Case> ajoutBateaux(int i, int j, int taille, int rotation) {
 		ArrayList<Case> temp = new ArrayList<Case>();
 		if(rotation == 90){
@@ -158,20 +271,20 @@ public class AffichageBN extends Application implements Initializable {
 		System.out.println("Ajout du bateau sur les cases: " + temp.toString());
 		return temp;
 	}
-	
+
 	public int getColBateau(int i) {
 		return GridPane.getColumnIndex(tab1.getChildren().get(i));
 	}
-	
+
 	public int getRowBateau(int i) {
 		return GridPane.getRowIndex(tab1.getChildren().get(i));
 	}
-	
+
 	public void verifError(int a, int b) {
-		
+
 	}
-	
-	//Gére la fin du remplissage de la grille des bateaux des deux joueurs
+
+	//Gï¿½re la fin du remplissage de la grille des bateaux des deux joueurs
 	static boolean turn1 = true;
 	public void entrerBateaux() {
 		if(turn1) {
@@ -199,17 +312,17 @@ public class AffichageBN extends Application implements Initializable {
 			}catch(Exception e) { erreurBN(); }
 		}
 	}
-	
+
 	public void erreurBN() {
 		Window w = pane.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Erreur dans le placement de vos bateaux, il vous manque peut-être un bateau ou un de vos bateaux sort de la grille");
+		alert.setContentText("Erreur dans le placement de vos bateaux, il vous manque peut-ï¿½tre un bateau ou un de vos bateaux sort de la grille");
 		alert.initOwner(w);
 		alert.show();
 
 	}
 
-	// Fonction rotation avec clic droit, gére les rotations des bateaux pairs
+	// Fonction rotation avec clic droit, gï¿½re les rotations des bateaux pairs
 	@FXML
 	protected void rotate(MouseEvent event) {
 		if (event.getButton() == MouseButton.SECONDARY) {
@@ -231,7 +344,7 @@ public class AffichageBN extends Application implements Initializable {
 		}
 	}
 
-	
+
 	//Inutile atm
 	@FXML
 	protected Boolean mouseMoved() {
@@ -254,7 +367,7 @@ public class AffichageBN extends Application implements Initializable {
 
 	public void dragDone(DragEvent event) {
 		if (event.getTransferMode() == TransferMode.MOVE) {
-			//Modifier le tab pour mettre à jourle nolbre de bateaux
+			//Modifier le tab pour mettre ï¿½ jourle nolbre de bateaux
 		}
 		event.consume();
 	}
@@ -276,7 +389,7 @@ public class AffichageBN extends Application implements Initializable {
 	}
 
 	////////////////////////////////////
-	//Chargement des régles pour le placement des bateaux
+	//Chargement des rï¿½gles pour le placement des bateaux
 	private final int n = 440; // taille de la Vbox; une case = 40*40px; il y a en tout 11 cases
 
 	public int g(int a, int tailleBateau) {
@@ -382,9 +495,9 @@ public class AffichageBN extends Application implements Initializable {
 		}
 	}
 
-	
+
 	public void dragDropped(DragEvent event) {
-		//System.out.println("Objet laché en " + x + "-" + y);;
+		//System.out.println("Objet lachï¿½ en " + x + "-" + y);;
 		db = event.getDragboard();
 		boolean success = false;
 		if (db.hasString()) {
@@ -396,22 +509,22 @@ public class AffichageBN extends Application implements Initializable {
 			int taille = (int) (bateau.getFitHeight() / 40);
 			switch ((int) bateau.getRotate()) {
 			case 90:
-				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
+				System.out.println("Bateau posï¿½ en: "+ g(x, taille) +" "+ g(y, 0));
 				try{tab1.add(bateau, g(x, taille), g(y, 0));}
 				catch(Exception e) {tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, taille), g(y, 0));}
 				break;
 			case 270:
-				System.out.println("Bateau posé en: "+ g(x, taille) +" "+ g(y, 0));
+				System.out.println("Bateau posï¿½ en: "+ g(x, taille) +" "+ g(y, 0));
 				try{tab1.add(bateau, g(x, taille), g(y, 0));}
 				catch(Exception e) {tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, taille), g(y, 0));}
 				break;
 			case 0:
-				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
+				System.out.println("Bateau posï¿½ en: "+ g(x, 0) +" "+ g(y, taille));
 				try{tab1.add(bateau, g(x, 0), g(y, taille));}
 				catch(Exception e){tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, 0), g(y, taille));}
 				break;
 			case 180:
-				System.out.println("Bateau posé en: "+ g(x, 0) +" "+ g(y, taille));
+				System.out.println("Bateau posï¿½ en: "+ g(x, 0) +" "+ g(y, taille));
 				try{tab1.add(bateau, g(x, 0), g(y, taille));}
 				catch(Exception e){tab1.getChildren().remove(bateau);tab1.add(bateau, g(x, 0), g(y, taille));}
 				break;
@@ -423,7 +536,7 @@ public class AffichageBN extends Application implements Initializable {
 		event.consume();
 	}
 
-	//Actualise les coordonées du bateau pour le placer
+	//Actualise les coordonï¿½es du bateau pour le placer
 	public void dragOver(DragEvent event) {
 		x = ((int) event.getX());
 		y = ((int) event.getY());
@@ -439,7 +552,7 @@ public class AffichageBN extends Application implements Initializable {
 
 	//Inutile atm
 	public boolean mousePressed(MouseEvent event) {
-		System.out.println("Coordonnées du clic: " + (int) event.getX() + "; " + (int) event.getY());
+		System.out.println("Coordonnï¿½es du clic: " + (int) event.getX() + "; " + (int) event.getY());
 		return true;
 	}
 
@@ -459,23 +572,10 @@ public class AffichageBN extends Application implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 	}
-	
 
 
-	@Override
-	public void start(Stage primaryStage) throws IOException {
-		primaryStage.close();
-		this.stage = new Stage();
-		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixBateau.fxml"));
-		this.scene = new Scene(root);
-		this.stage.setTitle("Bataille navale !");
-		this.stage.setScene(this.scene);
-		//JoueurBataille j1 = new JoueurBataille("Gabriel");
-		//JoueurBataille j2 = new JoueurBataille("Romane");
-		//AffichageBN.bataille = new Bataille(j1, j2);
 
-		this.stage.show();
-	}
+
 
 	public static void main(String[] args) {
 		launch(args);
