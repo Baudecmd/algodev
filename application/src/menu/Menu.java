@@ -45,6 +45,9 @@ public class Menu extends Application {
 
 	@FXML
 	private Button entrerNbJoueur;
+	
+	@FXML
+	private Button jouer;
 
 	@FXML
 	private Scene scene;
@@ -159,7 +162,7 @@ public class Menu extends Application {
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + this.i++ + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + Menu.i++ + "!");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
@@ -208,13 +211,20 @@ public class Menu extends Application {
 		}
 
 	}
+	
+	public void handleLancerMenu(ActionEvent Event ) throws IOException {
+		Stage temp = (Stage) this.jouer.getScene().getWindow();
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/styleMenu.fxml"));
+		temp.setScene(new Scene(this.root));
+	}
+		
 
 	public void start(Stage stage) throws IOException {
 		Popups.resetTimer();
 		this.stage = stage;
-		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/styleMenu.fxml"));
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/menu.fxml"));
 		this.scene = new Scene(root);
-		this.stage.setTitle("Menu Projet !");
+		this.stage.setTitle("Menu");
 		this.stage.setScene(this.scene);
 		this.stage.show();
 	}
