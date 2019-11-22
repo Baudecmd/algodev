@@ -80,10 +80,11 @@ public class Menu extends Application {
 		
 	}
 	
+
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		SelecGrille s= new SelecGrille();
-		s.start(stage2);
+		Affichage a = new Affichage();
+		a.start(stage2);
 
 	}
 

@@ -1,0 +1,17 @@
+.root {
+    -fx-font-size: 20px;
+    -fx-font-family: sans-serif;
+    -fx-background-color: lightgrey;
+    -fx-font-weight:bold;
+
+   }
+
+.caseVide{
+    -fx-fill: #008080;
+
+}
+
+.caseRemplis{
+    -fx-fill: #FFCAB5;
+
+}
