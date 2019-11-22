@@ -11,6 +11,15 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
     private Tirage tirage;
     private List<Integer> tiree;
 
+
+
+    public Loto() { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
+        this.joueurs = new ArrayList<>();
+        this.tiree = new ArrayList<>();
+        this.tirage = new Tirage(0, 0);
+       // Partie.initialiser("resources/scoreboardLoto.ser");
+    }
+
     public Loto(List<Joueur> L) { //Constructeur du loto, avec pour entrée la liste des joueurs de la partie envoyée par le menu
         this.joueurs = new ArrayList<>();
         for (Joueur j: L){
@@ -21,6 +30,21 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
         this.tiree = new ArrayList<>();
         this.tirage = new Tirage(L.size(), 0);
         Partie.initialiser("resources/scoreboardLoto.ser");
+    }
+
+    public void addJoueur(List<Joueur> L,int i){
+        tirage.setNbPlayers(i*L.size());
+        for (Joueur j: L){
+            int nb=0;
+            while(nb<i){
+                JoueurLoto jL = new JoueurLoto(j.getNom());
+                jL.initGrille();
+                joueurs.add(jL);
+                nb++;
+
+            }
+        }
+
     }
 
     List<JoueurLoto> getJoueurs() {
