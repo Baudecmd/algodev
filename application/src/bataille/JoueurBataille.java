@@ -91,7 +91,7 @@ public class JoueurBataille extends Joueur {
 
     public void placement(){        //placement des bateaux sur la grille
         Bateau temp;
-        ArrayList<Case>listeCases;      //liste des cases où doit être placé le bateau
+        ArrayList<Case> listeCases;      //liste des cases où doit être placé le bateau
         ArrayList<Bateau>listeBateauxCrees=new ArrayList<>();
         int count=5;
         while(count > 0){

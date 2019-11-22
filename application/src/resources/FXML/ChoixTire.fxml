@@ -14,7 +14,7 @@
          <children>
             <TitledPane collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="640.0" text="Joueur 1">
                <content>
-                  <GridPane fx:id="tab2" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
+                  <GridPane fx:id="t1" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -144,9 +144,9 @@
                   </GridPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" expanded="false" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#actualiseBateau" prefHeight="640.0" prefWidth="640.0" text="Grille Joueur 1">
+            <TitledPane animated="false" expanded="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="640.0" text="Grille Joueur 1">
                <content>
-                  <GridPane fx:id="j1" alignment="CENTER" gridLinesVisible="true">
+                  <GridPane fx:id="bateauxj1" alignment="CENTER" gridLinesVisible="true" onMouseClicked="#actualiseBateau">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -180,7 +180,7 @@
          <children>
             <TitledPane alignment="TOP_LEFT" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="640.0" text="Joueur 2">
                <content>
-                  <GridPane fx:id="tab1" disable="true" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
+                  <GridPane fx:id="t2" disable="true" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -312,7 +312,7 @@
             </TitledPane>
             <TitledPane animated="false" expanded="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="640.0" prefWidth="640.0" text="Grille Joueur 2">
                <content>
-                  <GridPane fx:id="j2" alignment="CENTER" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
+                  <GridPane fx:id="bateauxj2" alignment="CENTER" gridLinesVisible="true" prefHeight="500.0" prefWidth="500.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

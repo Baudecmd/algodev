@@ -1,5 +1,7 @@
 package menu;
 
+import bataille.Bataille;
+import bataille.JoueurBataille;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
