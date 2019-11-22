@@ -86,6 +86,7 @@ public class AffichageBN extends Application implements Initializable {
 		temp.setScene(new Scene(this.root));
         temp.setHeight(800);
         temp.setWidth(800);
+		System.out.println(bataille.getJ1().getListeBateaux().get(0).toString());
     }
 
     private void partieFinie() {
@@ -168,28 +169,35 @@ public class AffichageBN extends Application implements Initializable {
         img=new ImageView(path);
         img.setPreserveRatio(true);
         img.setFitHeight(t1.getHeight()/10);
-        if(joueur.equals(bataille.getJ1())) bateauxj1.add(img,i,j);
-        else bateauxj2.add(img,i,j);
+        if(joueur.equals(bataille.getJ1())) {
+        	bateauxj2.add(img,i,j);
+			t1.add(img,i,j);
+		}
+        else {
+        	bateauxj1.add(img,i,j);
+			t2.add(img,i,j);
+		}
     }
 
 	public void placementBateaux(int joueur, int i, int j, int taille, int rotation) {
 		if(joueur == 1) {
 			ArrayList<Bateau> bateaux = bataille.getJ1().getListeBateaux();
-			bateaux.add(new Bateau(ajoutBateaux(i, j, taille, rotation),bataille.getJ1()));
+			bateaux.add(new Bateau(ajoutBateaux(i-1, j-1, taille, rotation),bataille.getJ1()));
 			bataille.getJ1().setListeBateaux(bateaux);
+			System.out.println(bataille.getJ1().getListeBateaux().toString());
 		//bJ1.addAll(ajoutBateaux(i, j, taille, rotation));
 		} else {
 			ArrayList<Bateau> bateaux = bataille.getJ2().getListeBateaux();
-			bateaux.add(new Bateau(ajoutBateaux(i, j, taille, rotation),bataille.getJ2()));
+			bateaux.add(new Bateau(ajoutBateaux(i-1, j-1, taille, rotation),bataille.getJ2()));
 			bataille.getJ2().setListeBateaux(bateaux);
-			System.out.println(bataille.getJ1().getListeBateaux().get(0).getName());
+			System.out.println(bataille.getJ2().getListeBateaux().toString());
 		//bJ2.addAll(ajoutBateaux(i, j, taille, rotation));
 		}
 	}
 
 	//Retourne une liste de cases occup�es par un bateau
 	public ArrayList<Case> ajoutBateaux(int i, int j, int taille, int rotation) {
-		ArrayList<Case> temp = new ArrayList<Case>();
+		ArrayList<Case> temp = new ArrayList<>();
 		if(rotation == 90){
 			switch(taille) {
 			case 2 :
@@ -262,11 +270,11 @@ public class AffichageBN extends Application implements Initializable {
 	public void entrerBateaux() {
 		if(turn1) {
 			try {
-			placementBateaux(1,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
-			placementBateaux(1,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
-			placementBateaux(1,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
-			placementBateaux(1,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
-			placementBateaux(1,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+			placementBateaux(1,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
+			placementBateaux(1,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
+			placementBateaux(1,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
+			placementBateaux(1,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
+			placementBateaux(1,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
 			System.out.println(bJ1);
 			j1 = tab1;
 			turn1 = false;
@@ -275,11 +283,11 @@ public class AffichageBN extends Application implements Initializable {
 			}catch(Exception e) { erreurBN(); }
 		}else {
 			try {
-			placementBateaux(2,getColBateau(21),getRowBateau(21),2,(int)torpilleur.getRotate());
-			placementBateaux(2,getColBateau(22),getRowBateau(22),3,(int)destroyer1.getRotate());
-			placementBateaux(2,getColBateau(23),getRowBateau(23),3,(int)destroyer2.getRotate());
-			placementBateaux(2,getColBateau(24),getRowBateau(24),4,(int)cuirasse.getRotate());
-			placementBateaux(2,getColBateau(25),getRowBateau(25),5,(int)porteAvions.getRotate());
+			placementBateaux(2,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
+			placementBateaux(2,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
+			placementBateaux(2,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
+			placementBateaux(2,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
+			placementBateaux(2,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
 			System.out.println(bJ2);
 			j2 = tab1;
 			partie();

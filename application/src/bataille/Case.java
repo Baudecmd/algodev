@@ -48,6 +48,6 @@ public class Case {
     }
     
     public String toString() {
-    	return "H = "+i+" B = "+j;
+    	return "i = "+i+" j = "+j;
     }
 }

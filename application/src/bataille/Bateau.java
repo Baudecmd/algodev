@@ -33,7 +33,20 @@ public class Bateau {
         this.status=true;
     }
 
-    public Bateau(ArrayList<Case> tabCases,Joueur joueur) {
+    @Override
+    public String toString() {
+        String tabCasesS="";
+        for (int i=0;i<this.tabCases.size();i++){
+            tabCasesS+=tabCasesS + " "+ tabCases.get(i).toString();
+        }
+        return "Bateau{" +
+                "name='" + name + '\'' +
+                ", tabCases=" + tabCasesS+
+                ", joueur=" + joueur.getNom()+
+                '}';
+    }
+
+    public Bateau(ArrayList<Case> tabCases, Joueur joueur) {
         this.tabCases = tabCases;
         this.joueur=joueur;
         if(tabCases.size()==2){
