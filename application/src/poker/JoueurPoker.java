@@ -185,6 +185,9 @@ public class JoueurPoker extends Joueur {
         ArrayList<Carte>newHand=new ArrayList<>();
         for(ArrayList<Carte>temp:listCombinations){
             if(!result.isGreater(getCombinationHand(temp))){
+                if(result==getCombinationHand(temp)){   //on a  la même combinaison, il faut maintenant sélectionner la meilleure main
+                    //généraliser hasBetterHand pour pouvoir prendre une simple ArrayList
+                }
                 result=getCombinationHand(temp);
                 newHand=temp;
             }
@@ -313,6 +316,8 @@ public class JoueurPoker extends Joueur {
     public int checkBestBrelan(ArrayList<Carte>checkedList){
         ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
         ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        sortHand(temp1);
+        sortHand(temp2);
         ArrayList<Carte>brelan1=new ArrayList<>();
         ArrayList<Carte> brelan2=new ArrayList<>();
         ArrayList<Carte>otherCards1=new ArrayList<>();
@@ -356,6 +361,8 @@ public class JoueurPoker extends Joueur {
         int i;
         ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
         ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        sortHand(temp1);
+        sortHand(temp2);
         ArrayList<Carte>firstPair1=new ArrayList<>();
         ArrayList<Carte>firstPair2=new ArrayList<>();
         ArrayList<Carte>secondPair1=new ArrayList<>();
@@ -486,37 +493,38 @@ public class JoueurPoker extends Joueur {
         ArrayList<Carte>communityCards=new ArrayList<>();
         ArrayList<Carte>mainJoueur=new ArrayList<>();
 
-        Carte asCoeur=new Carte(Couleurs.coeur,Hauteurs.huit);
-        Carte dixCarreau=new Carte(Couleurs.coeur,Hauteurs.neuf);
-        Carte asPique=new Carte(Couleurs.trefle,Hauteurs.huit);
-        Carte deuxTrefle=new Carte(Couleurs.pique,Hauteurs.sept);
-        Carte septCoeur=new Carte(Couleurs.pique,Hauteurs.dix);
+        Carte asTrefle=new Carte(Couleurs.trefle,Hauteurs.as);
+        Carte huitPique=new Carte(Couleurs.pique,Hauteurs.huit);
+        Carte troisTrefle=new Carte(Couleurs.trefle,Hauteurs.trois);
+        Carte huitCarreau=new Carte(Couleurs.carreau,Hauteurs.huit);
+        Carte dixPique=new Carte(Couleurs.pique,Hauteurs.dix);
 
-        Carte asCarreau=new Carte(Couleurs.carreau,Hauteurs.sept);
-        Carte dixPique=new Carte(Couleurs.coeur,Hauteurs.deux);
+        Carte deuxTrefle=new Carte(Couleurs.trefle,Hauteurs.deux);
+        Carte asCoeur=new Carte(Couleurs.coeur,Hauteurs.as);
 
-        communityCards.add(asCoeur);
-        communityCards.add(dixCarreau);
-        communityCards.add(asPique);
-        communityCards.add(deuxTrefle);
-        communityCards.add(septCoeur);
+        communityCards.add(asTrefle);
+        communityCards.add(huitPique);
+        communityCards.add(troisTrefle);
+        communityCards.add(huitCarreau);
+        communityCards.add(dixPique);
 
         JoueurPoker player=new JoueurPoker("Robert", mainJoueur, 100);
 
-        player.mainJoueur.add(asCarreau);
-        player.mainJoueur.add(dixPique);
+        player.mainJoueur.add(deuxTrefle);
+        player.mainJoueur.add(asCoeur);
 
         result=player.createAllCombinations(communityCards);
         player.setCombinationHand(result);
+
         System.out.println(player.combinaison);
         player.showHand();
 
         JoueurPoker player2=new JoueurPoker("Bertrand", 200);
-        Carte newCard1=new Carte(Couleurs.coeur,Hauteurs.dame);
-        Carte newCard2=new Carte(Couleurs.trefle,Hauteurs.valet);
-        Carte newCard3=new Carte(Couleurs.pique,Hauteurs.dame);
-        Carte newCard4=new Carte(Couleurs.coeur,Hauteurs.valet);
-        Carte newCard5=new Carte(Couleurs.trefle,Hauteurs.dix);
+        Carte newCard1=new Carte(Couleurs.carreau,Hauteurs.trois);
+        Carte newCard2=new Carte(Couleurs.pique,Hauteurs.huit);
+        Carte newCard3=new Carte(Couleurs.pique,Hauteurs.trois);
+        Carte newCard4=new Carte(Couleurs.pique,Hauteurs.dix);
+        Carte newCard5=new Carte(Couleurs.carreau,Hauteurs.huit);
         player2.mainJoueur.add(newCard1);
         player2.mainJoueur.add(newCard2);
         player2.mainJoueur.add(newCard3);
@@ -524,8 +532,10 @@ public class JoueurPoker extends Joueur {
         player2.mainJoueur.add(newCard5);
         player2.sortHand(player2.mainJoueur);
         player2.combinaison=Combinaisons.deux_paires;
-        if(player2.hasBetterHand(player)>0)
-            System.out.println(player2.hasBetterHand(player) + ", ça marche!");
+        player.checkBestPairs(player2.mainJoueur);
+//        if(player2.hasBetterHand(player)>0)
+//            System.out.println(player2.hasBetterHand(player) + ", ça marche!");
+        System.out.println(player.checkBestPairs(player2.mainJoueur));
     }
 
 }
