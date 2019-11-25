@@ -14,6 +14,7 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
+import loto.SelecGrille;
 import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
@@ -83,8 +84,8 @@ public class Menu extends Application {
 
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		Affichage a = new Affichage();
-		a.start(stage2);
+		SelecGrille s= new SelecGrille();
+		s.start(stage2);
 
 	}
 

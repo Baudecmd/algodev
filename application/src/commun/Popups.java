@@ -72,6 +72,22 @@ public class Popups implements Initializable {
 				a.printStackTrace();
 			}
 		});
+		
+		/*Button recommencer = new Button("Recommencer");
+		recommencer.setOnAction(e -> {
+			window.close();//
+			resetTimer();
+			if (timeline != null)
+				timeline.stop();
+			// Retour au menu principal
+			MenuSudoku m = new MenuSudoku();
+			Menu.nomsJoueurs.clear();
+			try {
+				m.start(stage);
+			} catch (Exception a) {
+				a.printStackTrace();
+			}
+		});*/
 
 		VBox layout = new VBox(10);
 		layout.getChildren().addAll(label, retour, quitter);

@@ -14,19 +14,20 @@ public class Sudoku {
 	public Sudoku(ArrayList<Joueur> lj, int difficulty) {
 		if(lj !=null) this.joueur = new JoueurSudoku(lj.get(0)); else this.joueur = null;
 		//templateSudoku.setCouple(difficulty);
+		int random = (int)(Math.random()*5);
 		switch (difficulty) {
 		case 1:
 			//Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
-			Sudoku.grille.setMatrice(templateSudoku.test());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.test2());
+			Sudoku.grille.setMatrice(templateSudoku.facile(random).getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.facile(random).getTemplate().getMatrice());
 			break;
 		case 2:
-			Sudoku.grille.setMatrice(templateSudoku.facile().template.getMatrice());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.facile().solution.getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.moyen(random).template.getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.moyen(random).solution.getMatrice());
 			break;
 		case 3:
-			Sudoku.grille.setMatrice(templateSudoku.facile().getTemplate().getMatrice());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.facile().getTemplate().getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.difficile(random).getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.difficile(random).getTemplate().getMatrice());
 			break;
 		}
 
