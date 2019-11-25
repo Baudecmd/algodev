@@ -477,7 +477,7 @@ public class JoueurPoker extends Joueur {
     }
 
     public void sortHand(ArrayList<Carte>hand){
-        Collections.sort(hand, Carte::compareTo2);
+        Collections.sort(hand, Carte::compareTo);
         Collections.reverse(hand);
     }
 
@@ -514,6 +514,7 @@ public class JoueurPoker extends Joueur {
         player.mainJoueur.add(asCoeur);
 
         result=player.createAllCombinations(communityCards);
+        System.out.println(result.size());
         player.setCombinationHand(result);
 
         System.out.println(player.combinaison);

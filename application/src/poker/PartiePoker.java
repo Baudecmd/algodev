@@ -15,6 +15,7 @@ public class PartiePoker implements Partie {
     private Stack<Carte>pile=new Stack<>();
     private ArrayList<JoueurPoker>listeJoueurs=new ArrayList<>();
     private ArrayList<JoueurPoker>joueursCouches=new ArrayList<>();
+    private ArrayList<Carte>communityCards=new ArrayList<>();
 
     public int getBlinde() {
         return blinde;
@@ -65,6 +66,14 @@ public class PartiePoker implements Partie {
     }
 
     public void addPlayer(JoueurPoker player){ this.listeJoueurs.add(player); }
+
+    public ArrayList<Carte> getCommunityCards() {
+        return communityCards;
+    }
+
+    public void setCommunityCards(ArrayList<Carte> communityCards) {
+        this.communityCards = communityCards;
+    }
 
     public PartiePoker(int blinde){
         this.blinde=blinde;
@@ -317,7 +326,7 @@ public class PartiePoker implements Partie {
         }
     }
 
-    private void addCommunityCards(ArrayList<Carte>communityCards){
+    private void addCommunityCards(){
         if(communityCards.isEmpty()){   //flop
             for(int i=0;i<3;i++)
                 communityCards.add(pile.pop());
@@ -326,7 +335,7 @@ public class PartiePoker implements Partie {
             communityCards.add(pile.pop());     //turn ou river: on n'ajoute qu'une carte
     }
 
-    private void showCommunityCards(ArrayList<Carte>communityCards){
+    private void showCommunityCards(){
         System.out.println("Les cartes communes sont:");
         for(Carte card:communityCards)
             System.out.println(card.getHauteur() + " de " + card.getCouleur());
@@ -345,7 +354,6 @@ public class PartiePoker implements Partie {
         ArrayList<JoueurPoker>quit;     //liste permettant de demander aux joueurs si ils souhaitent quitter la partie
         JoueurPoker player1=new JoueurPoker("Joffrey", 500);
         JoueurPoker player2=new JoueurPoker("Gaby", 500);
-        ArrayList<Carte>communityCards=new ArrayList<>();
         Scanner sc=new Scanner(System.in);
         int choice;
         System.out.println("Quelle est la mise de la grosse blinde?");
@@ -366,7 +374,7 @@ public class PartiePoker implements Partie {
                 if(nbTurns==5){
                     System.out.println("C'est le Showdown!");       //A traiter
                     for(JoueurPoker player:partie.listeJoueurs){
-                        player.setCombinationHand(player.createAllCombinations(communityCards));    //on assigne à chaque joueur sa meilleure main
+                        player.setCombinationHand(player.createAllCombinations(partie.getCommunityCards()));    //on assigne à chaque joueur sa meilleure main
                         System.out.println(player.getNom() + ", vous avez la main suivante:" );
                         player.showHand();
                         System.out.println("Vous avez la combinaison: " + player.getCombinaison());
@@ -407,7 +415,7 @@ public class PartiePoker implements Partie {
                     partie.setPots(0);      //on réinitialise les variables en vue d'une prochaine manche
                     nbTurns=1;
                     total=0;
-                    communityCards=new ArrayList<>();
+                    partie.setCommunityCards(new ArrayList<>());
                     partie.joueursCouches=new ArrayList<>();
                     partie.rotation();  //en vue de la prochaine manche
                     quit=new ArrayList<>(partie.getListeJoueurs());
@@ -429,8 +437,8 @@ public class PartiePoker implements Partie {
                     }
                 }
                 else {  //étapes de flop, turn ou river
-                    partie.addCommunityCards(communityCards);
-                    partie.showCommunityCards(communityCards);
+                    partie.addCommunityCards();
+                    partie.showCommunityCards();
                     partie.nextTurn(false);
                     nbTurns++;
                 }
@@ -446,7 +454,7 @@ public class PartiePoker implements Partie {
                     total=0;
                     partie.setPots(0);
                     nbTurns=1;
-                    communityCards=new ArrayList<>();
+                    partie.setCommunityCards(new ArrayList<>());
                     partie.joueursCouches=new ArrayList<>();
                     partie.rotation();
                     quit=new ArrayList<>(partie.getListeJoueurs());
