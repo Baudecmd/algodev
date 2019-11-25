@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/src/menu/scoreBoardAffichage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/src/resources/FXML/styleScoreboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/commun/Joueur.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/commun/Joueur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/commun/Partie.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/commun/Partie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/loto/Loto.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/loto/Loto.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,6 +202,14 @@
       <workItem from="1574279476724" duration="8448000" />
       <workItem from="1574365321955" duration="8471000" />
     </task>
+    <task id="LOCAL-00001" summary="-Ajout du scoreboard basique">
+      <created>1574418957284</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574418957284</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,5 +227,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="-Ajout du scoreboard basique" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Ajout du scoreboard basique" />
   </component>
 </project>
