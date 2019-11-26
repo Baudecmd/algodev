@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #b38b6d;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.MenuSudoku">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" snapToPixel="false" style="-fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 130% ,  #b38b6d, #0C181D);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.MenuSudoku">
    <children>
       <Button id="choix-diff-facile" fx:id="buttonFACILE" layoutX="325.0" layoutY="145.0" mnemonicParsing="false" onMouseClicked="#buttonFACILEPressed" prefHeight="60.0" prefWidth="150.0" styleClass="boutonSudoku" stylesheets="@styleSudoku.css" text="Facile" />
       <Button id="choix-diff-moyen" fx:id="buttonMOYEN" layoutX="325.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#buttonMOYENPressed" prefHeight="60.0" prefWidth="150.0" styleClass="boutonSudoku" stylesheets="@styleSudoku.css" text="Moyen" />

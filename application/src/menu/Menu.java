@@ -20,6 +20,8 @@ import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -120,15 +122,32 @@ public class Menu extends Application {
 		}
 	}
 /////////////////////////////////////////
+	
+	@FXML
+	public void handleEnterKey(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			try {
+				handleNbJoueur();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
 
 	@FXML
-	public void handleNbJoueur(ActionEvent event) throws IOException {
+	public void handleNbJoueur() throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
 		// Vérif
+		boolean stop = false;
+		try {
+	        @SuppressWarnings("unused")
+			Double d = Double.parseDouble(nbJoueur.getText());
+	    } catch (NumberFormatException nfe) {
+	        stop = true;
+	    }
 		System.out.println("Nombre de joueurs entré :" + nbJoueur.getText());
-		if (nbJoueur.getText().isEmpty()) {
+		if ((nbJoueur.getText().isEmpty()) || stop) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Entrer un nombre de joueurs !");
+			alert.setContentText("Entrez un nombre de joueurs !");
 			alert.initOwner(w);
 			alert.show();
 			return;
@@ -149,9 +168,18 @@ public class Menu extends Application {
 		System.out.println(this.labelNomJoueur.getText());
 		this.labelNomJoueur.setText(s);
 	}
+	
+	public void handleEnterKeyNoms(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			try {
+				handleNomsJoueurs();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 	@FXML
-	public void handleNomsJoueurs(ActionEvent event) throws IOException, InterruptedException {
+	public void handleNomsJoueurs() throws IOException, InterruptedException {
 		Window w = entrerNomJoueur.getScene().getWindow();
 		if (nomJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);

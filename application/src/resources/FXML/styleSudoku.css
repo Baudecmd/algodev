@@ -1,5 +1,5 @@
 .fenetre {
-	 -fx-background-color: b38b6d;
+	 -fx-background-color:  radial-gradient(focus-distance 0% , center 50% 50% , radius 130% ,  #b38b6d, #0C181D);
 }
 .boutonSudoku { 
 	 -fx-background-color: #bdc3c7;
@@ -45,20 +45,20 @@
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
     -fx-background-radius: 8;
     -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #ADFF2F 0%, #7FDD4C 100%),
-        #7FDD4C,
-        #9FE855,
-        radial-gradient(center 50% 50%, radius 100%, #9FE855, #7FDD4C);
+        linear-gradient(from 0% 93% to 0% 100%, #32CD32 0%, #228B22 100%),
+        #008000,
+        #00FF00,
+        radial-gradient(center 50% 50%, radius 100%, #32CD32, #228B22);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
 }
 #choix-diff-facile:hover {
     -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #C2F732 0%, #7FFF00 100%),
-        #7FDD4C,
-        #9FE855,
-        radial-gradient(center 50% 50%, radius 100%, #C2F732, #7FFF00);
+        linear-gradient(from 0% 93% to 0% 100%, #008000 0%, #32CD32 100%),
+        #008000,
+        #00FF00,
+        radial-gradient(center 50% 50%, radius 100%, #32CD32, #228B22);
 }
 #choix-diff-facile:pressed {
     -fx-padding: 10 15 13 15;
