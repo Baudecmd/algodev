@@ -80,7 +80,6 @@ public class PartiePoker implements Partie {
         this.miseEnCours=blinde;        //la mise du tour est égale à la blinde au début
         this.pot=0;
         initPile();
-        Collections.shuffle(pile);      //on mélange la pile des cartes;
     }
 
     private void initPile(){
@@ -91,6 +90,16 @@ public class PartiePoker implements Partie {
                 pile.push(temp);
             }
         }
+        Collections.shuffle(pile);
+    }
+
+    public void newRound(){     //redéfinit les variables de classe qui doivent l'être en vue d'une prochaine manche
+        setPots(0);
+        setPile(new Stack<>());
+        initPile();
+        setCommunityCards(new ArrayList<>());
+        setJoueurCouches(new ArrayList<>());
+        rotation();
     }
 
     public void selectSmallBlind(){
@@ -348,7 +357,6 @@ public class PartiePoker implements Partie {
 
     public static void main(String[] args) {
         int nbTurns=1;
-        int total=0;
         ArrayList<JoueurPoker>winners;
         ArrayList<JoueurPoker>finalPlayers;
         ArrayList<JoueurPoker>quit;     //liste permettant de demander aux joueurs si ils souhaitent quitter la partie
@@ -403,23 +411,18 @@ public class PartiePoker implements Partie {
                             System.out.println(player.getNom());
                         }
                         System.out.println(" gagnent la manche!");
-                        total=partie.getPot()/winners.size();
                         for(JoueurPoker player:winners)
-                            player.setSomme(player.getSomme()+total);
+                            player.setSomme(player.getSomme()+(partie.getPot()/winners.size()));
                     }
                     else{
-                        total=partie.pot;
                         System.out.println(winners.get(0).getNom() + " gagne la manche!");
-                        winners.get(0).setSomme(winners.get(0).getSomme()+total);
+                        winners.get(0).setSomme(winners.get(0).getSomme()+partie.getPot());
                     }
-                    partie.setPots(0);      //on réinitialise les variables en vue d'une prochaine manche
                     nbTurns=1;
-                    total=0;
-                    partie.setCommunityCards(new ArrayList<>());
-                    partie.joueursCouches=new ArrayList<>();
-                    partie.rotation();  //en vue de la prochaine manche
+                    partie.newRound();  //on réinitialise les variables de classe
                     quit=new ArrayList<>(partie.getListeJoueurs());
                     for(JoueurPoker joueur:quit){
+                        joueur.setMainJoueur(new ArrayList<>());
                         joueur.setTapis(false);     //on en profite pour réinitialiser le tapis des joueurs
                         joueur.setMise(0);
                         if(joueur.getSomme()==0){
@@ -449,14 +452,9 @@ public class PartiePoker implements Partie {
                 if(partie.getJoueurCouches().size()>0){     //tous les joueurs se sont couchés sauf un
                     System.out.println("Tous les joueurs se sont couchés sauf " + finalPlayers.get(0).getNom());
                     System.out.println("C'est donc le vainqueur de cette manche!");
-                    total=partie.getPot();
-                    finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+total);
-                    total=0;
-                    partie.setPots(0);
+                    finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+partie.getPot());
                     nbTurns=1;
-                    partie.setCommunityCards(new ArrayList<>());
-                    partie.joueursCouches=new ArrayList<>();
-                    partie.rotation();
+                    partie.newRound();
                     quit=new ArrayList<>(partie.getListeJoueurs());
                     for(JoueurPoker joueur:quit){
                         if(joueur.getSomme()==0){
@@ -467,6 +465,7 @@ public class PartiePoker implements Partie {
                         }
                         joueur.setTapis(false);
                         joueur.setMise(0);
+                        joueur.setMainJoueur(new ArrayList<>());
                         System.out.println(joueur.getNom() + ", souhaitez-vous partir? Tapez 1 pour dire oui");
                         choice=sc.nextInt();
                         if(choice==1)

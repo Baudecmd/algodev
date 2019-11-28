@@ -122,14 +122,26 @@ public class JoueurPoker extends Joueur {
         return true;
     }
 
-    private int nbCartesMemeHauteur(ArrayList<Carte>hand){
-        int total=-1;   //on a une itération de trop
-        Carte temp=hand.get(0);
-        for(Carte a:hand){
-            if(a.getHauteur()==temp.getHauteur())
-                total+=1;
+    private int nbCartesMemeHauteur(ArrayList<Carte>hand){      //renvoie le nombre de cartes semblables à la carte la plus présente dans la liste. Si il y a 4 deux, la fonction renverra 3
+        int result=0,total,index,i;
+        ArrayList<Carte>temp=new ArrayList<>(hand);
+        sortHand(temp);
+        for(Carte current:temp){
+            total=0;
+            index=temp.indexOf(current);
+            i=index+1;
+            while(i<5){
+                if(temp.get(i).getHauteur()==current.getHauteur()){
+                    total++;
+                    i++;
+                }
+                else
+                    break;
+            }
+            if(total>result)
+                result=total;
         }
-        return total;
+        return result;
     }
 
     private boolean checkSuite(ArrayList<Carte>hand){
@@ -185,9 +197,9 @@ public class JoueurPoker extends Joueur {
         ArrayList<Carte>newHand=new ArrayList<>();
         for(ArrayList<Carte>temp:listCombinations){
             if(!result.isGreater(getCombinationHand(temp))){
-                if(result==getCombinationHand(temp)){   //on a  la même combinaison, il faut maintenant sélectionner la meilleure main
+                /*if(result==getCombinationHand(temp)){   //on a  la même combinaison, il faut maintenant sélectionner la meilleure main
                     //généraliser hasBetterHand pour pouvoir prendre une simple ArrayList
-                }
+                }*/
                 result=getCombinationHand(temp);
                 newHand=temp;
             }
@@ -313,7 +325,7 @@ public class JoueurPoker extends Joueur {
         }
     }
 
-    public int checkBestBrelan(ArrayList<Carte>checkedList){
+    public int checkBestBrelan2(ArrayList<Carte>checkedList){       //A ne plus utiliser, conservé uniquement au cas ou
         ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
         ArrayList<Carte>temp2=new ArrayList<>(checkedList);
         sortHand(temp1);
@@ -357,8 +369,104 @@ public class JoueurPoker extends Joueur {
             return Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue());
     }
 
+    public int checkBestBrelan(ArrayList<Carte>checkedList){
+        ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
+        ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        ArrayList<Carte>brelan1=new ArrayList<>();
+        ArrayList<Carte> brelan2=new ArrayList<>();
+        sortHand(temp1);
+        sortHand(temp2);
+        brelan1.add(temp1.get(2));      //la carte centrale de la main appartient forcément au brelan
+        brelan2.add(temp2.get(2));
+        //on récupère les brelans
+        for(Carte a:temp1){
+            if(a.getHauteur()==brelan1.get(0).getHauteur())
+                brelan1.add(a);
+        }
+        for(Carte b:temp2){
+            if(b.getHauteur()==brelan2.get(0).getHauteur())
+                brelan2.add(b);
+        }
+        temp1.removeAll(brelan1);
+        temp2.removeAll(brelan2);
+        if(Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue())==0){
+            if(Integer.compare(temp1.get(0).getHauteur().getValue(), temp2.get(0).getHauteur().getValue())==0){
+                return Integer.compare(temp1.get(1).getHauteur().getValue(), temp2.get(1).getHauteur().getValue());
+            }
+            else
+                return Integer.compare(temp1.get(0).getHauteur().getValue(), temp2.get(0).getHauteur().getValue());
+        }
+        else
+            return Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue());
+    }
+
     public int checkBestPairs(ArrayList<Carte>checkedList){
+        ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
+        ArrayList<Carte>temp2=new ArrayList<>(checkedList);
+        ArrayList<Carte>firstPair1=new ArrayList<>();
+        ArrayList<Carte>firstPair2=new ArrayList<>();
+        ArrayList<Carte>secondPair1=new ArrayList<>();
+        ArrayList<Carte>secondPair2=new ArrayList<>();
+        sortHand(temp1);
+        sortHand(temp2);
+        firstPair1.add(temp1.get(1));       //la seconde carte de la liste appartient forcément à une paire. De même pour l'avant-dernière carte
+        temp1.remove(1);
+        if(temp1.get(0).getHauteur()==firstPair1.get(0).getHauteur()) {
+            firstPair1.add(temp1.get(0));
+            temp1.remove(0);
+        }
+        else{
+            firstPair1.add(temp1.get(1));
+            temp1.remove(1);
+        }
+        secondPair1.add(temp1.get(1));      //il ne reste que 3 cartes dans temp1. Celle du milieu appartient forcément à la paire
+        temp1.remove(1);
+        if(temp1.get(0).getHauteur()==secondPair1.get(0).getHauteur()) {
+            secondPair1.add(temp1.get(0));
+            temp1.remove(0);
+        }
+        else{
+            secondPair1.add(temp1.get(1));
+            temp1.remove(1);
+        }
+        firstPair2.add(temp2.get(1));
+        temp2.remove(1);
+        if(temp2.get(0).getHauteur()==firstPair2.get(0).getHauteur()) {
+            firstPair2.add(temp2.get(0));
+            temp2.remove(0);
+        }
+        else{
+            firstPair2.add(temp2.get(1));
+            temp2.remove(1);
+        }
+        secondPair2.add(temp2.get(1));
+        temp2.remove(1);
+        if(temp2.get(0).getHauteur()==secondPair2.get(0).getHauteur()) {
+            secondPair2.add(temp1.get(0));
+            temp2.remove(0);
+        }
+        else{
+            secondPair2.add(temp2.get(1));
+            temp2.remove(1);
+        }
+        if(Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue())==0){
+            if(combinaison==Combinaisons.deux_paires){
+                if(Integer.compare(secondPair1.get(0).getHauteur().getValue(), secondPair2.get(0).getHauteur().getValue())==0){
+                    return Integer.compare(temp1.get(0).getHauteur().getValue(),temp2.get(0).getHauteur().getValue());
+                }
+                else
+                    return Integer.compare(secondPair1.get(0).getHauteur().getValue(), secondPair2.get(0).getHauteur().getValue());
+            }
+            else
+                return Integer.compare(temp1.get(0).getHauteur().getValue(),temp2.get(0).getHauteur().getValue());
+        }
+        else
+            return Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue());
+    }
+
+    public int checkBestPairs2(ArrayList<Carte>checkedList){        //A ne plus utiliser; conservée au cas où
         int i;
+        boolean first1=false,first2=false,second1=false,second2=false;
         ArrayList<Carte>temp1=new ArrayList<>(mainJoueur);
         ArrayList<Carte>temp2=new ArrayList<>(checkedList);
         sortHand(temp1);
@@ -367,38 +475,54 @@ public class JoueurPoker extends Joueur {
         ArrayList<Carte>firstPair2=new ArrayList<>();
         ArrayList<Carte>secondPair1=new ArrayList<>();
         ArrayList<Carte>secondPair2=new ArrayList<>();
-        for(i=0;i<temp1.size()-1;i++){
-            if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur()){
+        for(i=0;i<temp1.size()-2;i++){
+            if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur() && !first1){
                 firstPair1.add(temp1.get(i));
                 firstPair1.add(temp1.get(i+1));
                 temp1.remove(firstPair1.get(0));
                 temp1.remove(firstPair1.get(1));
+                first1=true;
             }
-            if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur()){
+            if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur() && !first2){
                 firstPair2.add(temp2.get(i));
                 firstPair2.add(temp2.get(i+1));
                 temp2.remove(firstPair2.get(0));
                 temp2.remove(firstPair2.get(1));
-                break;
+                first2=true;
             }
+            if(firstPair1.size()!=0 && firstPair2.size()!=0)
+                break;
         }
         if(combinaison==Combinaisons.deux_paires){
-            for(i=0;i<temp1.size()-1;i++){
-                if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur()){
+            for(i=0;i<temp1.size()-2;i++){
+                System.out.println(temp1.size());
+                System.out.println(temp2.size());
+                if(temp1.get(i).getHauteur()==temp1.get(i+1).getHauteur() && !second1){
                     secondPair1.add(temp1.get(i));
                     secondPair1.add(temp1.get(i+1));
                     temp1.remove(secondPair1.get(0));
                     temp1.remove(secondPair1.get(1));
+                    second1=true;
                 }
-                if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur()){
+                if(temp2.get(i).getHauteur()==temp2.get(i+1).getHauteur() && !second2){
                     secondPair2.add(temp2.get(i));
                     secondPair2.add(temp2.get(i+1));
                     temp2.remove(secondPair2.get(0));
                     temp2.remove(secondPair2.get(1));
-                    break;
+                    second2=true;
                 }
+                if(secondPair1.size()!=0 && secondPair2.size()!=0)
+                    break;
             }
         }
+        System.out.println();
+        System.out.println(secondPair1.get(0).toString());
+        System.out.println(secondPair1.get(1).toString());
+        System.out.println(firstPair2.get(0).toString());
+        System.out.println(firstPair2.get(1).toString());
+        System.out.println(secondPair2.size());
+        System.out.println(secondPair2.get(0).toString());
+        System.out.println();
         if(Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue())==0){
             if(combinaison==Combinaisons.deux_paires){
                 if(Integer.compare(secondPair1.get(0).getHauteur().getValue(), secondPair2.get(0).getHauteur().getValue())==0){
@@ -487,56 +611,42 @@ public class JoueurPoker extends Joueur {
             System.out.println(current.getHauteur() + " de " + current.getCouleur());
     }
 
+    public void show(ArrayList<Carte>liste){
+        for(Carte a:liste)
+            System.out.println(a.getHauteur() + " de " + a.getCouleur());
+    }
+
     public static void main(String[] args) {
 
         ArrayList<ArrayList<Carte>>result;
         ArrayList<Carte>communityCards=new ArrayList<>();
-        ArrayList<Carte>mainJoueur=new ArrayList<>();
+        JoueurPoker player=new JoueurPoker("Robert", 500);
 
-        Carte asTrefle=new Carte(Couleurs.trefle,Hauteurs.as);
-        Carte huitPique=new Carte(Couleurs.pique,Hauteurs.huit);
-        Carte troisTrefle=new Carte(Couleurs.trefle,Hauteurs.trois);
-        Carte huitCarreau=new Carte(Couleurs.carreau,Hauteurs.huit);
-        Carte dixPique=new Carte(Couleurs.pique,Hauteurs.dix);
+        Carte deuxCoeur=new Carte(Couleurs.coeur,Hauteurs.deux);
+        Carte deuxPique=new Carte(Couleurs.pique,Hauteurs.deux);
+        Carte dameCoeur=new Carte(Couleurs.carreau,Hauteurs.trois);
+        Carte troisPique=new Carte(Couleurs.pique,Hauteurs.trois);
+        Carte asCarreau=new Carte(Couleurs.carreau,Hauteurs.as);
 
-        Carte deuxTrefle=new Carte(Couleurs.trefle,Hauteurs.deux);
-        Carte asCoeur=new Carte(Couleurs.coeur,Hauteurs.as);
-
-        communityCards.add(asTrefle);
-        communityCards.add(huitPique);
-        communityCards.add(troisTrefle);
-        communityCards.add(huitCarreau);
-        communityCards.add(dixPique);
-
-        JoueurPoker player=new JoueurPoker("Robert", mainJoueur, 100);
+        Carte deuxTrefle=new Carte(Couleurs.trefle,Hauteurs.dame);
+        Carte roiCarreau=new Carte(Couleurs.carreau,Hauteurs.roi);
 
         player.mainJoueur.add(deuxTrefle);
-        player.mainJoueur.add(asCoeur);
+        player.mainJoueur.add(roiCarreau);
 
-        result=player.createAllCombinations(communityCards);
-        System.out.println(result.size());
-        player.setCombinationHand(result);
+        communityCards.add(deuxCoeur);
+        communityCards.add(deuxPique);
+        communityCards.add(dameCoeur);
+        communityCards.add(troisPique);
+        communityCards.add(asCarreau);
+        player.sortHand(communityCards);
 
-        System.out.println(player.combinaison);
+        System.out.println(player.nbCartesMemeHauteur(communityCards));
+        System.out.println(player.getCombinationHand(communityCards));
+
+        player.setCombinationHand(player.createAllCombinations(communityCards));
         player.showHand();
-
-        JoueurPoker player2=new JoueurPoker("Bertrand", 200);
-        Carte newCard1=new Carte(Couleurs.carreau,Hauteurs.trois);
-        Carte newCard2=new Carte(Couleurs.pique,Hauteurs.huit);
-        Carte newCard3=new Carte(Couleurs.pique,Hauteurs.trois);
-        Carte newCard4=new Carte(Couleurs.pique,Hauteurs.dix);
-        Carte newCard5=new Carte(Couleurs.carreau,Hauteurs.huit);
-        player2.mainJoueur.add(newCard1);
-        player2.mainJoueur.add(newCard2);
-        player2.mainJoueur.add(newCard3);
-        player2.mainJoueur.add(newCard4);
-        player2.mainJoueur.add(newCard5);
-        player2.sortHand(player2.mainJoueur);
-        player2.combinaison=Combinaisons.deux_paires;
-        player.checkBestPairs(player2.mainJoueur);
-//        if(player2.hasBetterHand(player)>0)
-//            System.out.println(player2.hasBetterHand(player) + ", ça marche!");
-        System.out.println(player.checkBestPairs(player2.mainJoueur));
+        System.out.println(player.getCombinaison());
     }
 
 }

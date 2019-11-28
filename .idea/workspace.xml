@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/poker/Carte.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Carte.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" afterDir="false" />
     </list>
@@ -193,6 +192,10 @@
       <workItem from="1574508881114" duration="1591000" />
       <workItem from="1574706465700" duration="1446000" />
       <workItem from="1574709265649" duration="471000" />
+      <workItem from="1574764284121" duration="2658000" />
+      <workItem from="1574843926859" duration="120000" />
+      <workItem from="1574949144803" duration="3517000" />
+      <workItem from="1574970895279" duration="7495000" />
     </task>
     <servers />
   </component>
