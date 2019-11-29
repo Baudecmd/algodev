@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,30 +45,23 @@
     </option>
   </component>
   <component name="ProjectId" id="1RjVfRt7PlXULHpqzighzNhsM5E" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PATH_TO_FX$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.JoueurPoker">
+  <component name="RunManager" selected="Application.PartiePoker">
     <configuration name="Bataille" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bataille.Bataille" />
       <module name="projet-algodev" />
@@ -138,13 +130,25 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JoueurPoker" />
         <item itemvalue="Application.PartiePoker" />
+        <item itemvalue="Application.JoueurPoker" />
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.Bataille" />
         <item itemvalue="Application.JoueurBataille2" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -189,6 +193,16 @@
       <workItem from="1574186214386" duration="11026000" />
       <workItem from="1574279476724" duration="8448000" />
       <workItem from="1574365321955" duration="8471000" />
+      <workItem from="1574508881114" duration="1591000" />
+      <workItem from="1574706465700" duration="1446000" />
+      <workItem from="1574709265649" duration="471000" />
+      <workItem from="1574764284121" duration="2658000" />
+      <workItem from="1574843926859" duration="120000" />
+      <workItem from="1574949144803" duration="3517000" />
+      <workItem from="1574970895279" duration="7495000" />
+      <workItem from="1574978965302" duration="242000" />
+      <workItem from="1575014943801" duration="7496000" />
+      <workItem from="1575022691849" duration="138000" />
     </task>
     <servers />
   </component>
@@ -207,5 +221,27 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1298" height="175" key="GridCell.Tab.0.bottom" timestamp="1575022484334">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1298" height="175" key="GridCell.Tab.0.bottom/0.30.1366.738@0.30.1366.738" timestamp="1575022484334" />
+    <state width="1298" height="175" key="GridCell.Tab.0.center" timestamp="1575022484333">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1298" height="175" key="GridCell.Tab.0.center/0.30.1366.738@0.30.1366.738" timestamp="1575022484333" />
+    <state width="1298" height="175" key="GridCell.Tab.0.left" timestamp="1575022484333">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1298" height="175" key="GridCell.Tab.0.left/0.30.1366.738@0.30.1366.738" timestamp="1575022484333" />
+    <state width="1298" height="175" key="GridCell.Tab.0.right" timestamp="1575022484333">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1298" height="175" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1575022484333" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1575016113929">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1575016113929" />
   </component>
 </project>

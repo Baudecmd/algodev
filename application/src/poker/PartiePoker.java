@@ -13,8 +13,9 @@ public class PartiePoker implements Partie {
     private int miseEnCours;
     private int pot;
     private Stack<Carte>pile=new Stack<>();
-    private ArrayList<JoueurPoker>listeJoueurs=new ArrayList<>();
+    private static ArrayList<JoueurPoker>listeJoueurs=new ArrayList<>();
     private ArrayList<JoueurPoker>joueursCouches=new ArrayList<>();
+    private ArrayList<Carte>communityCards=new ArrayList<>();
 
     public int getBlinde() {
         return blinde;
@@ -61,17 +62,24 @@ public class PartiePoker implements Partie {
     }
 
     public void setListeJoueurs(ArrayList<JoueurPoker> listeJoueurs) {
-        this.listeJoueurs = listeJoueurs;
+        PartiePoker.listeJoueurs = listeJoueurs;
     }
 
-    public void addPlayer(JoueurPoker player){ this.listeJoueurs.add(player); }
+    public void addPlayer(JoueurPoker player){ PartiePoker.listeJoueurs.add(player); }
+
+    public ArrayList<Carte> getCommunityCards() {
+        return communityCards;
+    }
+
+    public void setCommunityCards(ArrayList<Carte> communityCards) {
+        this.communityCards = communityCards;
+    }
 
     public PartiePoker(int blinde){
         this.blinde=blinde;
         this.miseEnCours=blinde;        //la mise du tour est égale à la blinde au début
         this.pot=0;
         initPile();
-        Collections.shuffle(pile);      //on mélange la pile des cartes;
     }
 
     private void initPile(){
@@ -82,6 +90,16 @@ public class PartiePoker implements Partie {
                 pile.push(temp);
             }
         }
+        Collections.shuffle(pile);
+    }
+
+    public void newRound(){     //redéfinit les variables de classe qui doivent l'être en vue d'une prochaine manche
+        setPots(0);
+        setPile(new Stack<>());
+        initPile();
+        setCommunityCards(new ArrayList<>());
+        setJoueurCouches(new ArrayList<>());
+        rotation();
     }
 
     public void selectSmallBlind(){
@@ -317,7 +335,7 @@ public class PartiePoker implements Partie {
         }
     }
 
-    private void addCommunityCards(ArrayList<Carte>communityCards){
+    private void addCommunityCards(){
         if(communityCards.isEmpty()){   //flop
             for(int i=0;i<3;i++)
                 communityCards.add(pile.pop());
@@ -326,7 +344,7 @@ public class PartiePoker implements Partie {
             communityCards.add(pile.pop());     //turn ou river: on n'ajoute qu'une carte
     }
 
-    private void showCommunityCards(ArrayList<Carte>communityCards){
+    private void showCommunityCards(){
         System.out.println("Les cartes communes sont:");
         for(Carte card:communityCards)
             System.out.println(card.getHauteur() + " de " + card.getCouleur());
@@ -339,13 +357,11 @@ public class PartiePoker implements Partie {
 
     public static void main(String[] args) {
         int nbTurns=1;
-        int total=0;
         ArrayList<JoueurPoker>winners;
         ArrayList<JoueurPoker>finalPlayers;
         ArrayList<JoueurPoker>quit;     //liste permettant de demander aux joueurs si ils souhaitent quitter la partie
         JoueurPoker player1=new JoueurPoker("Joffrey", 500);
         JoueurPoker player2=new JoueurPoker("Gaby", 500);
-        ArrayList<Carte>communityCards=new ArrayList<>();
         Scanner sc=new Scanner(System.in);
         int choice;
         System.out.println("Quelle est la mise de la grosse blinde?");
@@ -355,7 +371,7 @@ public class PartiePoker implements Partie {
         while(!partie.partieFinie()){
             if(nbTurns==1){
                 partie.giveCardsToPlayer();
-                for(JoueurPoker player:partie.listeJoueurs){
+                for(JoueurPoker player:PartiePoker.listeJoueurs){
                     System.out.println(player.getNom() + ", vous avez les cartes suivantes:");
                     player.showHand();
                 }
@@ -365,8 +381,8 @@ public class PartiePoker implements Partie {
             else{
                 if(nbTurns==5){
                     System.out.println("C'est le Showdown!");       //A traiter
-                    for(JoueurPoker player:partie.listeJoueurs){
-                        player.setCombinationHand(player.createAllCombinations(communityCards));    //on assigne à chaque joueur sa meilleure main
+                    for(JoueurPoker player:PartiePoker.listeJoueurs){
+                        player.setCombinationHand(player.createAllCombinations(partie.getCommunityCards()));    //on assigne à chaque joueur sa meilleure main
                         System.out.println(player.getNom() + ", vous avez la main suivante:" );
                         player.showHand();
                         System.out.println("Vous avez la combinaison: " + player.getCombinaison());
@@ -379,10 +395,10 @@ public class PartiePoker implements Partie {
                     winners.add(finalPlayers.get(0));   //c'est forcément un gagnant
                     for(JoueurPoker player:finalPlayers){
                         if(player.getCombinaison()==winners.get(0).getCombinaison() && !winners.contains(player)) {    //la deuxième condition permet d'éviter que le premier joueur, qui est déjà dans la liste, soit placé deux fois dedans
-                            if (player.hasBetterHand(winners.get(0)) == 0)
+                            if (player.bestHand(player.getMainJoueur(), winners.get(0).getMainJoueur())==0)
                                 winners.add(player);
                             else{
-                                if (player.hasBetterHand(winners.get(0)) > 0) {
+                                if (player.bestHand(player.getMainJoueur(),winners.get(0).getMainJoueur()) > 0) {
                                     winners.clear();
                                     winners.add(player);
                                 }
@@ -395,42 +411,37 @@ public class PartiePoker implements Partie {
                             System.out.println(player.getNom());
                         }
                         System.out.println(" gagnent la manche!");
-                        total=partie.getPot()/winners.size();
                         for(JoueurPoker player:winners)
-                            player.setSomme(player.getSomme()+total);
+                            player.setSomme(player.getSomme()+(partie.getPot()/winners.size()));
                     }
                     else{
-                        total=partie.pot;
                         System.out.println(winners.get(0).getNom() + " gagne la manche!");
-                        winners.get(0).setSomme(winners.get(0).getSomme()+total);
+                        winners.get(0).setSomme(winners.get(0).getSomme()+partie.getPot());
                     }
-                    partie.setPots(0);      //on réinitialise les variables en vue d'une prochaine manche
                     nbTurns=1;
-                    total=0;
-                    communityCards=new ArrayList<>();
-                    partie.joueursCouches=new ArrayList<>();
-                    partie.rotation();  //en vue de la prochaine manche
+                    partie.newRound();  //on réinitialise les variables de classe
                     quit=new ArrayList<>(partie.getListeJoueurs());
                     for(JoueurPoker joueur:quit){
+                        joueur.setMainJoueur(new ArrayList<>());
                         joueur.setTapis(false);     //on en profite pour réinitialiser le tapis des joueurs
                         joueur.setMise(0);
                         if(joueur.getSomme()==0){
-                            partie.listeJoueurs.remove(joueur);
+                            PartiePoker.listeJoueurs.remove(joueur);
                             System.out.println(joueur.getNom() + " n'a plus assez d'argent pour continuer! Il est éliminé!");
-                            if(partie.listeJoueurs.size()==1)
+                            if(PartiePoker.listeJoueurs.size()==1)
                                 break;
                         }
                         System.out.println(joueur.getNom() + ", souhaitez-vous partir? Tapez 1 pour dire oui");
                         choice=sc.nextInt();
                         if(choice==1)
-                            partie.listeJoueurs.remove(joueur);
-                        if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
+                            PartiePoker.listeJoueurs.remove(joueur);
+                        if(PartiePoker.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
                             break;
                     }
                 }
                 else {  //étapes de flop, turn ou river
-                    partie.addCommunityCards(communityCards);
-                    partie.showCommunityCards(communityCards);
+                    partie.addCommunityCards();
+                    partie.showCommunityCards();
                     partie.nextTurn(false);
                     nbTurns++;
                 }
@@ -441,29 +452,25 @@ public class PartiePoker implements Partie {
                 if(partie.getJoueurCouches().size()>0){     //tous les joueurs se sont couchés sauf un
                     System.out.println("Tous les joueurs se sont couchés sauf " + finalPlayers.get(0).getNom());
                     System.out.println("C'est donc le vainqueur de cette manche!");
-                    total=partie.getPot();
-                    finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+total);
-                    total=0;
-                    partie.setPots(0);
+                    finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+partie.getPot());
                     nbTurns=1;
-                    communityCards=new ArrayList<>();
-                    partie.joueursCouches=new ArrayList<>();
-                    partie.rotation();
+                    partie.newRound();
                     quit=new ArrayList<>(partie.getListeJoueurs());
                     for(JoueurPoker joueur:quit){
                         if(joueur.getSomme()==0){
-                            partie.listeJoueurs.remove(joueur);
+                            PartiePoker.listeJoueurs.remove(joueur);
                             System.out.println(joueur.getNom() + " n'a plus assez d'argent pour continuer! Il est éliminé!");
-                            if(partie.listeJoueurs.size()==1)
+                            if(PartiePoker.listeJoueurs.size()==1)
                                 break;
                         }
                         joueur.setTapis(false);
                         joueur.setMise(0);
+                        joueur.setMainJoueur(new ArrayList<>());
                         System.out.println(joueur.getNom() + ", souhaitez-vous partir? Tapez 1 pour dire oui");
                         choice=sc.nextInt();
                         if(choice==1)
-                            partie.listeJoueurs.remove(joueur);
-                        if(partie.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
+                            PartiePoker.listeJoueurs.remove(joueur);
+                        if(PartiePoker.listeJoueurs.size()==1)   //pas la peine de continuer à demander s'il ne reste qu'un seul joueur
                             break;
                     }
                 }
