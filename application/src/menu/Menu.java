@@ -16,6 +16,8 @@ import javafx.stage.Window;
 import loto.Affichage;
 import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
+import poker.AffichagePoker;
+import poker.PartiePoker;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -72,11 +74,7 @@ public class Menu extends Application {
 
 /////////////////////////////////////////
 //Ajouter les méthodes pour lancer les parties ic
-	
-	public void buttonLoto() {
-		
-	}
-	
+
 
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
@@ -96,13 +94,16 @@ public class Menu extends Application {
 	}
 
 	public void buttonPoker() {
-		Window w = loto.getScene().getWindow();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
-		alert.initOwner(w);
-		alert.show();
-
+		Stage temp = (Stage) this.loto.getScene().getWindow();
+		PartiePoker.listeJoueurs = nomsJoueurs;
+		AffichagePoker ap = new AffichagePoker();
+		try {
+			ap.start(temp);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 
 	//Fini
 	public void buttonSudoku() {
