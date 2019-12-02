@@ -250,11 +250,14 @@ public class Menu extends Application {
 
 	public void start(Stage stage) throws IOException {
 		Popups.resetTimer();
+		Font.loadFont(getClass().getResourceAsStream("../resources/fonts/ka1.ttf"), 14);
+		Font.loadFont(getClass().getResourceAsStream("../resources/fonts/Arcadepix Plus.ttf"), 14);
 		this.stage = stage;
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/menu.fxml"));
 		this.scene = new Scene(root);
 		this.stage.setTitle("Menu");
 		this.stage.setScene(this.scene);
+		this.stage.setResizable(false);
 		this.stage.show();
 	}
 

@@ -9,16 +9,16 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.Menu">
 	<children>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
 			<children>
-				<Label alignment="CENTER" layoutX="169.0" layoutY="43.0" style="&#10;" text="Les 4 jeux de l'apocalypse" textAlignment="CENTER" wrapText="false">
+				<Label id="arcade" alignment="CENTER" layoutX="7.0" layoutY="41.0" prefHeight="36.0" prefWidth="627.0" text="Les 4 jeux de l'apocalypse" textAlignment="CENTER" wrapText="false">
 					<font>
 						<Font name="Arial" size="26.0" />
 					</font>
 					</Label>
-				<Button id="rich-blue" fx:id="entrerNomJoueur" layoutX="416.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleNomsJoueurs" prefHeight="25.0" prefWidth="92.0" text="Entrer" textFill="#ab0000" />
-				<TextField id="nomJoueur" fx:id="nomJoueur" layoutX="153.0" layoutY="194.0" onKeyPressed="#handleEnterKeyNoms" />
-				<Label id="label1" alignment="CENTER" layoutX="94.0" layoutY="149.0" style="&#10;" text="Entrer les noms des Joueurs !" textAlignment="CENTER" wrapText="false">
+				<Button id="rich-blue" fx:id="entrerNomJoueur" layoutX="391.0" layoutY="186.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleNomsJoueurs" prefHeight="50.0" prefWidth="100.0" text="Entrer" textFill="#ab0000" />
+				<TextField id="nomJoueur" fx:id="nomJoueur" layoutX="152.0" layoutY="196.0" onKeyPressed="#handleEnterKeyNoms" />
+				<Label id="label1" alignment="CENTER" layoutX="114.0" layoutY="141.0" text="Entrer les noms des Joueurs !" textAlignment="CENTER" wrapText="false">
 					<font>
 						<Font size="14.0" />
 					</font>

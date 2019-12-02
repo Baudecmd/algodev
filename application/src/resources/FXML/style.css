@@ -18,11 +18,20 @@
     -fx-font-size: 20;
 }
 
-#label2 {
+#label1 {
     -fx-text-fill: black;
     -fx-font-weight: bold;
-    -fx-font-size: 15;
+    -fx-font-size: 30;
+    -fx-font-family: "Arcadepix Plus";
 }
+
+#arcade {
+	-fx-font-family: "Karmatic Arcade";
+	-fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 25;
+}
+
 #green {
     -fx-background-color:
         linear-gradient(#194004, #2f7808),
@@ -138,8 +147,9 @@
         linear-gradient(#395cab, #223768);
     -fx-background-insets: 0,1,2,3;
     -fx-background-radius: 3,2,2,2;
+    -fx-font-family: "Arcadepix Plus";
     -fx-text-fill: white;
-    -fx-font-size: 12px;
+    -fx-font-size: 20px;
 }
 
 #rich-blue:hover {

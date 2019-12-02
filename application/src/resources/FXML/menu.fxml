@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@style.css" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.Menu">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.Menu">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="182.0" layoutY="50.0" style="&#10;" text="Les 4 jeux de l'Apocalypse" textAlignment="CENTER" wrapText="false">
+        <Label id="arcade" alignment="CENTER" layoutX="21.0" layoutY="49.0" prefHeight="36.0" prefWidth="621.0" stylesheets="@style.css" text="Les 4 jeux de l'Apocalypse" textAlignment="CENTER" wrapText="false">
           <font>
             <Font size="24.0" />
           </font>
         </Label>
-            <Button fx:id="jouer" id="rich-blue" layoutX="294.0" layoutY="150.0" mnemonicParsing="false" text="Jouer !" onAction="#handleLancerMenu"/>
-            <Button id="rich-blue" alignment="CENTER" layoutX="262.0" layoutY="232.0" mnemonicParsing="false" text="Tableau des scores" />
+            <Button id="rich-blue" fx:id="jouer" layoutX="276.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleLancerMenu" prefHeight="50.0" prefWidth="89.0" text="Jouer !" />
+            <Button id="rich-blue" alignment="CENTER" layoutX="218.0" layoutY="250.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Tableau des scores" />
       </children>
     </AnchorPane>
   </children>

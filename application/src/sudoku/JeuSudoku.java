@@ -286,7 +286,7 @@ public class JeuSudoku extends Application implements Initializable {
 	}
 
 	public void buttonOPTIONPressed() {
-		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Option de Jeu");
+		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Options de Jeu");
 	}
 
 	boolean started = false;

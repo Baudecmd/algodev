@@ -45,6 +45,7 @@ public class Popups implements Initializable {
 		window.setTitle(titre);
 		window.setMinWidth(300);
 		window.setMinHeight(300);
+		
 
 		Label label = new Label();
 		label.setText(message);
@@ -92,6 +93,11 @@ public class Popups implements Initializable {
 		VBox layout = new VBox(10);
 		layout.getChildren().addAll(label, retour, quitter);
 		layout.setAlignment(Pos.CENTER);
+		layout.setStyle("-fx-text-fill: black;\r\n" + 
+				"    -fx-font-weight: bold;\r\n" + 
+				"    -fx-font-size: 22;\r\n" + 
+				"    -fx-font-family: \"Arcadepix Plus\";" +
+				"	-fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 130% , #56BFED, #0C181D);\r\n");
 
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
