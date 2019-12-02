@@ -113,8 +113,8 @@ public class JoueurBataille extends Joueur {
         }
     }
 
-    public boolean tir(int i,int j){    //booléen pour indiquer si un bateau a été touché ou non
-        boolean touche=false;           // ATTENTION! Cette fonction n'effectue pas un tir CONTRE le joueur adverse (sinon, celui-ci serait passé en paramètre). C'est au joueur 2 de faire appel à cette fonction du joueur 1 pour effectuer son tir contre celui-ci.
+    public int tir(int i,int j){    //booléen pour indiquer si un bateau a été touché ou non
+        int touche=0;           // ATTENTION! Cette fonction n'effectue pas un tir CONTRE le joueur adverse (sinon, celui-ci serait passé en paramètre). C'est au joueur 2 de faire appel à cette fonction du joueur 1 pour effectuer son tir contre celui-ci.
         Bateau removed=null;
         Case temp=new Case(i,j);
         if(alreadyChecked.contains(temp)){
@@ -125,7 +125,7 @@ public class JoueurBataille extends Joueur {
             for(Bateau b:listeBateaux){   //la case est existante
                 for(Case c:b.getTabCases()){
                     if(c.getI()==i && c.getJ()==j){
-                        touche=true;
+                        touche=1;
                         System.out.println("Bateau touché!");
                         b.getTabCases().remove(c);
                         if(b.getTabCases().isEmpty())
@@ -137,6 +137,7 @@ public class JoueurBataille extends Joueur {
             }
             if(removed!=null){
                 this.getListeBateaux().remove(removed);
+                touche = 2;
                 System.out.println("Bateau coulé!");
             }
         }

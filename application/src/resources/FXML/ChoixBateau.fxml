@@ -18,7 +18,7 @@
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="463.0">
          <children>
-            <GridPane fx:id="tab1" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDropped="#dragDropped" onDragEntered="#dragEntered" onDragExited="#dragExited" onDragOver="#dragOver" onMouseClicked="#mousePressed" prefHeight="440.0" prefWidth="440.0">
+            <GridPane fx:id="tab1" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDropped="#dragDropped" onDragOver="#dragOver" prefHeight="440.0" prefWidth="440.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -66,9 +66,7 @@
                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="8" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="9" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
-            
-                  
-                     </children>
+               </children>
             </GridPane>
             <TabPane fx:id="tabPane" prefHeight="322.0" prefWidth="481.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -76,7 +74,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="torpilleur" fitHeight="80.0" fitWidth="40.0" layoutX="200.0" layoutY="102.0" nodeOrientation="INHERIT" onDragDetected="#dragDetected" onDragDone="#dragDone" onMouseClicked="#rotate" onMouseDragged="#mousePressed" rotate="90.0">
+                              <ImageView fx:id="torpilleur" fitHeight="80.0" fitWidth="40.0" layoutX="200.0" layoutY="102.0" nodeOrientation="INHERIT" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
                                  <image>
                                     <Image url="@../image/Torpilleur.png" />
                                  </image>
@@ -99,12 +97,12 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="destroyer1" fitHeight="120.0" fitWidth="40.0" layoutX="85.0" layoutY="82.0" onDragDetected="#dragDetected" onDragDone="#dragDone" onMouseClicked="#rotate" rotate="90.0">
+                              <ImageView fx:id="destroyer1" fitHeight="120.0" fitWidth="40.0" layoutX="85.0" layoutY="82.0" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
                                  <image>
                                     <Image url="@../image/Destroyeur.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="destroyer2" fitHeight="120.0" fitWidth="40.0" layoutX="319.0" layoutY="82.0" onDragDetected="#dragDetected" onDragDone="#dragDone" onMouseClicked="#rotate" rotate="90.0">
+                              <ImageView fx:id="destroyer2" fitHeight="120.0" fitWidth="40.0" layoutX="319.0" layoutY="82.0" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
                                  <image>
                                     <Image url="@../image/Destroyeur.png" />
                                  </image>
@@ -127,7 +125,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="cuirasse" fitHeight="160.0" fitWidth="40.0" layoutX="200.0" layoutY="62.0" onDragDetected="#dragDetected" onDragDone="#dragDone" onMouseClicked="#rotate" rotate="90.0">
+                              <ImageView fx:id="cuirasse" fitHeight="160.0" fitWidth="40.0" layoutX="200.0" layoutY="62.0" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
                                  <image>
                                     <Image url="@../image/Cuirasse.png" />
                                  </image>
@@ -150,7 +148,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="porteAvions" fitHeight="200.0" fitWidth="40.0" layoutX="200.0" layoutY="42.0" onDragDetected="#dragDetected" onDragDone="#dragDone" onMouseClicked="#rotate" rotate="90.0">
+                              <ImageView fx:id="porteAvions" fitHeight="200.0" fitWidth="40.0" layoutX="200.0" layoutY="42.0" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
                                  <image>
                                     <Image url="@../image/Porte-avion.png" />
                                  </image>

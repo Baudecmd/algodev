@@ -48,7 +48,7 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
         return scores;
     }
 
-    static void ajouterVictoire(String fileName,Joueur j) { //Ajout du score dans le cas d'un classement par nombre de parties gagnées
+    static void ajouterVictoire(String fileName, Joueur j) { //Ajout du score dans le cas d'un classement par nombre de parties gagnées
         File f = getFileFromResources(fileName);
         ArrayList<Joueur> scores = recupererScore(fileName);
 

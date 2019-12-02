@@ -1,35 +1,24 @@
 package sudoku;
 
-import javafx.animation.KeyFrame;
 import commun.Grille;
 import commun.Joueur;
 //import commun.Partie;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import commun.Popups;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -93,7 +82,7 @@ public class JeuSudoku extends Application implements Initializable {
 
 
 
-	// Fonction recopie à remplacer lorsque j'aurai trouvé la solution du probléme
+	// Fonction recopie ï¿½ remplacer lorsque j'aurai trouvï¿½ la solution du problï¿½me
 	public static Grille recopie(Grille a) {
 		if (a != null) {
 			Grille temp = new Grille(a.getNbLignes(),a.getNbLignes());
@@ -159,7 +148,7 @@ public class JeuSudoku extends Application implements Initializable {
 				context.fillRoundRect(position_x, position_y, width, width, 10, 10);
 			}
 		}
-		// Dessine le contour de la case une fois selectionnée par le joueur
+		// Dessine le contour de la case une fois selectionnï¿½e par le joueur
 		context.setStroke(Color.RED);
 		context.setLineWidth(3);
 		context.strokeRoundRect(player_selected_col * coteCase + 2, player_selected_row * coteCase + 2, 46, 46, 10, 10);
@@ -187,7 +176,7 @@ public class JeuSudoku extends Application implements Initializable {
 				}
 			}
 		}
-		// Dessine les séparations des régions du Sudoku
+		// Dessine les sï¿½parations des rï¿½gions du Sudoku
 		context.setLineWidth(4);
 		context.setStroke(Color.BLACK);
 		context.strokeRoundRect(0, 0, 450, 450, 10, 10);
@@ -205,10 +194,10 @@ public class JeuSudoku extends Application implements Initializable {
 		//Change le EventHandler du canvas
 		grille.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				// récupére les coordonées du clic et les transforme en int
+				// rï¿½cupï¿½re les coordonï¿½es du clic et les transforme en int
 				int mouse_x = (int) event.getX();
 				int mouse_y = (int) event.getY();
-				//Met à jour la case selectionnée par le joueur
+				//Met ï¿½ jour la case selectionnï¿½e par le joueur
 				player_selected_row = (int) (mouse_y / coteCase); 
 				player_selected_col = (int) (mouse_x / coteCase);
 

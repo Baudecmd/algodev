@@ -37,7 +37,7 @@ public class Bateau {
     public String toString() {
         String tabCasesS="";
         for (int i=0;i<this.tabCases.size();i++){
-            tabCasesS+=tabCasesS + " "+ tabCases.get(i).toString();
+            tabCasesS+=" "+ tabCases.get(i).toString();
         }
         return "Bateau{" +
                 "name='" + name + '\'' +
@@ -54,14 +54,14 @@ public class Bateau {
         }
         else{
             if(tabCases.size()==3){
-                this.name="Destroyer";
+                this.name="Destroyeur";
             }
             else{
                 if(tabCases.size()==4){
-                    this.name="Croiseur";
+                    this.name="Cuirasse";
                 }
                 else
-                    this.name="Porte-Avions";
+                    this.name="Porte-avion";
             }
         }
         this.status=true;
