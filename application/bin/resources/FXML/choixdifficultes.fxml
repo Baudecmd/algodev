@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.MenuSudoku">
+   <children>
+      <Button id="choix-diff-facile" fx:id="buttonFACILE" layoutX="325.0" layoutY="145.0" mnemonicParsing="false" onMouseClicked="#buttonFACILEPressed" prefHeight="60.0" prefWidth="150.0" styleClass="boutonSudoku" stylesheets="@styleSudoku.css" text="Facile" />
+      <Button id="choix-diff-moyen" fx:id="buttonMOYEN" layoutX="325.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#buttonMOYENPressed" prefHeight="60.0" prefWidth="150.0" styleClass="boutonSudoku" stylesheets="@styleSudoku.css" text="Moyen" />
+      <Button id="choix-diff-difficile" fx:id="buttonDIFFICILE" layoutX="325.0" layoutY="397.0" mnemonicParsing="false" onMouseClicked="#buttonDIFFICILEPressed" prefHeight="60.0" prefWidth="150.0" styleClass="boutonSudoku" stylesheets="@styleSudoku.css" text="Difficile" />
+      <Button fx:id="buttonOPTION" layoutX="737.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonOPTIONPressed" prefHeight="30.0" prefWidth="30.0">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="29.0">
+               <image>
+                  <Image url="@../image/option.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</Pane>

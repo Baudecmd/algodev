@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import menu.Menu;
@@ -35,7 +36,7 @@ public class AffichageBN extends Application implements Initializable {
 	@FXML
 	private Parent root;
 	@FXML
-	TitledPane pane;
+	Pane pane;
 	@FXML
 	private Stage stage;
 
@@ -566,6 +567,12 @@ public class AffichageBN extends Application implements Initializable {
 		// setCursor(Cursor.DEFAULT);
 		return true;
 	}*/
+	@FXML
+	Button buttonOPTION;
+	
+	public void buttonOPTIONPressed() {
+		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Option de Jeu");
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
