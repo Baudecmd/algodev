@@ -154,6 +154,8 @@ public class Affichage extends Application {
 					else
 						rectangle.getStyleClass().add("caseRemplis");
 
+
+
 					rectangle.setStroke(Color.BLACK);
 					root.getChildren().add(rectangle);
 
