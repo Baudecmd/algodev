@@ -229,29 +229,87 @@ public class AffichageBN extends Application implements Initializable {
 
 		bateaux.add(img,j,i);
     }
+	
+	int tor;
+	int des1;
+	int des2;
+	int cui;
+	int por;
+	
+	private void sortBateaux() {
+		for(int i = 21; i < 26; i++) {
+			switch (tab1.getChildren().get(i).getId()) {
+			case "torpilleur":
+				tor = i;
+				break;
+			case "destroyer1":
+				des1 = i;
+				break;
+			case "destroyer2":
+				des2 = i;
+				break;
+			case "cuirasse":
+				cui = i;
+				break;
+			case "porteAvions":
+				por = i;
+				break;
+			}
+		}
+	}
+	
+	private boolean verifPlacement(int joueur) {
+		ArrayList<Bateau> bateaux;
+		int cpt = 0;
+		if(joueur == 1) bateaux = bataille.getJ1().getListeBateaux();
+		else bateaux = bataille.getJ2().getListeBateaux();
+		for(Bateau b : bateaux) {
+			for(Case c : b.getTabCases()) {
+				if((c.getI() < 0) || (c.getI() > 9) || (c.getJ() < 0) || (c.getJ() > 9)) return false;
+				for(Bateau temp : bateaux) {
+					for(Case tempC : temp.getTabCases()) {
+						if(c.equals(tempC)) cpt++;
+						if(cpt > 1) return false;
+					}
+				}
+				cpt = 0;
+			}
+		}
+		return true;
+	}
 
-	//Gère la fin du remplissage de la grille des bateaux des deux joueurs
+	//Gere la fin du remplissage de la grille des bateaux des deux joueurs
 	public void entrerBateaux() {
 		if(firstRunPlacement) {
 			try {
-				placementBateaux(1,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
-				placementBateaux(1,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
-				placementBateaux(1,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
-				placementBateaux(1,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
-				placementBateaux(1,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
-				firstRunPlacement = false;
-				Stage temp = (Stage) this.pane.getScene().getWindow();
-				Popups.joueurDeux(temp, "Joueur 1", "Valider et passer la main au Joueur 2");
-			}catch(Exception e) { erreurBN(); }
+				sortBateaux();
+				placementBateaux(1,getRowBateau(tor),getColBateau(tor),2,(int)torpilleur.getRotate());
+				placementBateaux(1,getRowBateau(des1),getColBateau(des1),3,(int)destroyer1.getRotate());
+				placementBateaux(1,getRowBateau(des2),getColBateau(des2),3,(int)destroyer2.getRotate());
+				placementBateaux(1,getRowBateau(cui),getColBateau(cui),4,(int)cuirasse.getRotate());
+				placementBateaux(1,getRowBateau(por),getColBateau(por),5,(int)porteAvions.getRotate());
+				if(verifPlacement(1)) {
+					firstRunPlacement = false;
+					Stage temp = (Stage) this.pane.getScene().getWindow();
+					Popups.joueurDeux(temp, "Joueur 1", "Valider et passer la main au Joueur 2");
+				}else {
+					bataille.getJ1().getListeBateaux().clear(); erreurBN(2);
+				}
+			}catch(Exception e) { bataille.getJ1().getListeBateaux().clear(); erreurBN(1); }
 		}else {
 			try {
-				placementBateaux(2,getRowBateau(21),getColBateau(21),2,(int)torpilleur.getRotate());
-				placementBateaux(2,getRowBateau(22),getColBateau(22),3,(int)destroyer1.getRotate());
-				placementBateaux(2,getRowBateau(23),getColBateau(23),3,(int)destroyer2.getRotate());
-				placementBateaux(2,getRowBateau(24),getColBateau(24),4,(int)cuirasse.getRotate());
-				placementBateaux(2,getRowBateau(25),getColBateau(25),5,(int)porteAvions.getRotate());
-				partie();
-			}catch(Exception e) { erreurBN();e.printStackTrace(); }
+				sortBateaux();
+				placementBateaux(2,getRowBateau(tor),getColBateau(tor),2,(int)torpilleur.getRotate());
+				placementBateaux(2,getRowBateau(des1),getColBateau(des1),3,(int)destroyer1.getRotate());
+				placementBateaux(2,getRowBateau(des2),getColBateau(des2),3,(int)destroyer2.getRotate());
+				placementBateaux(2,getRowBateau(cui),getColBateau(cui),4,(int)cuirasse.getRotate());
+				placementBateaux(2,getRowBateau(por),getColBateau(por),5,(int)porteAvions.getRotate());
+				if(verifPlacement(2)) {
+					partie();
+				}else {
+					bataille.getJ2().getListeBateaux().clear(); erreurBN(2); 
+				}
+			}catch(Exception e) { bataille.getJ2().getListeBateaux().clear(); erreurBN(1); }
 		}
 	}
 
@@ -267,7 +325,7 @@ public class AffichageBN extends Application implements Initializable {
 		}
 	}
 
-	//Retourne une liste de cases occup�es par un bateau
+	//Retourne une liste de cases occupees par un bateau
 	private ArrayList<Case> ajoutBateaux(int i, int j, int taille, int rotation) {
 		ArrayList<Case> temp = new ArrayList<>();
 		i--;
@@ -334,12 +392,11 @@ public class AffichageBN extends Application implements Initializable {
 		return GridPane.getRowIndex(tab1.getChildren().get(i));
 	}
 
-	//public void verifError(int a, int b) { }
-
-	private void erreurBN() {
+	private void erreurBN(int code) {
 		Window w = pane.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Erreur dans le placement de vos bateaux, il vous manque peut-être un bateau ou un de vos bateaux sort de la grille");
+		if(code == 1) alert.setContentText("Erreur dans le placement de vos bateaux, tous vos bateaux ne sont pas placés sur la grille");
+		else alert.setContentText("Erreur dans le placement de vos bateaux, un de vos bateaux sort de la grille ou vos bateaux sont superposés");
 		alert.initOwner(w);
 		alert.show();
 	}
@@ -391,7 +448,7 @@ public class AffichageBN extends Application implements Initializable {
 	}
 
 
-	//Chargement des r�gles pour le placement des bateaux
+	//Chargement des régles pour le placement des bateaux
 	private final int n = 440; // taille de la Vbox; une case = 40*40px; il y a en tout 11 cases*/
 
 	private int g(int a, int tailleBateau) {
@@ -510,7 +567,7 @@ public class AffichageBN extends Application implements Initializable {
 		db.setContent(content);
 		event.consume();
 	}
-
+	
 	@FXML
 	public void dragDropped(DragEvent event) {
 		db = event.getDragboard();

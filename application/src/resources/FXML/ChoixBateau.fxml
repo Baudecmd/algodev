@@ -68,9 +68,9 @@
             </GridPane>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="334.0" prefWidth="439.0">
                <children>
-                  <Text fill="#0c3180" layoutX="73.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clic droit pour tourner votre bateau" wrappingWidth="293.6708984375">
+                  <Text fill="WHITE" layoutX="74.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clic droit pour tourner votre bateau" wrappingWidth="275.6708984375">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Text>
                   <ImageView fx:id="torpilleur" fitHeight="80.0" fitWidth="40.0" layoutX="49.0" layoutY="57.0" nodeOrientation="INHERIT" onDragDetected="#dragDetected" onMouseClicked="#rotate" rotate="90.0">
@@ -125,7 +125,7 @@
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="29.0">
                            <image>
-                              <Image url="@../../../../../../projet-algodev/application/src/resources/image/option.png" />
+                              <Image url="@../image/option.png" />
                            </image>
                            <cursor>
                               <Cursor fx:constant="HAND" />
