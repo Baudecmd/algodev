@@ -139,15 +139,15 @@ public class Menu extends Application {
 		// Vérif
 		boolean stop = false;
 		try {
-	        @SuppressWarnings("unused")
-			Double d = Double.parseDouble(nbJoueur.getText());
+	        Double d = Double.parseDouble(nbJoueur.getText());
+	        if(d >= 5.0) throw new NumberFormatException();
 	    } catch (NumberFormatException nfe) {
 	        stop = true;
 	    }
 		System.out.println("Nombre de joueurs entré :" + nbJoueur.getText());
-		if ((nbJoueur.getText().isEmpty()) || stop) {
+		if ((nbJoueur.getText().isEmpty()) || stop ) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Entrez un nombre de joueurs !");
+			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
 			alert.show();
 			return;
