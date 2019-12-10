@@ -3,6 +3,7 @@ package poker;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,12 +19,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import menu.Menu;
 
-public class AffichagePoker extends Application implements Initializable{
+public class AffichagePoker extends Application implements Initializable {
 
 	@FXML
 	public Label argent1;
@@ -79,6 +84,8 @@ public class AffichagePoker extends Application implements Initializable{
 	public Button buttonCheck;
 	@FXML
 	public Button buttonMiser;
+	@FXML
+	public TextField lamise;
 
 	@FXML
 	public Parent root;
@@ -88,154 +95,218 @@ public class AffichagePoker extends Application implements Initializable{
 	public Scene scene;
 
 	public static ArrayList<JoueurPoker> joueurs;
-	public static JoueurPoker premierJoueur;
-	public static JoueurPoker joueurCourant;
 	public static PartiePoker pp;
 	public static int nbTour;
 
 	public void afficherSommeJoueur() {
-		if (AffichagePoker.joueurs.get(0) != null) {
-			this.argent1.setText(AffichagePoker.joueurs.get(0).getNom() + " a " + AffichagePoker.joueurs.get(0).getSomme()
-					+ " euros !");
+		if (this.pp.getListeJoueurs().size() >= 1) {
+			this.argent1.setText(this.pp.getListeJoueurs().get(0).getNom() + " a "
+					+ this.pp.getListeJoueurs().get(0).getSomme() + " euros !");
 		}
-		if (AffichagePoker.joueurs.get(1) != null) {
-			this.argent2.setText(AffichagePoker.joueurs.get(1).getNom() + " a " + AffichagePoker.joueurs.get(1).getSomme()
-					+ " euros !");
+		if (this.pp.getListeJoueurs().size() >= 2) {
+			this.argent2.setText(this.pp.getListeJoueurs().get(1).getNom() + " a "
+					+ this.pp.getListeJoueurs().get(1).getSomme() + " euros !");
 		}
-		if (AffichagePoker.joueurs.get(2) != null) {
-			this.argent3.setText(AffichagePoker.joueurs.get(2).getNom() + " a " + AffichagePoker.joueurs.get(2).getSomme()
-					+ " euros !");
+		if (this.pp.getListeJoueurs().size() >= 3) {
+			this.argent3.setText(this.pp.getListeJoueurs().get(2).getNom() + " a "
+					+ this.pp.getListeJoueurs().get(2).getSomme() + " euros !");
 		}
-		if (AffichagePoker.joueurs.get(3) != null) {
-			this.argent4.setText(AffichagePoker.joueurs.get(3).getNom() + " a " + AffichagePoker.joueurs.get(3).getSomme()
-					+ " euros !");
+		if (this.pp.getListeJoueurs().size() >= 4) {
+			this.argent4.setText(this.pp.getListeJoueurs().get(3).getNom() + " a "
+					+ this.pp.getListeJoueurs().get(3).getSomme() + " euros !"); // affichage de l'argent des joueurs
+																					// s'ils existent
 		}
 	}
 
 	public void handleMiser(ActionEvent Event) {
-
+		this.pp.nextTurn(true, 1);
 	}
 
 	public void handleCheck(ActionEvent Event) {
-		// this.joueurCourant.actionJoueur(1);
-
+		this.pp.nextTurn(true, 4);
 	}
 
+	// a faire
 	public void handleSuivre(ActionEvent Event) {
-		// this.joueurCourant.actionJoueur(2);
-
+		this.pp.nextTurn(true, 2);
 	}
 
 	public void handleCoucher(ActionEvent Event) {
-		// this.joueurCourant.actionJoueur(3);
-
+		this.pp.nextTurn(true, 3);
 	}
+
 	@Override
 	public void initialize(URL args0, ResourceBundle arg1) {
-		this.pot.setText("Le pot s'�l�ve maintenant � :\n" + Integer.toString(AffichagePoker.pp.getPot()) + " euros !");
+		AffichagePoker.pp.initPile();
+		AffichagePoker.pp.setPots(200);
+		AffichagePoker.pp.giveCardsToPlayer(); // après la création de la pp dan sle menu, il faut la set pour
+												// l'affichage
+		try {
+		setDos();}
+		catch(IOException e) {}
+		actualiserPot();
 		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
 	}
-	
+
+	public void actualiserPot() {
+		this.pot.setText("Le pot s'élève maintenant à :\n" + Integer.toString(AffichagePoker.pp.getPot()) + " euros !");
+	}
+
+	public void actualiserTour() {
+		this.tour.setText("C'est le tour de " + this.pp.joueurCourant.getNom() + " !");
+	}
+
+	public void actualiserMise() {
+		this.mise.setText("La mise actuelle est de : " + this.pp.getMiseEnCours() + "euros !");
+	}
 
 	public void handleAfficheDos(MouseEvent Event) throws FileNotFoundException {
 		Image dos = new Image("resources/image/dos.png");
-		System.out.println(AffichagePoker.joueurCourant.getNom());
-		switch (AffichagePoker.joueurs.indexOf(AffichagePoker.joueurCourant)) {
+		System.out.println(this.pp.joueurCourant.getNom());
+		switch (this.pp.getListeJoueurs().indexOf(this.pp.joueurCourant)) {
 		case 0:
-			this.carte1j1.setImage(dos);
-			this.carte2j1.setImage(dos);
+			if (this.pp.getListeJoueurs().size() >= 1) {
+				this.carte1j1.setImage(dos);
+				this.carte2j1.setImage(dos);
+			}
 			break;
 		case 1:
-			this.carte1j2.setImage(dos);
-			this.carte2j2.setImage(dos);
+			if (this.pp.getListeJoueurs().size() >= 2) {
+				this.carte1j2.setImage(dos);
+				this.carte2j2.setImage(dos);
+			}
 			break;
 		case 2:
-			this.carte1j3.setImage(dos);
-			this.carte2j3.setImage(dos);
+			if (this.pp.getListeJoueurs().size() >= 3) {
+				this.carte1j3.setImage(dos);
+				this.carte2j3.setImage(dos);
+			}
 			break;
 		case 3:
-			this.carte1j4.setImage(dos);
-			this.carte2j4.setImage(dos);
-			break;
+			if (this.pp.getListeJoueurs().size() >= 4) {
+				this.carte1j4.setImage(dos);
+				this.carte2j4.setImage(dos);
+			}
+			break; // affiche le dos quand le joueur lache la souris
 
 		}
+	}
+
+	public void setDos() throws FileNotFoundException {
+		Image dos = new Image("resources/image/dos.png");
+
+		if (this.pp.getListeJoueurs().size() >= 1) {
+			this.carte1j1.setImage(dos);
+			this.carte2j1.setImage(dos);
+		}
+
+		if (this.pp.getListeJoueurs().size() >= 2) {
+			this.carte1j2.setImage(dos);
+			this.carte2j2.setImage(dos);
+		}
+
+		if (this.pp.getListeJoueurs().size() >= 3) {
+			this.carte1j3.setImage(dos);
+			this.carte2j3.setImage(dos);
+		}
+
+		if (this.pp.getListeJoueurs().size() >= 4) {
+			this.carte1j4.setImage(dos);
+			this.carte2j4.setImage(dos);
+		}
+		// affiche le dos des joueurs existant, pour le début de la partie 
+
+	}
+
+	@FXML
+	public void handleEntrerMise(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER)
+			this.pp.joueurCourant.setMise(Menu.stringtoint2(this.lamise.getText())); // a faire
 	}
 
 	public void afficherCarteCentre() {
 		switch (AffichagePoker.nbTour) {
 		case 1:
-			Image carte1 = new Image("resources/image/" + this.pp.communityCard.get(0).toString + ".png");
+			Image carte1 = new Image("resources/image/" + this.pp.getCommunityCards().get(0).toString() + ".png");
 			this.carte1.setImage(carte1);
-			Image carte2 = new Image("resources/image/" + this.pp.communityCard.get(1).toString + ".png");
+			Image carte2 = new Image("resources/image/" + this.pp.getCommunityCards().get(1).toString() + ".png");
 			this.carte2.setImage(carte2);
-			Image carte3 = new Image("resources/image/" + this.pp.communityCard.get(2).toString + ".png");
+			Image carte3 = new Image("resources/image/" + this.pp.getCommunityCards().get(2).toString() + ".png");
 			this.carte3.setImage(carte3);
 			break;
 		case 2:
-			Image carte4 = new Image("resources/image/" + this.pp.communityCard.get(3).toString + ".png");
+			Image carte4 = new Image("resources/image/" + this.pp.getCommunityCards().get(3).toString() + ".png");
 			this.carte4.setImage(carte4);
 			break;
 		case 3:
-			Image carte5 = new Image("resources/image/" + this.pp.communityCard.get(4).toString + ".png");
+			Image carte5 = new Image("resources/image/" + this.pp.getCommunityCards().get(4).toString() + ".png");
 			this.carte5.setImage(carte5);
-			break;
+			break; // affiche les cartes en fonction du nbdetour
 
 		}
 
 	}
 
 	public void handleAfficheCarteJoueur(MouseEvent Event) throws FileNotFoundException {
-		switch (AffichagePoker.joueurs.indexOf(AffichagePoker.joueurCourant)) {
+		switch (this.pp.getListeJoueurs().indexOf(this.pp.joueurCourant)) {
 		case 0:
-			this.carte1j1.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
-			this.carte2j1.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
+			this.carte1j1.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
+			this.carte2j1.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
 			break;
 		case 1:
-			this.carte1j2.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
-			this.carte2j2.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
+			this.carte1j2.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
+			this.carte2j2.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
 			break;
 		case 2:
-			this.carte1j3.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
-			this.carte2j3.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
+			this.carte1j3.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
+			this.carte2j3.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
 			break;
 		case 3:
-			this.carte1j4.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
-			this.carte2j4.setImage(new Image(
-					"resources/image/" + AffichagePoker.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
+			this.carte1j4.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(0).toString() + ".png"));
+			this.carte2j4.setImage(
+					new Image("resources/image/" + this.pp.joueurCourant.getMainJoueur().get(1).toString() + ".png"));
 			break;
 
-		}
+		} // affiche les cartes du joueur courant en fonction de sa position dans la liste
+			// de joeueur
 	}
 
+	public static ArrayList<JoueurPoker> getJoueurs() {
+		return joueurs;
+	}
+
+	public static void setJoueurs(ArrayList<JoueurPoker> joueurs) {
+		AffichagePoker.joueurs = joueurs;
+	}
+
+	public static PartiePoker getPp() {
+		return pp;
+	}
+
+	public static void setPp(PartiePoker pp) {
+		AffichagePoker.pp = pp;
+	}
+
+	public static int getNbTour() {
+		return nbTour;
+	}
+
+	public static void setNbTour(int nbTour) {
+		AffichagePoker.nbTour = nbTour;
+	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		AffichagePoker.joueurs = new ArrayList<JoueurPoker>();
 
-		for (int i = 1; i < 5; i++) {
-			JoueurPoker j = new JoueurPoker("Joueur" + i , 500);
-			AffichagePoker.joueurs.add(j);
-		}
-		AffichagePoker.joueurCourant = new JoueurPoker(AffichagePoker.joueurs.get(0));
-		System.out.println(AffichagePoker.joueurCourant.getNom());
-		AffichagePoker.premierJoueur = AffichagePoker.joueurs.get(0);
-		ArrayList<Carte> mainJoueur = new ArrayList<Carte>();
-		mainJoueur.add(new Carte(Couleurs.pique, Hauteurs.as));
-		mainJoueur.add(new Carte(Couleurs.pique, Hauteurs.dame));
-
-		AffichagePoker.joueurs.get(0).setMainJoueur(mainJoueur);
-		AffichagePoker.joueurCourant.setMainJoueur(mainJoueur);
-		AffichagePoker.pp = new PartiePoker(10);
-		AffichagePoker.pp.setPots(200);
-
-		
 		this.stage = stage;
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/tablePoker.fxml"));
 		this.scene = new Scene(root);

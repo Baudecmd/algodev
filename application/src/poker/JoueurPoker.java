@@ -74,6 +74,12 @@ public class JoueurPoker extends Joueur {
         this.mise=0;
         this.tapis=false;
     }
+    
+    public JoueurPoker(Joueur j) {
+    	super(j.getNom());
+    	this.mise = 0;
+    	this.somme = 500;
+    }
 
     public JoueurPoker(JoueurPoker player){
         super(player.getNom());
@@ -88,7 +94,7 @@ public class JoueurPoker extends Joueur {
     public boolean canPlay(int miseEnCours){
         return miseEnCours <= somme;
     }
-
+/*
     public int actionJoueur(boolean hasChecked){   //true: le joueur précédent a check
         int choix=0;
         boolean correctValue=true;
@@ -112,7 +118,7 @@ public class JoueurPoker extends Joueur {
                 correctValue=false;
         }
         return choix;
-    }
+    }*/
 
     private boolean memeCouleur(ArrayList<Carte>hand){
         Carte temp=hand.get(0);
