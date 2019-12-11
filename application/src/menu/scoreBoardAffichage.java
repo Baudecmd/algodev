@@ -28,19 +28,17 @@ public class scoreBoardAffichage extends Application {
 
 
     public void start(Stage stage,int jeu) throws IOException {
-        jeu=1;
+        String pathImg="";
+        String jeux="";
+
         Pane root = new Pane();
         ArrayList<Joueur> lJ;
         String path;
 
-        Scene scene = new Scene(root, 800, 800);
-        scene.getStylesheets().add(getClass().getResource("../resources/FXML/loto.css").toExternalForm());
-       stage.setScene(scene);
-        stage.show();
-
         switch(jeu){
-            case 1:
-                path = Loto.fileName;break;
+            case 1:path = Loto.fileName;
+                pathImg="resources/image/piece.png";
+                jeux="Loto";break;
             case 2:path="scoreboardBataille.ser";break;
             case 3:path="scoreboardSudoku.ser";break;
             case 4:path="scoreboardPoker.ser";break;
@@ -48,9 +46,75 @@ public class scoreBoardAffichage extends Application {
                 throw new IllegalStateException("Unexpected value: " + jeu);
         }
 
-        lJ=Partie.recupererScore(path);
-        System.out.println(lJ);
 
+        //affichage du nom du jeux
+        Label nomJeux=new Label(jeux);
+        nomJeux.setLayoutX(350);
+        nomJeux.setLayoutY(40);
+        nomJeux.setAlignment(Pos.CENTER);
+        root.getChildren().add(nomJeux);
+
+        lJ=Partie.recupererScore(path);
+
+        //entourage du tableau
+        Rectangle r1=new Rectangle(185,140,400,600);
+        r1.setStroke(Color.BLACK);
+        r1.setFill(Color.TRANSPARENT);
+        root.getChildren().add(r1);
+
+        for(int i =0;i<10;i++){
+
+            //affichage du rectangle en arrière plan
+            Rectangle r=new Rectangle(185,140+60*i,400,60);
+            r.setOpacity(0.5);
+            if(i%2==0)r.setFill(Color.GREY);
+            else r.setFill(Color.BEIGE);
+            r.setOnMouseEntered(e->
+                    r.setOpacity(0)
+            );
+
+            r.setOnMouseExited(e-> r.setOpacity(0.5)
+            );
+            root.getChildren().add(r);
+
+
+            //affichage du nom du Joueur
+            Label scoreJ =new Label(lJ.get(i).getNom());
+            scoreJ.setLayoutX(230);
+            scoreJ.setLayoutY(145+i*60);
+            root.getChildren().add(scoreJ);
+
+
+            //affichage du score
+            scoreJ =new Label(String.valueOf(((int)lJ.get(i).getScore())));
+            scoreJ.setLayoutX(480);
+            scoreJ.setLayoutY(147+i*60);
+            root.getChildren().add(scoreJ);
+
+
+
+
+
+        }
+
+        //affichage des 2 logos
+        Image image2 = new Image(pathImg, 100, 100, true, true);
+        ImageView imageView = new ImageView(image2);
+        imageView.setX(50);
+        imageView.setY(40);
+        root.getChildren().add(imageView);
+        image2 = new Image(pathImg, 100, 100, true, true);
+        imageView = new ImageView(image2);
+        imageView.setX(650);
+        imageView.setY(40);
+        root.getChildren().add(imageView);
+
+
+        Scene scene = new Scene(root, 800, 800);
+        scene.getStylesheets().add(getClass().getResource("../resources/FXML/styleScoreboard.css").toExternalForm());
+        stage.setScene(scene);
+        stage.resizableProperty().setValue(false);
+        stage.show();
 
 
 
