@@ -13,12 +13,12 @@ public class PartiePoker implements Partie {
 
 	private int blinde;
 	private int miseEnCours;
-	private int pot;
+	protected int pot;
 	private Stack<Carte> pile = new Stack<>();
 	public static JoueurPoker premierJoueur;
 	public static JoueurPoker joueurCourant;
 	public static ArrayList<JoueurPoker> listeJoueurs = new ArrayList<>();
-	private ArrayList<JoueurPoker> joueursCouches = new ArrayList<>();
+	protected ArrayList<JoueurPoker> joueursCouches = new ArrayList<>();
 	private ArrayList<Carte> communityCards = new ArrayList<>();
 
 	public int getBlinde() {
@@ -253,7 +253,7 @@ public class PartiePoker implements Partie {
 														// se sont couchés sauf un, il est, par défaut, le gagnant
 	}
 
-	private boolean searchPlayerInAllIn(ArrayList<JoueurPoker> allPlayers) { // indique si un joueur précédent a fait
+	protected boolean searchPlayerInAllIn(ArrayList<JoueurPoker> allPlayers) { // indique si un joueur précédent a fait
 																				// tapis
 		for (JoueurPoker player : allPlayers) {
 			if (player.isTapis())
@@ -262,7 +262,7 @@ public class PartiePoker implements Partie {
 		return false;
 	}
 
-	private void handleAllIn(JoueurPoker player, ArrayList<JoueurPoker> allPLayers) { // si deux joueurs font tapis,
+	protected void handleAllIn(JoueurPoker player, ArrayList<JoueurPoker> allPLayers) { // si deux joueurs font tapis,
 																						// garde le tapis le plus faible
 																						// et rend la somme superflue à
 																						// l'autre joueur
@@ -307,7 +307,7 @@ public class PartiePoker implements Partie {
 		}
 	}
 
-	private boolean sameBet() { // vérifie si tous les joueurs ont misé la même somme
+	protected boolean sameBet() { // vérifie si tous les joueurs ont misé la même somme
 		int mise = listeJoueurs.get(0).getMise();
 		for (JoueurPoker joueur : listeJoueurs) {
 			if (joueur.getMise() != mise)
@@ -378,7 +378,7 @@ public class PartiePoker implements Partie {
 		}
 	}
 
-	private void addCommunityCards() {
+	public void addCommunityCards() {
 		if (communityCards.isEmpty()) { // flop
 			for (int i = 0; i < 3; i++)
 				communityCards.add(pile.pop());

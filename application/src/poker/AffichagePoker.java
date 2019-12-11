@@ -8,10 +8,13 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
+import commun.Popups;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -85,6 +88,8 @@ public class AffichagePoker extends Application implements Initializable {
 	@FXML
 	public Button buttonMiser;
 	@FXML
+	public Button buttonTapis;
+	@FXML
 	public TextField lamise;
 
 	@FXML
@@ -95,6 +100,7 @@ public class AffichagePoker extends Application implements Initializable {
 	public Scene scene;
 
 	public static ArrayList<JoueurPoker> joueurs;
+	/////////////////////////////////////////////
 	public static PartiePoker pp;
 	public static int nbTour;
 
@@ -118,37 +124,6 @@ public class AffichagePoker extends Application implements Initializable {
 		}
 	}
 
-	public void handleMiser(ActionEvent Event) {
-		this.pp.nextTurn(true, 1);
-	}
-
-	public void handleCheck(ActionEvent Event) {
-		this.pp.nextTurn(true, 4);
-	}
-
-	// a faire
-	public void handleSuivre(ActionEvent Event) {
-		this.pp.nextTurn(true, 2);
-	}
-
-	public void handleCoucher(ActionEvent Event) {
-		this.pp.nextTurn(true, 3);
-	}
-
-	@Override
-	public void initialize(URL args0, ResourceBundle arg1) {
-		AffichagePoker.pp.initPile();
-		AffichagePoker.pp.setPots(200);
-		AffichagePoker.pp.giveCardsToPlayer(); // après la création de la pp dan sle menu, il faut la set pour
-												// l'affichage
-		try {
-		setDos();}
-		catch(IOException e) {}
-		actualiserPot();
-		afficherSommeJoueur();
-		actualiserTour();
-		actualiserMise();
-	}
 
 	public void actualiserPot() {
 		this.pot.setText("Le pot s'élève maintenant à :\n" + Integer.toString(AffichagePoker.pp.getPot()) + " euros !");
@@ -160,6 +135,10 @@ public class AffichagePoker extends Application implements Initializable {
 
 	public void actualiserMise() {
 		this.mise.setText("La mise actuelle est de : " + this.pp.getMiseEnCours() + "euros !");
+	}
+	
+	public void refreshAffichage() {
+		
 	}
 
 	public void handleAfficheDos(MouseEvent Event) throws FileNotFoundException {
@@ -220,11 +199,172 @@ public class AffichagePoker extends Application implements Initializable {
 
 	}
 
+	int indiceJoueurCourant = 0;
+	boolean lastPlayer = false;
+	
+	public void joueurSuivant() {
+		if(pp.joueursCouches.size() == (pp.getListeJoueurs().size() - 1)) finDuRound();
+		if(indiceJoueurCourant == pp.getListeJoueurs().size() - 1) indiceJoueurCourant = 0;
+		else indiceJoueurCourant++;
+		PartiePoker.joueurCourant = pp.getListeJoueurs().get(indiceJoueurCourant);
+		if(pp.sameBet() || (pp.joueursCouches.size() == (pp.getListeJoueurs().size() - 1))) lastPlayer = true;
+		if(lastPlayer) {
+			AffichagePoker.nbTour++;
+			if(nbTour == 1) pp.addCommunityCards();
+			if(nbTour == 2) pp.addCommunityCards();
+			if(nbTour == 3) pp.addCommunityCards();
+			lastPlayer = false;
+		}
+		if(nbTour > 3) pp.addCommunityCards();
+	}
+	
 	@FXML
 	public void handleEntrerMise(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER)
-			this.pp.joueurCourant.setMise(Menu.stringtoint2(this.lamise.getText())); // a faire
+		if (event.getCode() == KeyCode.ENTER) { PartiePoker.joueurCourant.setMise(Menu.stringtoint2(this.lamise.getText()));
+
+		int miseP = PartiePoker.joueurCourant.getMise();
+		
+		if (PartiePoker.joueurCourant.canPlay(pp.getMiseEnCours())) {
+			if (miseP < PartiePoker.joueurCourant.getSomme()) {
+				if (miseP >= (pp.getMiseEnCours() * 2)) {
+					if (PartiePoker.joueurCourant.isTapis()) { // surmiser un tapis revient simplement à
+															// suivre ce tapis
+						pp.pot += pp.getMiseEnCours() - miseP;
+						PartiePoker.joueurCourant.setSomme(PartiePoker.joueurCourant.getSomme()- (pp.getMiseEnCours()- miseP));
+						PartiePoker.joueurCourant.setMise(pp.getMiseEnCours());
+					} else {
+						PartiePoker.joueurCourant.setSomme(PartiePoker.joueurCourant.getSomme() - miseP);
+						PartiePoker.joueurCourant.setMise(miseP);
+						pp.setMiseEnCours(miseP);
+						pp.pot += miseP;
+					}
+				} else
+					Popups.alertPoker("La mise doit être au moins supérieure à deux fois la mise actuelle, qui est de "+ pp.getMiseEnCours(), paquet.getScene().getWindow());
+			} else
+				Popups.alertPoker("Vous n'avez pas les moyens de miser autant! Vous avez "+ PartiePoker.joueurCourant.getSomme(),paquet.getScene().getWindow());
+		} else {
+			Popups.alertPoker("Vous n'avez pas les moyens de miser ou de suivre! Veuillez effectuer un autre choix.",paquet.getScene().getWindow());
+		}
+		pp.getListeJoueurs().set(indiceJoueurCourant, PartiePoker.joueurCourant);
+		joueurSuivant();
+		actualiserPot();
+		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
+		afficherCarteCentre();
+		}
 	}
+	
+	@FXML
+	public void handleSuivre(Event event) {
+		if (PartiePoker.joueurCourant.canPlay(pp.getMiseEnCours())) {
+			if (PartiePoker.joueurCourant.getMise() == pp.getMiseEnCours()) { // le joueur a déjà suivi la mise en cours,
+																// il n'y a pas d'équilibrage à faire
+				pp.pot += pp.getMiseEnCours();
+				PartiePoker.joueurCourant.setSomme(PartiePoker.joueurCourant.getSomme() - pp.getMiseEnCours());
+			} else { // il y a un équilibrage à faire
+				pp.pot += (pp.getMiseEnCours() - PartiePoker.joueurCourant.getMise());
+				PartiePoker.joueurCourant.setSomme(PartiePoker.joueurCourant.getSomme() - (pp.getMiseEnCours() - PartiePoker.joueurCourant.getMise()));
+				PartiePoker.joueurCourant.setMise(pp.getMiseEnCours()); // le joueur se contente de miser suffisamment pour
+															// atteindre la mise en cours
+			}
+		} else Popups.alertPoker("Vous n'avez pas les moyens de miser ou de suivre! Veuillez effectuer un autre choix.", paquet.getScene().getWindow());
+		pp.getListeJoueurs().set(indiceJoueurCourant, PartiePoker.joueurCourant);
+		joueurSuivant();
+		actualiserPot();
+		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
+		afficherCarteCentre();
+	}
+	
+	@FXML
+	public void handleCoucher(Event event) {
+		pp.joueursCouches.add(PartiePoker.joueurCourant);
+		if(pp.getListeJoueurs().size() == pp.joueursCouches.size() + 1) lastPlayer = true;
+		joueurSuivant();
+		actualiserPot();
+		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
+		afficherCarteCentre();
+	}
+	
+	public void handleCheck(Event Event) {
+		//////
+	}
+	
+	@FXML
+	public void handleTapis(Event event) {
+		if (pp.searchPlayerInAllIn(pp.getListeJoueurs())) { // un joueur a déjà fait tapis
+			pp.handleAllIn(PartiePoker.joueurCourant, pp.getListeJoueurs());
+		} else {
+			pp.pot += PartiePoker.joueurCourant.getSomme();
+			PartiePoker.joueurCourant.setMise(PartiePoker.joueurCourant.getMise() + PartiePoker.joueurCourant.getSomme());
+			PartiePoker.joueurCourant.setSomme(0);
+			pp.setMiseEnCours(PartiePoker.joueurCourant.getMise());
+			PartiePoker.joueurCourant.setTapis(true);
+		}
+		pp.getListeJoueurs().set(indiceJoueurCourant, PartiePoker.joueurCourant);
+		joueurSuivant();
+		actualiserPot();
+		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
+		afficherCarteCentre();
+	}
+	
+	public void finDuRound() {
+		ArrayList<JoueurPoker>winners;
+        ArrayList<JoueurPoker>finalPlayers;
+        //ArrayList<JoueurPoker>quit;
+        
+        for(JoueurPoker player : pp.getListeJoueurs()){
+            player.setCombinationHand(player.createAllCombinations(pp.getCommunityCards()));    //on assigne à chaque joueur sa meilleure main
+            /*System.out.println(player.getNom() + ", vous avez la main suivante:" );
+            player.showHand();
+            System.out.println("Vous avez la combinaison: " + player.getCombinaison());
+            System.out.println();*/
+        }
+        
+        finalPlayers=new ArrayList<JoueurPoker>(pp.getListeJoueurs());
+        winners=new ArrayList<JoueurPoker>();
+        System.out.println(finalPlayers.toString());
+        Collections.sort(finalPlayers, JoueurPoker::compareCombination);      //on trie en fonction de la meilleure combinaison
+        Collections.reverse(finalPlayers);
+        winners.add(finalPlayers.get(0));
+        
+        for(JoueurPoker player:finalPlayers){
+            if(player.getCombinaison()==winners.get(0).getCombinaison() && !winners.contains(player)) {    //la deuxième condition permet d'éviter que le premier joueur, qui est déjà dans la liste, soit placé deux fois dedans
+                if (player.bestHand(player.getMainJoueur(), winners.get(0).getMainJoueur())==0)
+                    winners.add(player);
+                else{
+                    if (player.bestHand(player.getMainJoueur(),winners.get(0).getMainJoueur()) > 0) {
+                        winners.clear();
+                        winners.add(player);
+                    }
+                }
+            }
+        }
+        for(JoueurPoker j : pp.getListeJoueurs()) {
+        	if(j.getSomme() == 0) pp.getListeJoueurs().remove(j);
+        }
+        if(winners.size()>1){
+            String temp = new String("Les joueurs : ");
+            for(JoueurPoker player:winners){
+                temp = temp +(player.getNom())+" ";
+            }
+            temp = temp + "gagnent la manche!";
+            Popups.alertPoker(temp, paquet.getScene().getWindow());
+            for(JoueurPoker player:winners)
+                player.setSomme(player.getSomme()+(pp.getPot()/winners.size()));
+        }
+        else{
+        	Popups.alertPoker(winners.get(0).getNom() + " gagne la manche!", paquet.getScene().getWindow());
+            winners.get(0).setSomme(winners.get(0).getSomme()+pp.getPot());
+        }
+	}
+	
 
 	public void afficherCarteCentre() {
 		switch (AffichagePoker.nbTour) {
@@ -237,7 +377,7 @@ public class AffichagePoker extends Application implements Initializable {
 			this.carte3.setImage(carte3);
 			break;
 		case 2:
-			Image carte4 = new Image("resources/image/" + this.pp.getCommunityCards().get(3).toString() + ".png");
+			Image carte4 = new Image("resources/image/" + this.pp.getCommunityCards().get(3).toString() + ".png"); 
 			this.carte4.setImage(carte4);
 			break;
 		case 3:
@@ -302,6 +442,23 @@ public class AffichagePoker extends Application implements Initializable {
 
 	public static void setNbTour(int nbTour) {
 		AffichagePoker.nbTour = nbTour;
+	}
+	
+
+	@Override
+	public void initialize(URL args0, ResourceBundle arg1) {
+		AffichagePoker.pp.initPile();
+		AffichagePoker.pp.setPots(200);
+		AffichagePoker.pp.giveCardsToPlayer(); // aprés la création de la pp dan sle menu, il faut la set pour
+		//AffichagePoker.pp.addCommunityCards();	// l'affichage
+		AffichagePoker.nbTour = 0;
+		try {
+		setDos();}
+		catch(IOException e) {}
+		actualiserPot();
+		afficherSommeJoueur();
+		actualiserTour();
+		actualiserMise();
 	}
 
 	@Override

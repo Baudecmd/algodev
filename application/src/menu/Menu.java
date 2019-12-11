@@ -101,11 +101,11 @@ public class Menu extends Application {
 			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(2)));
 		if (Menu.nomsJoueurs.size() >= 4)
 			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(3))); // creation d'autant de joueur que possible
-		pp.joueurCourant = new JoueurPoker(pp.getListeJoueurs().get(0)); //le joueur courant au début d'une partie est le premier joueur
-		pp.premierJoueur = pp.getListeJoueurs().get(0); //le premier joueur est celui tout à gauche soit le joueur 1
+		PartiePoker.joueurCourant = new JoueurPoker(pp.getListeJoueurs().get(0)); //le joueur courant au début d'une partie est le premier joueur
+		PartiePoker.premierJoueur = pp.getListeJoueurs().get(0); //le premier joueur est celui tout à gauche soit le joueur 1
 		AffichagePoker ap = new AffichagePoker();
 		try {
-			ap.setPp(pp);
+			AffichagePoker.setPp(pp);
 			System.out.print(pp.getListeJoueurs().toString());
 			ap.start(temp);
 		} catch (Exception e) {
