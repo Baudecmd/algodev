@@ -195,6 +195,15 @@ public class Menu extends Application {
 			alert.show();
 			return;
 		} else {
+			if(nomJoueur.getText().length()>11) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("Le pseudo doit faire moins de 11 caractère !");
+				alert.initOwner(w);
+				alert.show();
+				nomJoueur.setText("");
+				return;
+				
+			}
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
