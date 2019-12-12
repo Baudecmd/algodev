@@ -74,7 +74,7 @@ public class Menu extends Application {
 	}
 
 /////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ic
+//Ajouter les mï¿½thodes pour lancer les parties ic
 	
 	public void buttonLoto() {
 		
@@ -92,7 +92,7 @@ public class Menu extends Application {
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
@@ -101,10 +101,16 @@ public class Menu extends Application {
 	public void buttonPoker() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
+	}
+
+	public void buttonScoreBoard(){
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+			selecScoreBoard sCB= new selecScoreBoard();
+			scb.start(stage2);
 	}
 
 	//Fini
@@ -123,8 +129,8 @@ public class Menu extends Application {
 	@FXML
 	public void handleNbJoueur(ActionEvent event) throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
-		// Vérif
-		System.out.println("Nombre de joueurs entré :" + nbJoueur.getText());
+		// Vï¿½rif
+		System.out.println("Nombre de joueurs entrï¿½ :" + nbJoueur.getText());
 		if (nbJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrer un nombre de joueurs !");
@@ -162,7 +168,7 @@ public class Menu extends Application {
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + Menu.i++ + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous ï¿½tes le joueur " + Menu.i++ + "!");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
