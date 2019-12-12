@@ -167,8 +167,8 @@ public class Affichage extends Application {
 			Label text = new Label();
 			text.setStyle("-fx-background-color:POWDERBLUE");
 			text.setText(jl.getNom());
-			text.setLayoutX(470*((int)(nbJoueur/4)));
-			text.setLayoutY((nbJoueur%4 )* 200  + 102);
+			text.setLayoutX(470*((int)(nbJoueur/4))+350);
+			text.setLayoutY((nbJoueur%4 )* 200  + 190);
 			root.getChildren().add(text);
 
 
