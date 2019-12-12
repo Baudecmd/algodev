@@ -162,10 +162,11 @@ public class Popups implements Initializable {
 	}
 	
 	public static void alertPoker(String message, Window w) {
-		Alert alert = new Alert(AlertType.ERROR);
+		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setContentText(message);
 		alert.initOwner(w);
 		alert.show();
+		return;
 	}
 
 	public static void main(String[] args) {

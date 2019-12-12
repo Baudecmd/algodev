@@ -310,7 +310,7 @@ public class PartiePoker implements Partie {
 	protected boolean sameBet() { // vérifie si tous les joueurs ont misé la même somme
 		int mise = listeJoueurs.get(0).getMise();
 		for (JoueurPoker joueur : listeJoueurs) {
-			if (joueur.getMise() != mise)
+			if ((joueur.getMise() != mise) && (!this.joueursCouches.contains(joueur)))
 				return false;
 		}
 		return true;
