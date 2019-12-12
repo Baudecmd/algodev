@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/commun/Grille.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/commun/Grille.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/loto/Tirage.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/loto/Tirage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/poker/Carte.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Carte.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/poker/Combinaisons.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Combinaisons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/sudoku/JeuSudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/sudoku/JeuSudoku.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/sudoku/templateSudoku.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/sudoku/templateSudoku.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +36,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -208,7 +204,27 @@
       <workItem from="1574978965302" duration="242000" />
       <workItem from="1575014943801" duration="7496000" />
       <workItem from="1575022691849" duration="138000" />
+      <workItem from="1576161410789" duration="622000" />
+      <workItem from="1576176073440" duration="2770000" />
+      <workItem from="1576182317889" duration="24000" />
+      <workItem from="1576182850311" duration="576000" />
+      <workItem from="1576189445590" duration="1268000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'poker' of gitlab.com:projet-algodev/projet-algodev into poker&#10;&#10;# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est&#10;# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.&#10;#&#10;# Les lignes commençant par '#' seront ignorées, et un message vide&#10;# abandonne la validation.">
+      <created>1576143320395</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1576143320395</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merge branch 'testloto' of gitlab.com:projet-algodev/projet-algodev into testloto&#10;&#10;Modification de la fonction initTab et ajout de la fonction setNumber afin de résoudre le bug de colonne vide du loto&#10;&#10;# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est&#10;# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.&#10;#&#10;# Les lignes commençant par '#' seront ignorées, et un message vide&#10;# abandonne la validation.">
+      <created>1576181932193</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1576181932193</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,11 +243,20 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'poker' of gitlab.com:projet-algodev/projet-algodev into poker&#10;&#10;# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est&#10;# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.&#10;#&#10;# Les lignes commençant par '#' seront ignorées, et un message vide&#10;# abandonne la validation." />
+    <MESSAGE value="Merge branch 'testloto' of gitlab.com:projet-algodev/projet-algodev into testloto&#10;&#10;Modification de la fonction initTab et ajout de la fonction setNumber afin de résoudre le bug de colonne vide du loto&#10;&#10;# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est&#10;# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.&#10;#&#10;# Les lignes commençant par '#' seront ignorées, et un message vide&#10;# abandonne la validation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'testloto' of gitlab.com:projet-algodev/projet-algodev into testloto&#10;&#10;Modification de la fonction initTab et ajout de la fonction setNumber afin de résoudre le bug de colonne vide du loto&#10;&#10;# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est&#10;# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.&#10;#&#10;# Les lignes commençant par '#' seront ignorées, et un message vide&#10;# abandonne la validation." />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="192" y="141" key="FileChooserDialogImpl" timestamp="1576139938527">
+    <state x="0" y="30" width="1213" height="738" key="CommitChangelistDialog2" timestamp="1576190889322">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="192" y="141" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1576139938527" />
+    <state x="0" y="30" width="1213" height="738" key="CommitChangelistDialog2/0.30.1366.738@0.30.1366.738" timestamp="1576190889322" />
+    <state x="192" y="141" key="FileChooserDialogImpl" timestamp="1576176524018">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="192" y="141" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1576176524018" />
     <state width="1298" height="175" key="GridCell.Tab.0.bottom" timestamp="1575022484334">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -248,10 +273,18 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state width="1298" height="175" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1575022484333" />
-    <state x="227" y="30" width="1026" height="710" key="SettingsEditor" timestamp="1576139947247">
+    <state x="227" y="30" width="1026" height="710" key="SettingsEditor" timestamp="1576176530866">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="227" y="30" width="1026" height="710" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1576139947247" />
+    <state x="227" y="30" width="1026" height="710" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1576176530866" />
+    <state x="282" y="125" key="Vcs.Push.Dialog.v2" timestamp="1576143333092">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="282" y="125" key="Vcs.Push.Dialog.v2/0.30.1366.738@0.30.1366.738" timestamp="1576143333092" />
+    <state x="479" y="321" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576181672606">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="479" y="321" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.30.1366.738@0.30.1366.738" timestamp="1576181672606" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1575016113929">
       <screen x="0" y="30" width="1366" height="738" />
     </state>

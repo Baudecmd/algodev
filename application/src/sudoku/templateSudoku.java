@@ -5,6 +5,10 @@ import commun.Grille;
 public class templateSudoku {
 	public final int nbSudoku = 3;
 
+	/**
+	 * Génère une grille de sudoku
+	 * @return Un coupleSudoku contenant la grille et sa solution
+	 */
 	public static coupleSudoku facile() {
 		coupleSudoku temp = new coupleSudoku();
 		switch((int)(Math.random()*5)) {
