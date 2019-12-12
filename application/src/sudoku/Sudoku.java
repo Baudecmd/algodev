@@ -17,17 +17,16 @@ public class Sudoku {
 		int random = (int)(Math.random()*5);
 		switch (difficulty) {
 		case 1:
-			//Sudoku.grille.setMatrice(templateSudoku.facile1.getTemplate().getMatrice());
 			Sudoku.grille.setMatrice(templateSudoku.facile(random).getTemplate().getMatrice());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.facile(random).getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.facile(random).getSolution().getMatrice());
 			break;
 		case 2:
-			Sudoku.grille.setMatrice(templateSudoku.moyen(random).template.getMatrice());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.moyen(random).solution.getMatrice());
+			Sudoku.grille.setMatrice(templateSudoku.moyen(random).getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.moyen(random).getSolution().getMatrice());
 			break;
 		case 3:
 			Sudoku.grille.setMatrice(templateSudoku.difficile(random).getTemplate().getMatrice());
-			Sudoku.grilleSolution.setMatrice(templateSudoku.difficile(random).getTemplate().getMatrice());
+			Sudoku.grilleSolution.setMatrice(templateSudoku.difficile(random).getSolution().getMatrice());
 			break;
 		}
 
