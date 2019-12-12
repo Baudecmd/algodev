@@ -3,10 +3,7 @@ package commun;
 import java.io.*;
 import java.util.Objects;
 
-public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur est caracterise par son nom/pseudo et son score
-    /**
-	 *
-	 */
+public class Joueur implements Serializable, Comparable<Joueur> {
 	private static final long serialVersionUID = -2511917305652687589L;
 	private String nom;
     private float score;
@@ -21,7 +18,10 @@ public class Joueur implements Serializable, Comparable<Joueur> { //Un Joueur es
     }
     public float getScore() { return score; }
 
-
+    /**
+     * Augmente le score du joueur
+     * @param scoreGagne quantité de score à ajouter
+     */
     void increaseScore(float scoreGagne) { //Augmente le score du joueur en fonction de l'entrée
         this.score += scoreGagne;
     }

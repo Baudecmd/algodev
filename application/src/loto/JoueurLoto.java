@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class JoueurLoto extends Joueur {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -2464103437009606435L;
 	private Grille grille;
     private List<Integer> cochee;
