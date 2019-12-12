@@ -43,6 +43,9 @@ public class Tirage {
         this.unusedTokens = unusedTokens;
     }
 
+    /**
+     * Sélectionne le prochain numéro tiré
+     */
     public void RandomToken(){
         Random randomVar=new Random();
         int index=randomVar.nextInt(unusedTokens.size());
@@ -50,6 +53,10 @@ public class Tirage {
         unusedTokens.remove(index);     //on supprime cet élément de la liste
     }
 
+    /**
+     * Renvoie le numéro suivant après l'avoir sélectionné
+     * @return Le numéro sélectionné
+     */
     public int getTokenToGame(){
         if(!unusedTokens.isEmpty()) {
             RandomToken();

@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/commun/Grille.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/commun/Grille.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/loto/Tirage.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/loto/Tirage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/Carte.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Carte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/poker/Combinaisons.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/Combinaisons.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/JoueurPoker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/poker/PartiePoker.java" afterDir="false" />
     </list>
@@ -53,7 +58,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PATH_TO_FX$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaLibs/javafx-sdk-13.0.1/lib" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -223,6 +228,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="192" y="141" key="FileChooserDialogImpl" timestamp="1576139938527">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="192" y="141" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1576139938527" />
     <state width="1298" height="175" key="GridCell.Tab.0.bottom" timestamp="1575022484334">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -239,6 +248,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state width="1298" height="175" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1575022484333" />
+    <state x="227" y="30" width="1026" height="710" key="SettingsEditor" timestamp="1576139947247">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="227" y="30" width="1026" height="710" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1576139947247" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1575016113929">
       <screen x="0" y="30" width="1366" height="738" />
     </state>

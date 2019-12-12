@@ -83,6 +83,9 @@ public class PartiePoker implements Partie {
         initPile();
     }
 
+    /**
+     * Initialise la pile de cartes
+     */
     private void initPile(){
         Carte temp;
         for(Couleurs c:Couleurs.values()){
@@ -94,7 +97,10 @@ public class PartiePoker implements Partie {
         Collections.shuffle(pile);
     }
 
-    public void newRound(){     //redéfinit les variables de classe qui doivent l'être en vue d'une prochaine manche
+    /**
+     * Redéfinit les variables de classe qui doivent l'être en vue d'une prochaine manche
+     */
+    public void newRound(){
         setPots(0);
         setPile(new Stack<>());
         initPile();
@@ -103,26 +109,19 @@ public class PartiePoker implements Partie {
         rotation();
     }
 
-    public void selectSmallBlind(){
-        Random playerIndex=new Random();
-        int index=playerIndex.nextInt(listeJoueurs.size());
-        listeJoueurs.get(index).setSmallBlind(true);
-    }
-
-    public void rotationInititale(){     //place la petite et la grosse blinde en tête de liste pour en faciliter l'accès
-        for(JoueurPoker joueur:listeJoueurs){
-            if(joueur.isSmallBlind()){
-                Collections.rotate(listeJoueurs, listeJoueurs.indexOf(joueur));
-            }
-        }
-    }
-
+    /**
+     * Fait une rotation d'un cran de la liste de joueurs
+     */
     private void rotation(){
         //la petite blinde a déjà été placée en tête de liste
         Collections.rotate(listeJoueurs, 1);    //pas besoin de vérifier si il y a plus d'un joueur car le poker ne peut pas être joué seul
     }
 
-    private void nextTurn(boolean preFlop) {     //effectue un tour de table des joueurs en lice
+    /**
+     * Effectue un tour de table des joueurs
+     * @param preFlop Le booléen précisant si le tour est le tour de Preflop ou non
+     */
+    private void nextTurn(boolean preFlop) {
         boolean check = true, loop, terminated,lastPlayer=false;
         int choix, mise;
         Scanner sc = new Scanner(System.in);
@@ -227,6 +226,11 @@ public class PartiePoker implements Partie {
         }while (!sameBet() && turnTable.size()!=1);        //tant que les joueurs n'ont pas tous mis la même mise dans le pot, le tour de mises ne s'arrête pas. Si tous les joueurs se sont couchés sauf un, il est, par défaut, le gagnant
     }
 
+    /**
+     * Indique si un joueur de la liste de joueurs a déjà fait tapis
+     * @param allPlayers La liste des joueurs
+     * @return Le booléen indiquant si un joueur est déjà en tapis ou non
+     */
     private boolean searchPlayerInAllIn(ArrayList<JoueurPoker>allPlayers){       //indique si un joueur précédent a fait tapis
         for(JoueurPoker player:allPlayers){
             if(player.isTapis())
@@ -235,6 +239,11 @@ public class PartiePoker implements Partie {
         return false;
     }
 
+    /**
+     * Gère la situation où deux joueurs ont fait tapis
+     * @param player Le joueur qui vient de faire tapis
+     * @param allPLayers La liste des joueurs
+     */
     private void handleAllIn(JoueurPoker player,ArrayList<JoueurPoker>allPLayers){     //si deux joueurs font tapis, garde le tapis le plus faible et rend la somme superflue à l'autre joueur
         int temp=player.getSomme();
         player.setMise(player.getMise()+player.getSomme());
@@ -268,7 +277,11 @@ public class PartiePoker implements Partie {
         }
     }
 
-    private boolean sameBet(){      //vérifie si tous les joueurs ont misé la même somme
+    /**
+     * Vérifie si tous les joueurs ont misé la même somme
+     * @return Indique si tous les joueurs ont misé la même somme ou non
+     */
+    private boolean sameBet(){
         int mise=listeJoueurs.get(0).getMise();
         for(JoueurPoker joueur:listeJoueurs){
             if(joueur.getMise()!=mise)
@@ -277,7 +290,11 @@ public class PartiePoker implements Partie {
         return true;
     }
 
-    private void verifyBlinds(ArrayList<JoueurPoker>turnTable){     //fonction qui gère les tours des deux joueurs gérant les blindes. Ils n'ont pas besoin de joueur, car pas le choix!
+    /**
+     * Effectue les tours des deux joueurs gérant les blindes
+     * @param turnTable La liste des joueurs
+     */
+    private void verifyBlinds(ArrayList<JoueurPoker>turnTable){
         JoueurPoker small=turnTable.get(0);
         JoueurPoker big=turnTable.get(1);
         if(small.getSomme()<=(blinde/2)){
@@ -328,7 +345,10 @@ public class PartiePoker implements Partie {
         }
     }
 
-    private void giveCardsToPlayer(){     //donne deux cartes à chaque joueur
+    /**
+     * Donne deux cartes à chaque joueur
+     */
+    private void giveCardsToPlayer(){
         int i;
         for(JoueurPoker joueur:listeJoueurs){
             for(i=0;i<2;i++)
@@ -336,6 +356,9 @@ public class PartiePoker implements Partie {
         }
     }
 
+    /**
+     * Ajoute une carte commune (ou 3 si c'est le tour de Flop)
+     */
     private void addCommunityCards(){
         if(communityCards.isEmpty()){   //flop
             for(int i=0;i<3;i++)
@@ -345,12 +368,19 @@ public class PartiePoker implements Partie {
             communityCards.add(pile.pop());     //turn ou river: on n'ajoute qu'une carte
     }
 
+    /**
+     * Montre les cartes communes
+     */
     private void showCommunityCards(){
         System.out.println("Les cartes communes sont:");
         for(Carte card:communityCards)
             System.out.println(card.getHauteur() + " de " + card.getCouleur());
     }
 
+    /**
+     * Vérifie si la condition de fin de partie est remplie
+     * @return La valeur booléenne indiquant si il reste suffisamment de joueurs pour continuer à jouer ou non
+     */
     public Boolean partieFinie(){
         //partie terminée s'il ne reste plus qu'un joueur
         return listeJoueurs.size() <= 1;

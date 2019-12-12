@@ -22,6 +22,11 @@ public enum Combinaisons {
         return value;
     }
 
+    /**
+     * Renvoie vrai si la combinaison considérée est meilleure que celle à laquelle elle est comparée
+     * @param other La combinaison à comparer
+     * @return La valeur booléenne correspondant à la comparaison
+     */
     public boolean isGreater(Combinaisons other){
         return value > other.getValue();
     }

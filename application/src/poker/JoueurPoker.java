@@ -85,10 +85,20 @@ public class JoueurPoker extends Joueur {
         this.tapis=player.tapis;
     }
 
+    /**
+     * Verifie si le joueur peut jouer la mise en cours de la partie
+     * @param miseEnCours La valeur entière de la mise en cours de la partie
+     * @return La valeur booléenne correspondant à la comparaison de la mise en cours avec la somme du joueur
+     */
     public boolean canPlay(int miseEnCours){
         return miseEnCours <= somme;
     }
 
+    /**
+     * Demande au joueur son choix d'action pour son tour
+     * @param hasChecked Le booléen indiquant si le check est possible
+     * @return La valeur entière correspondant au type de choix du joueur
+     */
     public int actionJoueur(boolean hasChecked){   //true: le joueur précédent a check
         int choix=0;
         boolean correctValue=true;
@@ -114,6 +124,11 @@ public class JoueurPoker extends Joueur {
         return choix;
     }
 
+    /**
+     * Verifie si la main est de couleur unie
+     * @param hand La liste des cartes de la main
+     * @return La valeur booléenne indiquant si la main est de couleur unie ou non
+     */
     private boolean memeCouleur(ArrayList<Carte>hand){
         Carte temp=hand.get(0);
         for(Carte a:hand){
@@ -123,6 +138,11 @@ public class JoueurPoker extends Joueur {
         return true;
     }
 
+    /**
+     * Renvoie le nombre de cartes maximum de même hauteur
+     * @param hand La liste des cartes de la main
+     * @return Le nombre entier de cartes de même hauteur
+     */
     private int nbCartesMemeHauteur(ArrayList<Carte>hand){      //renvoie le nombre de cartes semblables à la carte la plus présente dans la liste. Si il y a 4 deux, la fonction renverra 3
         int result=0,total,index,i;
         ArrayList<Carte>temp=new ArrayList<>(hand);
@@ -145,6 +165,11 @@ public class JoueurPoker extends Joueur {
         return result;
     }
 
+    /**
+     * Verifie si la main est une suite
+     * @param hand La liste des cartes de la main
+     * @return La valeur booléenne indiquant si la main est une suite ou non
+     */
     private boolean checkSuite(ArrayList<Carte>hand){
         int i,val1,val2;
         ArrayList<Carte>temp=new ArrayList<>(hand);
@@ -158,6 +183,11 @@ public class JoueurPoker extends Joueur {
         return true;
     }
 
+    /**
+     * Verifie si la main est un full
+     * @param hand La liste des cartes de la main
+     * @return La valeur booléenne indiquant si la main est un full ou non
+     */
     private boolean checkFull(ArrayList<Carte>hand){
         ArrayList<Carte>temp=new ArrayList<>(hand);
         ArrayList<Carte>triple=new ArrayList<>();
@@ -176,6 +206,11 @@ public class JoueurPoker extends Joueur {
         return temp.get(0).getHauteur() == temp.get(1).getHauteur();
     }
 
+    /**
+     * Verifie si la main est une double paire
+     * @param hand La liste des cartes de la main
+     * @return La valeur booléenne indiquant si la main est une double paire ou non
+     */
     private boolean checkDouble(ArrayList<Carte>hand){
         ArrayList<Carte>temp=new ArrayList<>(hand);
         ArrayList<Carte>paire=new ArrayList<>();
@@ -193,6 +228,10 @@ public class JoueurPoker extends Joueur {
         return temp.get(0).getHauteur() == temp.get(1).getHauteur() || temp.get(1).getHauteur() == temp.get(2).getHauteur();
     }
 
+    /**
+     * Attribue la meilleure main possible au joueur
+     * @param listCombinations La liste des mains possibles du joueur
+     */
     public void setCombinationHand(ArrayList<ArrayList<Carte>>listCombinations){
         Combinaisons result=Combinaisons.plus_haute;
         ArrayList<Carte>newHand=new ArrayList<>(listCombinations.get(0));
@@ -212,6 +251,11 @@ public class JoueurPoker extends Joueur {
         mainJoueur=newHand;
     }
 
+    /**
+     * Determine la combinaison correspondant à la main considérée
+     * @param hand La liste des cartes de la main
+     * @return La combinaison correspondant à la main
+     */
     public Combinaisons getCombinationHand(ArrayList<Carte>hand){
         Combinaisons result=Combinaisons.plus_haute;
         int memeHauteur=nbCartesMemeHauteur(hand);
@@ -262,6 +306,12 @@ public class JoueurPoker extends Joueur {
         return result;
     }
 
+    /**
+     * Compare les mains de deux joueurs
+     * @param firstHand La liste des cartes de la main du premier joueur
+     * @param secondHand La liste des cartes de la main du second joueur
+     * @return La valeur entière correspondant au résultat de la comparaison des deux mains
+     */
     public int bestHand(ArrayList<Carte>firstHand, ArrayList<Carte>secondHand){     //compare deux mains ayant la même combinaison
         int i;
         sortHand(firstHand);
@@ -329,6 +379,12 @@ public class JoueurPoker extends Joueur {
         return 0;
     }
 
+    /**
+     * Compare les brelans des deux joueurs
+     * @param firstHand La liste des cartes de la main du premier joueur
+     * @param secondHand La liste des cartes de la main du second joueur
+     * @return La valeur entière correspondant au résultat de la comparaison des deux mains
+     */
     public int checkBestBrelan(ArrayList<Carte>firstHand, ArrayList<Carte>secondHand){
         ArrayList<Carte>temp1=new ArrayList<>(firstHand);
         ArrayList<Carte>temp2=new ArrayList<>(secondHand);
@@ -360,6 +416,13 @@ public class JoueurPoker extends Joueur {
             return Integer.compare(brelan1.get(0).getHauteur().getValue(), brelan2.get(0).getHauteur().getValue());
     }
 
+    /**
+     * Compare les paires et doubles paires des deux joueurs
+     * @param firstHand La liste des cartes de la main du premier joueur
+     * @param secondHand La liste des cartes de la main du second joueur
+     * @param combination Le type de combinaison de la main des deux joueurs
+     * @return La valeur entière correspondant au résultat de la comparaison des deux mains
+     */
     public int checkBestPairs(ArrayList<Carte>firstHand, ArrayList<Carte>secondHand,Combinaisons combination){
         ArrayList<Carte>temp1=new ArrayList<>(firstHand);
         ArrayList<Carte>temp2=new ArrayList<>(secondHand);
@@ -435,6 +498,11 @@ public class JoueurPoker extends Joueur {
             return Integer.compare(firstPair1.get(0).getHauteur().getValue(), firstPair2.get(0).getHauteur().getValue());
     }
 
+    /**
+     * Crée toutes les mains possibles de la main du joueur avec les cartes communes de la partie
+     * @param communityCards Les cartes communes de la partie
+     * @return La liste des mains possibles
+     */
     public ArrayList<ArrayList<Carte>> createAllCombinations(ArrayList<Carte>communityCards){
         ArrayList<ArrayList<Carte>>listCombinations=new ArrayList<>();
         ArrayList<Carte>listeCartes;
@@ -477,6 +545,11 @@ public class JoueurPoker extends Joueur {
         return listCombinations;
     }
 
+    /**
+     * Elimine toutes les combinaisons déjà existantes
+     * @param listCombinations La liste de toutes les mains possibles
+     * @return La liste de toutes les mains possibles sans doublons
+     */
     private ArrayList<ArrayList<Carte>> eliminateDuplicates(ArrayList<ArrayList<Carte>>listCombinations){
         Set<ArrayList<Carte>>noDuplicates;
         ArrayList<ArrayList<Carte>>result;
@@ -489,28 +562,31 @@ public class JoueurPoker extends Joueur {
         return result;
     }
 
+    /**
+     * Compare les combinaisons de deux joueurs
+     * @param other Le joueur qui est comparé
+     * @return La valeur entière correspondant à la comparaison des combinaisons des deux joueurs
+     */
     public int compareCombination(JoueurPoker other){
-        if(this.combinaison.getValue()>other.getCombinaison().getValue())
-            return 1;
-            if(this.combinaison.getValue()==other.getCombinaison().getValue())
-                return 0;
-            return -1;
+        return Integer.compare(this.combinaison.getValue(), other.getCombinaison().getValue());
     }
 
+    /**
+     * Trie la main
+     * @param hand La liste des cartes de la main
+     */
     public void sortHand(ArrayList<Carte>hand){
         Collections.sort(hand, Carte::compareTo);
         Collections.reverse(hand);
     }
 
+    /**
+     * Montre la main du joueur
+     */
     public void showHand(){
         sortHand(mainJoueur);
         for(Carte current:mainJoueur)
             System.out.println(current.getHauteur() + " de " + current.getCouleur());
-    }
-
-    public void show(ArrayList<Carte>liste){
-        for(Carte a:liste)
-            System.out.println(a.getHauteur() + " de " + a.getCouleur());
     }
 
     public static void main(String[] args) {

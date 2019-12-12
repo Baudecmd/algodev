@@ -61,6 +61,11 @@ public class Grille {
         return true;
     }
 
+    /**
+     * Vérifie si une liste de numéros est contenue dans la matrice
+     * @param Liste La liste de numéros
+     * @return La valeur booléenne indiquant si tous les numéros sont contenus dans la matrice ou non
+     */
     public boolean isContained(List<Integer> Liste){
         for(int i=0;i<nbLignes;i++){
             for(int j=0;j<nbColonnes;j++){
@@ -71,6 +76,9 @@ public class Grille {
         return true;
     }
 
+    /**
+     * Initialise la grille de loto
+     */
     public void initTab(){
         int premiersNombres[][]={{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
         ArrayList<Integer> alreadyUsed=new ArrayList<>();
@@ -131,6 +139,12 @@ public class Grille {
         matrice=premiersNombres;
     }
 
+    /**
+     * Renvoie un nombre aléatoire
+     * @param low La valeur minimale
+     * @param high La valeur maximale
+     * @return Le nombre aléatoire
+     */
     private static int hasard(int low, int high){
         Random re = new Random();
         return re.nextInt(high-low)+low;

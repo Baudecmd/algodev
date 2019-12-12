@@ -28,6 +28,11 @@ public class Carte {
         this.hauteur = hauteur;
     }
 
+    /**
+     * Compare les cartes selon leur Hauteur, puis, si celle-ci est équivalente, les compare selon leur Couleur
+     * @param other La carte à comparer
+     * @return La valeur entière de la comparaison
+     */
     public int compareTo(Carte other){     //tri d'abord par la hauteur, puis par la couleur si c'est nécessaire. Permet d'éviter que deux cartes de même hauteur soient mal comparées
         if(this.hauteur==other.getHauteur())
             return getCouleur().compareTo(other.getCouleur());
