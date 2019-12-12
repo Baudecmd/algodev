@@ -20,7 +20,7 @@ public class selecScoreBoard extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Loto");
         Pane root = new Pane();
-        Scene scene = new Scene(root, 400, 400);
+        Scene scene = new Scene(root, 800, 800);
 
 
         //bouton Loto
@@ -28,8 +28,8 @@ public class selecScoreBoard extends Application {
         Button btn = new Button();
         root.getChildren().add(btn);
         btn.setText("Loto!");
-        btn.setLayoutY(200);
-        btn.setLayoutX(20);
+        btn.setLayoutY(600);
+        btn.setLayoutX(150);
         btn.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -45,8 +45,8 @@ public class selecScoreBoard extends Application {
         Button btn1 = new Button();
         root.getChildren().add(btn1);
         btn1.setText("BATAILLENAV!");
-        btn1.setLayoutY(200);
-        btn1.setLayoutX(80);
+        btn1.setLayoutY(400);
+        btn1.setLayoutX(150);
         btn1.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -62,8 +62,8 @@ public class selecScoreBoard extends Application {
         Button btn2 = new Button();
         root.getChildren().add(btn2);
         btn2.setText("SUDOKU!");
-        btn2.setLayoutY(200);
-        btn2.setLayoutX(200);
+        btn2.setLayoutY(400);
+        btn2.setLayoutX(550);
         btn2.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -79,8 +79,8 @@ public class selecScoreBoard extends Application {
         Button btn3 = new Button();
         root.getChildren().add(btn3);
         btn3.setText("POKER!");
-        btn3.setLayoutY(200);
-        btn3.setLayoutX(290);
+        btn3.setLayoutY(600);
+        btn3.setLayoutX(550);
         btn3.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -92,7 +92,7 @@ public class selecScoreBoard extends Application {
 
         });
 
-//        scene.getStylesheets().add(getClass().getResource("../resources/FXML/style2.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("../resources/FXML/styleScoreboard.css").toExternalForm());
 
         primaryStage.setScene(scene);
         primaryStage.show();
