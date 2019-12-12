@@ -44,6 +44,8 @@ public class AffichagePoker extends Application implements Initializable {
 	@FXML
 	public Label tour;
 	@FXML
+	public Label tour2;
+	@FXML
 	public Label pot;
 	@FXML
 	public Label mise;
@@ -91,6 +93,8 @@ public class AffichagePoker extends Application implements Initializable {
 	public Button buttonTapis;
 	@FXML
 	public TextField lamise;
+	@FXML
+	Button buttonOPTION;
 
 	@FXML
 	public Parent root;
@@ -102,6 +106,10 @@ public class AffichagePoker extends Application implements Initializable {
 	public static ArrayList<JoueurPoker> joueurs;
 	public static PartiePoker pp;
 	public static int nbTour;
+	
+	public void buttonOPTIONPressed() {
+		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Option de Jeu");
+	}
 	
 	public void setDosCarteCentre() {
 		Image dos = new Image("resources/image/dos.png");
@@ -138,11 +146,12 @@ public class AffichagePoker extends Application implements Initializable {
 	}
 
 	public void actualiserTour() {
-		this.tour.setText("C'est le tour de " + AffichagePoker.pp.joueurCourant.getNom() + " !");
+		this.tour2.setText("Tour du joueur :");
+		this.tour.setText(AffichagePoker.pp.joueurCourant.getNom() + " !");
 	}
 
 	public void actualiserMise() {
-		this.mise.setText("La mise actuelle est de : " + AffichagePoker.pp.getMiseEnCours() + "euros !");
+		this.mise.setText("La mise actuelle est de : " + AffichagePoker.pp.getMiseEnCours() + " euros !");
 	}
 	
 	public void refreshAffichage() {
@@ -226,7 +235,7 @@ public class AffichagePoker extends Application implements Initializable {
 		PartiePoker.joueurCourant = pp.getListeJoueurs().get(indiceJoueurCourant);
 
 		
-		if(pp.sameBet()/* || (pp.joueursCouches.size() + 1) == pp.getListeJoueurs().size()*/) lastPlayer = true;
+		if(pp.sameBet()) lastPlayer = true;
 		if(lastPlayer) {
 			System.out.println("Nouveau Tour !");
 			for(JoueurPoker j : pp.getListeJoueurs()) { 
@@ -237,8 +246,16 @@ public class AffichagePoker extends Application implements Initializable {
 			if(nbTour == 1) pp.addCommunityCards();
 			if(nbTour == 2) pp.addCommunityCards();
 			if(nbTour == 3) pp.addCommunityCards();
+			if(nbTour == 4) {
+				System.out.println("Oui");
+				showdown();
+			}
 			lastPlayer = false;
 		}
+	}
+	
+	public void showdown() {
+		
 	}
 	
 	@FXML
@@ -329,6 +346,7 @@ public class AffichagePoker extends Application implements Initializable {
 			PartiePoker.joueurCourant.setMise(PartiePoker.joueurCourant.getMise() + PartiePoker.joueurCourant.getSomme());
 			PartiePoker.joueurCourant.setSomme(0);
 			pp.setMiseEnCours(PartiePoker.joueurCourant.getMise());
+			Popups.alertPoker(PartiePoker.joueurCourant.getNom() + " fait tapis !", paquet.getScene().getWindow());
 			PartiePoker.joueurCourant.setTapis(true);
 		}
 		pp.getListeJoueurs().set(indiceJoueurCourant, PartiePoker.joueurCourant);
@@ -343,9 +361,13 @@ public class AffichagePoker extends Application implements Initializable {
 	public void finDuRound() {
 		ArrayList<JoueurPoker>winners;
         ArrayList<JoueurPoker>finalPlayers;
+        finalPlayers=new ArrayList<JoueurPoker>(pp.getListeJoueurs());
+        winners=new ArrayList<JoueurPoker>();
+        
         if(nbTour == 0) pp.addCommunityCards();
         ArrayList<JoueurPoker>quit;
         if(pp.getListeJoueurs().size() - pp.joueursCouches.size()  != 1) {
+        	Popups.alertPoker("C'est le showdown !", paquet.getScene().getWindow());
         for(JoueurPoker player : pp.getListeJoueurs()){
             player.setCombinationHand(player.createAllCombinations(pp.getCommunityCards()));    //on assigne à chaque joueur sa meilleure main
             /*System.out.println(player.getNom() + ", vous avez la main suivante:" );
@@ -354,8 +376,7 @@ public class AffichagePoker extends Application implements Initializable {
             System.out.println();*/
         }
         
-        finalPlayers=new ArrayList<JoueurPoker>(pp.getListeJoueurs());
-        winners=new ArrayList<JoueurPoker>();
+        
         System.out.println(finalPlayers.toString());
         Collections.sort(finalPlayers, JoueurPoker::compareCombination);      //on trie en fonction de la meilleure combinaison
         Collections.reverse(finalPlayers);
@@ -393,8 +414,8 @@ public class AffichagePoker extends Application implements Initializable {
             newRound();
         }
         }else {
-        	Popups.alertPoker(pp.getListeJoueurs().get(0).getNom() + " gagne la manche!", paquet.getScene().getWindow());
-        	pp.getListeJoueurs().get(0).setSomme(pp.getListeJoueurs().get(0).getSomme()+pp.getPot());
+        	Popups.alertPoker(finalPlayers.get(0).getNom() + " gagne la manche!", paquet.getScene().getWindow());
+        	finalPlayers.get(0).setSomme(finalPlayers.get(0).getSomme()+pp.getPot());
         	newRound();
         }
         quit=new ArrayList<>(pp.getListeJoueurs());
@@ -409,7 +430,6 @@ public class AffichagePoker extends Application implements Initializable {
                     victoire();
             }
 	}
-        newRound();
 	}
 
 	public void victoire() {
