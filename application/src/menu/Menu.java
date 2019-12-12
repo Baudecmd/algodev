@@ -50,6 +50,9 @@ public class Menu extends Application {
 	private Button entrerNbJoueur;
 	
 	@FXML
+	private Button credit;
+	
+	@FXML
 	private Button jouer;
 
 	@FXML
@@ -86,8 +89,8 @@ public class Menu extends Application {
 
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		//SelecGrille s= new SelecGrille();
-		//s.start(stage2);
+		SelecGrille s= new SelecGrille();
+		s.start(stage2);
 
 	}
 
@@ -136,7 +139,6 @@ public class Menu extends Application {
 	@FXML
 	public void handleNbJoueur() throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
-		// V�rif
 		boolean stop = false;
 		try {
 	        Double d = Double.parseDouble(nbJoueur.getText());
@@ -144,7 +146,6 @@ public class Menu extends Application {
 	    } catch (NumberFormatException nfe) {
 	        stop = true;
 	    }
-		System.out.println("Nombre de joueurs entr� :" + nbJoueur.getText());
 		if ((nbJoueur.getText().isEmpty()) || stop ) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
@@ -165,7 +166,7 @@ public class Menu extends Application {
 	
 	@FXML
 	public void handleLancerCredits(ActionEvent Event) throws IOException {
-		Stage temp = (Stage) this.jouer.getScene().getWindow();
+		Stage temp = (Stage) this.credit.getScene().getWindow();
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
@@ -262,6 +263,19 @@ public class Menu extends Application {
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/styleMenu.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
+	@FXML
+	Button menuPrincipal;
+
+	public void handleRetourMenu() {
+	        Stage stage = (Stage) menuPrincipal.getScene().getWindow();
+	        Menu m = new Menu();
+	        try {
+	            m.start(stage);
+	        } catch (Exception a) {
+	            a.printStackTrace();
+	        }
+	    }
+
 		
 
 	public void start(Stage stage) throws IOException {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -47,6 +48,7 @@
                   <Image url="@../image/mise.png" />
                </image>
             </ImageView>
+            <Button fx:id="menuPrincipal" id="rich-blue" alignment="CENTER" layoutX="432.0" layoutY="341.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" onAction="#handleRetourMenu" text="Menu Principal" />
          </children>
     </AnchorPane>
   </children>

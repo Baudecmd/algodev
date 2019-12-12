@@ -71,6 +71,7 @@ public class Grille {
 		}
 		return true;
 	}
+	
 
 	public void initTab() {
 		int premiersNombres[][] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
