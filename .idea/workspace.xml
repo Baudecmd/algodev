@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="680be8ee-a4fd-4bf4-a4a1-4024f10ab1ea" name="Default Changelist" comment="Embellissement du scoreboard, changement du système de chemin en cohésion avec le système mis en place">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/bin/loto/Affichage.class" beforeDir="false" afterPath="$PROJECT_DIR$/application/bin/loto/Affichage.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/projet-algodev-testloto" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/application" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -215,6 +215,7 @@
       <workItem from="1576051201027" duration="78000" />
       <workItem from="1576051579896" duration="20000" />
       <workItem from="1576103346673" duration="276000" />
+      <workItem from="1576141888939" duration="244000" />
     </task>
     <task id="LOCAL-00001" summary="-Ajout du scoreboard basique">
       <created>1574418957284</created>
@@ -263,11 +264,11 @@
       <screen x="86" y="27" width="1834" height="1053" />
     </state>
     <state x="536" y="161" width="860" height="814" key="CommitChangelistDialog2/86.27.1834.1053@86.27.1834.1053" timestamp="1575827019320" />
-    <state x="788" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1576103617630">
+    <state x="788" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1576141898270">
       <screen x="86" y="27" width="1834" height="1053" />
     </state>
     <state x="778" y="311" width="424" height="491" key="FileChooserDialogImpl/70.27.1850.1053@70.27.1850.1053" timestamp="1575017106618" />
-    <state x="788" y="311" width="424" height="491" key="FileChooserDialogImpl/86.27.1834.1053@86.27.1834.1053" timestamp="1576103617630" />
+    <state x="788" y="311" width="424" height="491" key="FileChooserDialogImpl/86.27.1834.1053@86.27.1834.1053" timestamp="1576141898270" />
     <state width="1578" height="258" key="GridCell.Tab.0.bottom" timestamp="1575016745095">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
