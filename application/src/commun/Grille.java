@@ -131,6 +131,93 @@ public class Grille {
         matrice=premiersNombres;
     }
 
+    public void initTab2(){
+        int i,j;
+        boolean loop;
+        int premiersNombres[][]={{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
+        ArrayList<Integer> alreadyUsed=new ArrayList<>();
+        int result,nbMis,tirage,count=0;
+        for(i=0;i<3;i++){
+            nbMis=0;
+            if(i<=1){       //cas des deux premières lignes
+                while(nbMis<5){
+                    result=hasard(0, 9);
+                    if(premiersNombres[i][result]==0){
+                        if(result==0){
+                            tirage=hasard(1+result*10,10+result*10);
+                        }
+                        else{
+                            if(result==8){
+                                tirage=hasard(result*10,11+result*10);
+                            }
+                            else{
+                                tirage=hasard(result*10,10+result*10);
+                            }
+                        }
+                        tirage=hasard(1+result*10,9+result*10);
+                        if(!alreadyUsed.contains(tirage)){
+                            alreadyUsed.add(tirage);
+                            premiersNombres[i][result]=tirage;
+                            nbMis++;
+                        }
+                    }
+                }
+            }
+            else{       //cas de la dernière ligne
+                for(j=0;j<5;j++){   //on empêche qu'une colonne soit vide
+                    if(premiersNombres[0][j]==0 && premiersNombres[1][j]==0){
+                        loop=false;
+                        count++;
+                        while(loop){
+                            if(j==0){
+                                tirage=hasard(1+j*10,10+j*10);
+                            }
+                            else{
+                                if(j==8){
+                                    tirage=hasard(j*10,11+j*10);
+                                }
+                                else{
+                                    tirage=hasard(j*10,10+j*10);
+                                }
+                            }
+                            tirage=hasard(1+j*10,9+j*10);
+                            if(!alreadyUsed.contains(tirage)){
+                                alreadyUsed.add(tirage);
+                                premiersNombres[i][j]=tirage;
+                                nbMis++;
+                                loop=true;
+                            }
+                        }
+                    }
+                }
+                nbMis=count;
+                while(nbMis<5){
+                    result=hasard(0, 9);
+                    if(premiersNombres[i][result]==0){
+                        if(result==0){
+                            tirage=hasard(1+result*10,10+result*10);
+                        }
+                        else{
+                            if(result==8){
+                                tirage=hasard(result*10,11+result*10);
+                            }
+                            else{
+                                tirage=hasard(result*10,10+result*10);
+                            }
+                        }
+                        tirage=hasard(1+result*10,9+result*10);
+                        if(!alreadyUsed.contains(tirage)){
+                            alreadyUsed.add(tirage);
+                            premiersNombres[i][result]=tirage;
+                            nbMis++;
+                        }
+                    }
+                }
+            }
+        }
+        matrice=premiersNombres;
+    }
+
     private static int hasard(int low, int high){
         Random re = new Random();
         return re.nextInt(high-low)+low;
