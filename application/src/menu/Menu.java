@@ -77,7 +77,9 @@ public class Menu extends Application {
 //Ajouter les m�thodes pour lancer les parties ic
 	
 	public void buttonLoto() {
-		
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+		selecScoreBoard sCB= new selecScoreBoard();
+		sCB.start(stage2);
 	}
 	
 
