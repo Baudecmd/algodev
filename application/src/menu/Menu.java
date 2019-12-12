@@ -162,6 +162,13 @@ public class Menu extends Application {
 		}
 		System.out.println(Menu.nbJoueurInt);
 	}
+	
+	@FXML
+	public void handleLancerCredits(ActionEvent Event) throws IOException {
+		Stage temp = (Stage) this.jouer.getScene().getWindow();
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
+		temp.setScene(new Scene(this.root));
+	}
 
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);

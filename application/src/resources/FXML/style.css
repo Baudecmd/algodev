@@ -12,16 +12,19 @@
     -fx-font-size: 25;
 }
 
-#label1 {
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-font-size: 20;
-}
 
 #label1 {
     -fx-text-fill: black;
     -fx-font-weight: bold;
-    -fx-font-size: 30;
+    -fx-font-size: 35;
+    -fx-font-family: "Arcadepix Plus";
+}
+
+
+#label2 {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 45;
     -fx-font-family: "Arcadepix Plus";
 }
 
