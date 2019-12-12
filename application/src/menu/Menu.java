@@ -62,20 +62,26 @@ public class Menu extends Application {
 
 	@FXML
 	private Label labelNomJoueur;
+	
+	/**Simple fonction de cast, d'un string en int d'une première façon
+	 */
 
 	public static void stringtoint(String s, int a) {
 		a = Integer.parseInt(s);
 	}
+	
+	/**Simple fonction de cast, d'un string en int d'une deuxième façon 
+	 */
 
 	public int stringtoint2(String s) {
 		int a = Integer.parseInt(s);
 		return a;
 	}
 
-/////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ic
 
-
+	/**Procédure permettant de lancer une nouvelle partie de loto
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
 		Affichage a = new Affichage();
@@ -83,7 +89,9 @@ public class Menu extends Application {
 
 	}
 
-
+	/**Procédure permettant de lancer une nouvelle partie de bataille navale
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -92,6 +100,9 @@ public class Menu extends Application {
 		alert.show();
 
 	}
+	/**Procédure permettant de lancer une nouvelle partie de poker
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 
 	public void buttonPoker() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
@@ -105,7 +116,9 @@ public class Menu extends Application {
 	}
 
 
-	//Fini
+	/**Procédure permettant de lancer une nouvelle partie de sudoku
+	 * à l'aide des infomations sur le joueur précédement rentrées
+	 */
 	public void buttonSudoku() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
 		JeuSudoku.nomsJoueurs = nomsJoueurs;
@@ -117,7 +130,9 @@ public class Menu extends Application {
 		}
 	}
 /////////////////////////////////////////
-
+	/**Procédure permettant de rentrer le nombre de joueur
+	 * on effectue un cast du string rentré afin de pouvoir manipuler ce nombre
+	 */
 	@FXML
 	public void handleNbJoueur(ActionEvent event) throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
@@ -140,13 +155,16 @@ public class Menu extends Application {
 		}
 		System.out.println(Menu.nbJoueurInt);
 	}
-
+	/**Procédure permettant d'afficher le nom du joueur venant d'être rentré
+	 */
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);
 		System.out.println(this.labelNomJoueur.getText());
 		this.labelNomJoueur.setText(s);
 	}
 
+	/**Procédure permettant de rentrer le nom des joueurs
+	 */
 	@FXML
 	public void handleNomsJoueurs(ActionEvent event) throws IOException, InterruptedException {
 		Window w = entrerNomJoueur.getScene().getWindow();
@@ -172,6 +190,10 @@ public class Menu extends Application {
 		nomJoueur.setText("");
 
 	}
+	
+	/**Procédure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
+	 * exemple on ne peut pas jouer au sudoku à plusieurs
+	 */
 
 	public void affichageJeu() {
 		try {
