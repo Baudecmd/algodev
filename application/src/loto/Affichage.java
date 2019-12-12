@@ -131,7 +131,7 @@ public class Affichage extends Application {
 
 		afficherTableau(root, l.getJoueurs(), l.getTiree());
 
-		Scene scene = new Scene(root, (((int)l.getJoueurs().size()/4)+1)*470, fenetreY);
+		Scene scene = new Scene(root, ((((int)l.getJoueurs().size()-1)/4)+1)*470, fenetreY);
 		scene.getStylesheets().add(getClass().getResource("../resources/FXML/loto.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -234,7 +234,7 @@ public class Affichage extends Application {
 	 */
 	public void ajouterCoche(Loto l,int x, int y){
 		if(l.getJoueurs().size()>3){
-			if(y<690){
+			if(y<780){
 				int j=(y-35)/200+4*((int)x/470);
 
 				x=(x-35-((470*((int)j/4))))/45;
