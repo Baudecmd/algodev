@@ -24,9 +24,9 @@
 					</font>
 
 				</Label>
-				<Button id="rich-blue" fx:id="entrerNbJoueur" layoutX="391.0" layoutY="186.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleNbJoueur" prefHeight="50.0" prefWidth="100.0" text="Entrer" textFill="#ab0000" />
-				<TextField id="nbJoueur" fx:id="nbJoueur" layoutX="153.0" layoutY="195.0" onKeyPressed="#handleEnterKey" />
-				<Label id="label1" alignment="CENTER" layoutX="114.0" layoutY="141.0" text="Entrez le nombre de joueurs !" textAlignment="CENTER" wrapText="false" />
+				<Button id="rich-blue" fx:id="entrerNbJoueur" layoutX="424.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleNbJoueur" prefHeight="50.0" prefWidth="100.0" text="Entrer" textFill="#ab0000" />
+				<TextField id="nbJoueur" fx:id="nbJoueur" layoutX="150.0" layoutY="228.0" onKeyPressed="#handleEnterKey" />
+				<Label id="label1" alignment="CENTER" layoutX="64.0" layoutY="164.0" text="Entrez le nombre de joueurs !" textAlignment="CENTER" wrapText="false" />
 			</children>
 		</AnchorPane>
 	</children>

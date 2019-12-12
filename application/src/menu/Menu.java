@@ -191,7 +191,7 @@ public class Menu extends Application {
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + Menu.i++ + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + Menu.i++ + " !");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
