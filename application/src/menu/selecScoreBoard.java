@@ -1,4 +1,4 @@
-package menu;
+ppackage menu;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,13 +23,21 @@ public class selecScoreBoard extends Application {
         Scene scene = new Scene(root, 800, 800);
 
 
+        //affichage de scoreboard
+        Label l=new Label("SCOREBOARD");
+        root.getChildren().add(l);
+        l.setLayoutY(90);
+        l.setLayoutX(150);
+        l.setStyle("-fx-font-size:80");
+
         //bouton Loto
 
         Button btn = new Button();
         root.getChildren().add(btn);
-        btn.setText("Loto!");
+        btn.setText("LOTO !");
         btn.setLayoutY(600);
-        btn.setLayoutX(150);
+        btn.setLayoutX(100);
+        btn.setStyle("-fx-font-size:40");
         btn.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -40,13 +48,17 @@ public class selecScoreBoard extends Application {
             }
 
         });
+
+
         //bouton bataille navale
 
         Button btn1 = new Button();
         root.getChildren().add(btn1);
-        btn1.setText("BATAILLENAV!");
+        btn1.setText("BATAILLE NAVALE !");
         btn1.setLayoutY(400);
-        btn1.setLayoutX(150);
+        btn1.setLayoutX(50);
+        btn1.setStyle("-fx-font-size:40");
+
         btn1.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -57,13 +69,17 @@ public class selecScoreBoard extends Application {
             }
 
         });
+
+
         //bouton sudoku
 
         Button btn2 = new Button();
         root.getChildren().add(btn2);
-        btn2.setText("SUDOKU!");
+        btn2.setText("SUDOKU !");
         btn2.setLayoutY(400);
         btn2.setLayoutX(550);
+        btn2.setStyle("-fx-font-size:40");
+
         btn2.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -78,9 +94,11 @@ public class selecScoreBoard extends Application {
 
         Button btn3 = new Button();
         root.getChildren().add(btn3);
-        btn3.setText("POKER!");
+        btn3.setText("POKER !");
         btn3.setLayoutY(600);
-        btn3.setLayoutX(550);
+        btn3.setLayoutX(500);
+        btn3.setStyle("-fx-font-size:40");
+
         btn3.setOnAction(event -> {
 
             scoreBoardAffichage a = new scoreBoardAffichage();
@@ -95,6 +113,9 @@ public class selecScoreBoard extends Application {
         scene.getStylesheets().add(getClass().getResource("../resources/FXML/styleScoreboard.css").toExternalForm());
 
         primaryStage.setScene(scene);
+        primaryStage.resizableProperty().setValue(false);
+
         primaryStage.show();
+
     }
 }
