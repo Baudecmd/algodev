@@ -38,6 +38,7 @@ public class Affichage extends Application {
 
 		Pane root = new Pane();
 		Button btn = new Button();
+		Button option = new Button();
 		Label text = new Label();
 		text.setLayoutX(550);
 		text.setLayoutY(160);
@@ -46,13 +47,21 @@ public class Affichage extends Application {
 
 		root.getChildren().add(text2);
 
+		option.setText("Option");
+		option.setLayoutX(85);
+		option.setLayoutY(nbJoueur* 200 + 60);
+		option.setOnAction((event2) ->{
+			Popups.options((Stage) option.getScene().getWindow(), "Option", "Option de Jeu");
+		});
+		root.getChildren().add(option);
+
 		btn.setText("Jouer");
 		btn.setLayoutX(85);
 		double fenetreY=0;
 		if(l.getJoueurs().size()>3){
 			btn.setLayoutY(820);
 			text2.setLayoutY(825);
-			fenetreY=880;
+			fenetreY=920;
 		} else	{
 			fenetreY=nbJoueur*200+80;
 			btn.setLayoutY(nbJoueur* 200 + 30);
@@ -85,10 +94,6 @@ public class Affichage extends Application {
 					});
 				}
 			}, 100, 13);
-
-
-
-
 
 
 

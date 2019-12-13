@@ -32,7 +32,7 @@ public class AffichageBN extends Application {
 	//bouton d'option
 	@FXML
 	Button buttonOPTION;
-	//Elements de la fenêtre
+	//Elements de la fenÃªtre
 	@FXML
 	private Scene scene;
 	@FXML
@@ -80,7 +80,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * gère l'affichage du bouton option
+	 * gére l'affichage du bouton option
 	 */
 	public void buttonOPTIONPressed() {
 		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Option de Jeu");
@@ -121,7 +121,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * permet de trier les id des bateaux pour éviter les bug dans le cas d'un placement des bateaux dans un ordre different que du plus petit au plus grand
+	 * permet de trier les id des bateaux pour Ã©viter les bug dans le cas d'un placement des bateaux dans un ordre different que du plus petit au plus grand
 	 */
 	private void sortBateaux() {
 		for (int i = 21; i < 26; i++) {
@@ -191,7 +191,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * ajoutent le bateau placé au joueur
+	 * ajoutent le bateau placÃ© au joueur
 	 *
 	 * @param joueur   joueur concerné
 	 * @param i        ligne du bateau
@@ -305,24 +305,24 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * gère l'affichage si il y a une erreur dans le placement
+	 * gére l'affichage si il y a une erreur dans le placement
 	 *
-	 * @param code =1 s'il y a des bateaux non placés =2 s'il y a des bateaux mal placés
+	 * @param code =1 s'il y a des bateaux non placÃ©s =2 s'il y a des bateaux mal placés
 	 */
 	private void erreurBN(int code) {
 		Window w = pane.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		if (code == 1)
-			alert.setContentText("Erreur dans le placement de vos bateaux, tous vos bateaux ne sont pas placés sur la grille");
+			alert.setContentText("Erreur dans le placement de vos bateaux, tous vos bateaux ne sont pas placÃ©s sur la grille");
 		else
-			alert.setContentText("Erreur dans le placement de vos bateaux, un de vos bateaux sort de la grille ou vos bateaux sont superposés");
+			alert.setContentText("Erreur dans le placement de vos bateaux, un de vos bateaux sort de la grille ou vos bateaux sont superposÃ©s");
 		alert.initOwner(w);
 		alert.show();
 	}
 
 	/**
 	 * Chargement des régles pour le placement des bateaux int n = 440;  taille de la Vbox; une case = 40*40px; il y a en tout 11 cases
-	 *
+	 * Associe un intervalle de pixel à une case de la GridPane
 	 * @param a
 	 * @param tailleBateau
 	 * @return
@@ -431,6 +431,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
+	 * Gestion de la detection du Drag and Drop
 	 * @param event
 	 */
 	@FXML
@@ -444,6 +445,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
+	 * Gestion de la fin du Drag and Drop
 	 * @param event
 	 */
 	@FXML
@@ -499,7 +501,7 @@ public class AffichageBN extends Application {
 	/**
 	 * permet d'initialiser le scoreboard et de lancer une partie de bataille navale
 	 *
-	 * @throws IOException s'il le fichier FXML de la bataille n'est pas trouvé
+	 * @throws IOException s'il le fichier FXML de la bataille n'est pas trouvÃ©
 	 */
 	private void partie() throws IOException {
 		Stage temp = (Stage) pane.getScene().getWindow();
@@ -512,9 +514,9 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * gère le tire effectué par un joueurr sur la case du bouton
+	 * gére le tire effectué par un joueur sur la case du bouton
 	 *
-	 * @param event levé lors d'un clique sur un bouton encore disponible de la grille de tire courante
+	 * @param event levé lors d'un clique sur un bouton encore disponible de la grille de tir courante
 	 */
 	public void tirer(MouseEvent event) {
 		Button button = (Button) event.getSource();
@@ -563,7 +565,7 @@ public class AffichageBN extends Application {
 	/**
 	 * affichage de la reussite ou non d'un tir sur la grille de tir et sur celle d'affichage de l'etat des bateau
 	 *
-	 * @param joueur le joueur ayant effectué le tir
+	 * @param joueur le joueur ayant effectuÃ© le tir
 	 * @param j      colonne du tir
 	 * @param i      ligne du tir
 	 * @param touche tir reussi ou non
@@ -603,7 +605,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * permet le remplissage de la grille de visionnage avec les bateaux obtenus à partir du joueur construit lors du placement
+	 * permet le remplissage de la grille de visionnage avec les bateaux obtenus Ã  partir du joueur construit lors du placement
 	 *
 	 * @param event clique sur l'un des onglet deroulant de visionnage des bateaux
 	 */
@@ -674,14 +676,14 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * gère la fin de partie en affichant une fenêtre de victoire
+	 * gére la fin de partie en affichant une fenÃªtre de victoire
 	 */
 	private void partieFinie() {
 		Joueur gagnant = new Joueur(bataille.retournerGagnant().getNom());
 		Partie.ajouterVictoire(bataille.getFileName(), gagnant);
 		ArrayList<Joueur> scores = Partie.recupererScore(bataille.getFileName());
 		Popups.nom = gagnant.getNom();
-		Popups.score = "Vous avez gagné " + (int) (scores.get(scores.indexOf(gagnant)).getScore()) + " parties.";
+		Popups.score = "Vous avez gagnÃ© " + (int) (scores.get(scores.indexOf(gagnant)).getScore()) + " parties.";
 		try {
 			Popups.victoire((Stage) this.bateauxJ1.getScene().getWindow());
 		} catch (Exception e) {

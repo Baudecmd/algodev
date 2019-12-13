@@ -111,6 +111,10 @@ public class AffichagePoker extends Application implements Initializable {
 		Popups.options((Stage) this.buttonOPTION.getScene().getWindow(), "Option", "Option de Jeu");
 	}
 	
+	/** 
+	 * Procédure qui affiche le dos des cartes du centre, sert à l'initialisation
+	 */
+	
 	public void setDosCarteCentre() {
 		Image dos = new Image("resources/image/dos.png");
 		this.carte1.setImage(dos);
@@ -119,6 +123,10 @@ public class AffichagePoker extends Application implements Initializable {
 		this.carte4.setImage(dos);
 		this.carte5.setImage(dos);		
 	}
+	
+	/**
+	 * Procédure qui affiche l'argent restant des joueurs, sert à l'actualisation
+	 */
 
 	public void afficherSommeJoueur() {
 		if (this.pp.getListeJoueurs().size() >= 1) {
@@ -140,15 +148,22 @@ public class AffichagePoker extends Application implements Initializable {
 		}
 	}
 
-
+/**
+ * Procédure actualisant le pot
+ */
 	public void actualiserPot() {
 		this.pot.setText("Le pot s'élève maintenant à :\n" + Integer.toString(AffichagePoker.pp.getPot()) + " euros !");
 	}
-
+	/**
+	 * Procédure permettant d'afficher quel joueur doit jouer
+	 */
 	public void actualiserTour() {
 		this.tour2.setText("Tour du joueur :");
 		this.tour.setText(AffichagePoker.pp.joueurCourant.getNom() + " !");
 	}
+	/**
+	 * Procédure actualisant la mise en jeu
+	 */
 
 	public void actualiserMise() {
 		this.mise.setText("La mise actuelle est de : " + AffichagePoker.pp.getMiseEnCours() + " euros !");
@@ -157,6 +172,9 @@ public class AffichagePoker extends Application implements Initializable {
 	public void refreshAffichage() {
 		
 	}
+	/**
+	 * Procédure affichant le dos des cartes du joueur courant une fois qu'il clique (après qu'il les a retourner)
+	 */
 
 	public void handleAfficheDos(MouseEvent Event) throws FileNotFoundException {
 		Image dos = new Image("resources/image/dos.png");
@@ -189,6 +207,10 @@ public class AffichagePoker extends Application implements Initializable {
 
 		}
 	}
+	
+	/**
+	 * Procédure affichant le dos des cartes des joueurs, permet d'initialiser un tour
+	 */
 
 	public void setDos() throws FileNotFoundException {
 		Image dos = new Image("resources/image/dos.png");
@@ -435,6 +457,10 @@ public class AffichagePoker extends Application implements Initializable {
 	public void victoire() {
 		System.out.println("Le joueur "+pp.getListeJoueurs().get(0)+" gagne la partie !!!!!");
 	}
+	
+	/**
+	 * Procédure permettant d'afficher les cartes au centre en fonction du nombre de tour
+	 */
 
 	public void afficherCarteCentre() {
 		switch (AffichagePoker.nbTour) {
@@ -458,6 +484,11 @@ public class AffichagePoker extends Application implements Initializable {
 		}
 
 	}
+	/**
+	 * Procédure permettant d'afficher les cartes du joueur si celui ci clique dessus Ou s'il essaye de voir sur d'autres cartes
+	 * 
+	 * 
+	 */
 
 	public void handleAfficheCarteJoueur(MouseEvent Event) throws FileNotFoundException {
 		switch (this.pp.getListeJoueurs().indexOf(this.pp.joueurCourant)) {

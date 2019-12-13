@@ -41,6 +41,12 @@ import javafx.scene.input.MouseEvent;
 public class Popups implements Initializable {
 	static Timeline timeline;
 
+	/**
+	 * Génére la fenetre des options
+	 * @param stage
+	 * @param titre de la fenetre
+	 * @param message contenu dans la fenetre
+	 */
 	public static void options(Stage stage, String titre, String message) {
 		if (timeline != null)
 			timeline.pause();
@@ -79,22 +85,6 @@ public class Popups implements Initializable {
 			}
 		});
 		
-		/*Button recommencer = new Button("Recommencer");
-		recommencer.setOnAction(e -> {
-			window.close();//
-			resetTimer();
-			if (timeline != null)
-				timeline.stop();
-			// Retour au menu principal
-			MenuSudoku m = new MenuSudoku();
-			Menu.nomsJoueurs.clear();
-			try {
-				m.start(stage);
-			} catch (Exception a) {
-				a.printStackTrace();
-			}
-		});*/
-
 		VBox layout = new VBox(10);
 		layout.getChildren().addAll(label, retour, quitter);
 		layout.setAlignment(Pos.CENTER);
@@ -115,7 +105,6 @@ public class Popups implements Initializable {
  * Code originel venant de SatyaSnehith
  * Lien vers son github : https://gist.github.com/SatyaSnehith
  */
-//Timer utile pour le Sudoku
 	static int mins = 0, secs = 0, millis = 0;
 
 	public static void resetTimer() {
@@ -162,7 +151,9 @@ public class Popups implements Initializable {
 		scoreGagnant.setText(score);
 
 	}
-
+	/**
+	 * Gestion d'un Bouton renvoyant au menu principal
+	 */
 	public void menuPrincipalPressed() {
 		Stage stage = (Stage) menuPrincipal.getScene().getWindow();
 		Menu m = new Menu();
@@ -174,6 +165,11 @@ public class Popups implements Initializable {
 		}
 	}
 
+	/**
+	 * Génére la fenetre de victoire
+	 * @param primaryStage
+	 * @throws Exception si le fichier est introuvable
+	 */
 	public static void victoire(Stage primaryStage) throws Exception {
 		try {
 			Parent root = FXMLLoader.load(Popups.class.getResource("../resources/FXML/victoire.fxml"));
@@ -190,6 +186,11 @@ public class Popups implements Initializable {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Génére une fenetre de dialogue pour le poker
+	 * @param message 
+	 * @param w fenetre courante
+	 */
 	public static void alertPoker(String message, Window w) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setContentText(message);
@@ -198,6 +199,9 @@ public class Popups implements Initializable {
 		return;
 	}
 	
+	/*
+	 * Génére la fenetre de transition entre le joueur 1 et 2 de la bataille navale
+	 */
 	public static void joueurDeux(Stage stage, String titre, String message) {
 		Stage window = new Stage();
 
