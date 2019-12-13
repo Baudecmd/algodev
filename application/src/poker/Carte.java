@@ -28,16 +28,16 @@ public class Carte {
         this.hauteur = hauteur;
     }
 
-//    public int compareTo(Carte autre){
-//        return getHauteur().compareTo(autre.getHauteur());
-//    }
-
-    public int compareTo(Carte other){      //pour faire le tri en fonction de la hauteur ET de la couleur; nécessaire à la fonction d'élimination des doublons
-        return getHauteur().compareTo(other.getHauteur())+getCouleur().compareTo(other.getCouleur());
-    }
-
-    public int compareTo2(Carte other){     //pour faire le tri en fonction de la hauteur uniquement, pour permettre un affichage lisible
-        return getHauteur().compareTo(other.getHauteur());
+    /**
+     * Compare les cartes selon leur Hauteur, puis, si celle-ci est équivalente, les compare selon leur Couleur
+     * @param other La carte à comparer
+     * @return La valeur entière de la comparaison
+     */
+    public int compareTo(Carte other){     //tri d'abord par la hauteur, puis par la couleur si c'est nécessaire. Permet d'éviter que deux cartes de même hauteur soient mal comparées
+        if(this.hauteur==other.getHauteur())
+            return getCouleur().compareTo(other.getCouleur());
+        else
+            return getHauteur().compareTo(other.getHauteur());
     }
 
     @Override

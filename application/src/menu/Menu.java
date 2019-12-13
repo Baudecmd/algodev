@@ -17,6 +17,7 @@ import loto.Affichage;
 import loto.SelecGrille;
 import sudoku.JeuSudoku;
 import sudoku.MenuSudoku;
+import poker.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,7 +36,7 @@ public class Menu extends Application {
 
 	public static int nbJoueurInt;
 	public static int nbJoueurInt2;
-	public static int i = 1 ;
+	public static int i = 1;
 
 	@FXML
 	private TextField nbJoueur;
@@ -69,24 +70,25 @@ public class Menu extends Application {
 
 	@FXML
 	private Label labelNomJoueur;
+	
+	/**Simple fonction de cast, d'un string en int d'une première façon
+	 */
 
 	public static void stringtoint(String s, int a) {
 		a = Integer.parseInt(s);
 	}
+	
+	/**Simple fonction de cast, d'un string en int d'une deuxième façon 
+	 */
 
-	public int stringtoint2(String s) {
+	public static int stringtoint2(String s) {
 		int a = Integer.parseInt(s);
 		return a;
 	}
 
-/////////////////////////////////////////
-//Ajouter les mï¿½thodes pour lancer les parties ic
-	
-	public void buttonLoto() {
-		
-	}
-	
-
+	/**Procédure permettant de lancer une nouvelle partie de loto
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
 		SelecGrille s= new SelecGrille();
@@ -94,38 +96,59 @@ public class Menu extends Application {
 
 	}
 
-
+	/**Procédure permettant de lancer une nouvelle partie de bataille navale
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en dï¿½veloppement");
+		alert.setContentText("Jeu encore en developpement");
 		alert.initOwner(w);
 		alert.show();
 
 	}
+	/**Procédure permettant de lancer une nouvelle partie de poker
+	 * à l'aide des infomations sur les joueurs précédement rentrées
+	 */
 
 	public void buttonPoker() {
-		Window w = loto.getScene().getWindow();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en dï¿½veloppement");
-		alert.initOwner(w);
-		alert.show();
-
+		PartiePoker pp = new PartiePoker(5);
+		Stage temp = (Stage) this.loto.getScene().getWindow();
+		if (Menu.nomsJoueurs.size() >= 1)
+			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(0)));
+		if (Menu.nomsJoueurs.size() >= 2)
+			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(1)));
+		if (Menu.nomsJoueurs.size() >= 3)
+			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(2)));
+		if (Menu.nomsJoueurs.size() >= 4)
+			pp.getListeJoueurs().add(new JoueurPoker(Menu.nomsJoueurs.get(3))); // creation d'autant de joueur que possible
+		PartiePoker.joueurCourant = new JoueurPoker(pp.getListeJoueurs().get(0)); //le joueur courant au dÃ©but d'une partie est le premier joueur
+		PartiePoker.premierJoueur = pp.getListeJoueurs().get(0); //le premier joueur est celui tout Ã  gauche soit le joueur 1
+		AffichagePoker ap = new AffichagePoker();
+		try {
+			AffichagePoker.setPp(pp);
+			System.out.print(pp.getListeJoueurs().toString());
+			ap.start(temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	//Fini
+	/**Procédure permettant de lancer une nouvelle partie de sudoku
+	 * à l'aide des infomations sur le joueur précédement rentrées
+	 */
 	public void buttonSudoku() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
 		JeuSudoku.nomsJoueurs = nomsJoueurs;
 		MenuSudoku m = new MenuSudoku();
 		try {
 			m.start(temp);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 /////////////////////////////////////////
-	
+
 	@FXML
 	public void handleEnterKey(KeyEvent event) {
 		if(event.getCode() == KeyCode.ENTER)
@@ -135,7 +158,9 @@ public class Menu extends Application {
 				e.printStackTrace();
 			}
 	}
-
+	/**Procédure permettant de rentrer le nombre de joueur
+	 * on effectue un cast du string rentré afin de pouvoir manipuler ce nombre
+	 */
 	@FXML
 	public void handleNbJoueur() throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
@@ -147,6 +172,9 @@ public class Menu extends Application {
 	        stop = true;
 	    }
 		if ((nbJoueur.getText().isEmpty()) || stop ) {
+		// Vï¿½rif
+		System.out.println("Nombre de joueurs entrÃ© :" + nbJoueur.getText());
+		if (nbJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
@@ -163,14 +191,14 @@ public class Menu extends Application {
 		}
 		System.out.println(Menu.nbJoueurInt);
 	}
-	
 	@FXML
 	public void handleLancerCredits(ActionEvent Event) throws IOException {
 		Stage temp = (Stage) this.credit.getScene().getWindow();
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
-
+	/**Procédure permettant d'afficher le nom du joueur venant d'être rentré
+	 */
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);
 		System.out.println(this.labelNomJoueur.getText());
@@ -186,6 +214,8 @@ public class Menu extends Application {
 			}
 	}
 
+	/**Procédure permettant de rentrer le nom des joueurs
+	 */
 	@FXML
 	public void handleNomsJoueurs() throws IOException, InterruptedException {
 		Window w = entrerNomJoueur.getScene().getWindow();
@@ -208,7 +238,7 @@ public class Menu extends Application {
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + Menu.i++ + " !");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + this.i++ + " !");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
@@ -220,6 +250,10 @@ public class Menu extends Application {
 		nomJoueur.setText("");
 
 	}
+	
+	/**Procédure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
+	 * exemple on ne peut pas jouer au sudoku à plusieurs
+	 */
 
 	public void affichageJeu() {
 		try {

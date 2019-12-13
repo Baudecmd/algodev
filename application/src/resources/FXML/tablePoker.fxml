@@ -2,14 +2,18 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="CENTER" prefHeight="700.0" prefWidth="1100.0" stylesheets="@poker.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.affichagePoker">
+<GridPane alignment="CENTER" prefHeight="714.0" prefWidth="1118.0" stylesheets="@poker.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.AffichagePoker">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="346.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="467.0" />
@@ -24,75 +28,166 @@
    <children>
       <HBox alignment="CENTER">
          <children>
-            <Label fx:id="argent1" alignment="CENTER" text="Argent joueur 1" />
+            <Pane prefHeight="164.0" prefWidth="330.0">
+               <children>
+                  <Label fx:id="argent1" alignment="CENTER" layoutX="11.0" layoutY="67.0" prefHeight="30.0" prefWidth="315.0" text="Argent joueur 1" />
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="145.0" layoutY="113.0" rotate="270.0">
+                     <image>
+                        <Image url="@../image/fleche2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <HBox alignment="CENTER" GridPane.columnIndex="1">
+      <HBox alignment="CENTER" spacing="15.0" GridPane.columnIndex="1">
          <children>
-            <ImageView fx:id="carte1j2" fitHeight="143.0" fitWidth="93.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte2j2" fitHeight="143.0" fitWidth="93.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="carte1j2" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true">
+              </ImageView>
+            <ImageView fx:id="carte2j2" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true">
+              </ImageView>
          </children>
       </HBox>
       <HBox alignment="CENTER" GridPane.columnIndex="2">
          <children>
-            <Label fx:id="argent2" text="Argent joueur 2" />
+            <Pane prefHeight="164.0" prefWidth="328.0">
+               <children>
+                  <Label fx:id="argent2" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="67.0" prefHeight="30.0" prefWidth="315.0" textAlignment="CENTER" />
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="144.0" layoutY="97.0">
+                     <image>
+                        <Image url="@../image/fleche2.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="buttonOPTION" layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonOPTIONPressed" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="29.0">
+                           <image>
+                              <Image url="@../image/option.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <HBox alignment="CENTER" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <ImageView fx:id="carte1" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte2" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte3" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte4" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte5" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="carte1" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="carte2" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="carte3" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="carte4" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="carte5" fitHeight="150.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+            </ImageView>
          </children>
       </HBox>
-      <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <HBox alignment="CENTER" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <ImageView fx:id="carte1j4" fitHeight="158.0" fitWidth="114.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte2j4" fitHeight="157.0" fitWidth="103.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="carte1j4" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true">
+              </ImageView>
+            <ImageView fx:id="carte2j4" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
          </children>
       </HBox>
       <VBox alignment="CENTER" GridPane.rowIndex="1">
          <children>
-            <ImageView fx:id="carte1j1" fitHeight="92.0" fitWidth="158.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte2j1" fitHeight="92.0" fitWidth="158.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="carte1j1" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               </ImageView>
+            <ImageView fx:id="carte2j1" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               </ImageView>
          </children>
       </VBox>
       <HBox alignment="CENTER" prefHeight="164.0" prefWidth="346.0" GridPane.rowIndex="2">
          <children>
-            <Label fx:id="argent4" text="Argent joueur 4" />
+            <Pane prefHeight="165.0" prefWidth="323.0">
+               <children>
+                  <Label fx:id="argent4" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="68.0" prefHeight="30.0" prefWidth="315.0" />
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="142.0" layoutY="33.0" rotate="180.0">
+                     <image>
+                        <Image url="@../image/fleche2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="118.0" prefWidth="347.0" GridPane.rowIndex="3">
+      <HBox alignment="CENTER" prefHeight="118.0" prefWidth="347.0" spacing="15.0" GridPane.rowIndex="3">
          <children>
-            <Button id="buttonPoker" fx:id="buttonSuivre" mnemonicParsing="false" onAction="#handleSuivre" text="suivre" />
-            <Button id="buttonPoker" fx:id="buttonCoucher" mnemonicParsing="false" onAction="#handleCoucher" text="passer" />
-            <Button id="buttonPoker" fx:id="buttonCheck" mnemonicParsing="false" onAction="#handleCheck" text="check" />
+            <Button id="buttonPoker" fx:id="buttonSuivre" mnemonicParsing="false" onAction="#handleSuivre" text="Suivre" />
+            <Button id="buttonPoker" fx:id="buttonCoucher" mnemonicParsing="false" onAction="#handleCoucher" text="Se Coucher" />
+            <Button id="buttonPoker" fx:id="buttonCheck" mnemonicParsing="false" onAction="#handleCheck" text="Check" />
          </children>
       </HBox>
-      <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <VBox alignment="CENTER" prefHeight="252.0" prefWidth="327.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <ImageView fx:id="carte1j3" fitHeight="92.0" fitWidth="158.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="carte2j3" fitHeight="92.0" fitWidth="158.0" onMousePressed="#handleAfficheCarte" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="carte1j3" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               </ImageView>
+            <ImageView fx:id="carte2j3" fitHeight="150.0" fitWidth="100.0" onMousePressed="#handleAfficheCarteJoueur" onMouseReleased="#handleAfficheDos" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               </ImageView>
          </children>
       </VBox>
       <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <children>
-            <Label fx:id="argent3" text="Argent joueur 3" />
+            <Pane prefHeight="165.0" prefWidth="296.0">
+               <children>
+                  <Label fx:id="argent3" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="68.0" prefHeight="30.0" prefWidth="284.0" textAlignment="CENTER" />
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="128.0" layoutY="17.0" rotate="90.0">
+                     <image>
+                        <Image url="@../image/fleche2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <HBox GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <VBox GridPane.columnIndex="2" GridPane.rowIndex="3">
          <children>
             <Label fx:id="mise" text="Argent mis en jeu" />
-            <Label fx:id="pot" text="pot" />
+            <Label fx:id="pot" alignment="TOP_LEFT" prefHeight="97.0" prefWidth="333.0" text="Pot" />
+            <TextField fx:id="lamise" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleEntrerMise" prefHeight="25.0" prefWidth="95.0" promptText="mise" />
          </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <ImageView fx:id="paquet" fitHeight="92.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true" />
-            <Button id="buttonMiser" fx:id="buttonMiser" mnemonicParsing="false" stylesheets="@poker.css" text="miser" />
-            <Label fx:id="tour" text="Tour du joueur " />
+            <ImageView fx:id="paquet" fitHeight="122.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@../image/dos.png" />
+               </image>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" height="0.0" radius="10.68" width="44.72" />
+               </effect>
+            </ImageView>
+            <Pane>
+               <children>
+                  <Button id="buttonMiser" fx:id="buttonMiser" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#handleEntrerMise" stylesheets="@poker.css" text="Miser" />
+                  <Button id="buttonMiser" fx:id="buttonTapis" layoutY="92.0" mnemonicParsing="false" onAction="#handleTapis" stylesheets="@poker.css" text="Tapis" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Label fx:id="tour2" layoutY="53.0" prefHeight="30.0" prefWidth="166.0" text="Tour du joueur :" />
+                  <Label fx:id="tour" alignment="CENTER" layoutY="83.0" prefHeight="30.0" prefWidth="166.0" text="texte" textAlignment="CENTER" />
+               </children>
+            </Pane>
          </children>
       </HBox>
    </children>

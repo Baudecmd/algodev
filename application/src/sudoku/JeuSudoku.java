@@ -93,7 +93,8 @@ public class JeuSudoku extends Application implements Initializable {
 
 
 
-	// Fonction recopie à remplacer lorsque j'aurai trouvé la solution du probléme
+	// Fonction recopie ï¿½ remplacer lorsque j'aurai trouvï¿½ la solution du problï¿½me
+
 	public static Grille recopie(Grille a) {
 		if (a != null) {
 			Grille temp = new Grille(a.getNbLignes(),a.getNbLignes());
@@ -176,7 +177,7 @@ public class JeuSudoku extends Application implements Initializable {
 				context.fillRoundRect(position_x, position_y, width, width, 10, 10);
 			}
 		}
-		// Dessine le contour de la case une fois selectionnée par le joueur
+		// Dessine le contour de la case une fois selectionnï¿½e par le joueur
 		context.setStroke(Color.RED);
 		context.setLineWidth(3);
 		context.strokeRoundRect(player_selected_col * coteCase + 2, player_selected_row * coteCase + 2, 46, 46, 10, 10);
@@ -204,7 +205,7 @@ public class JeuSudoku extends Application implements Initializable {
 				}
 			}
 		}
-		// Dessine les séparations des régions du Sudoku
+		// Dessine les sï¿½parations des rï¿½gions du Sudoku
 		context.setLineWidth(4);
 		context.setStroke(Color.BLACK);
 		context.strokeRoundRect(0, 0, 450, 450, 10, 10);
@@ -226,10 +227,10 @@ public class JeuSudoku extends Application implements Initializable {
 		//Change le EventHandler du canvas
 		grille.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				// récupére les coordonées du clic et les transforme en int
+				// rï¿½cupï¿½re les coordonï¿½es du clic et les transforme en int
 				int mouse_x = (int) event.getX();
 				int mouse_y = (int) event.getY();
-				//Met à jour la case selectionnée par le joueur
+				//Met ï¿½ jour la case selectionnï¿½e par le joueur
 				player_selected_row = (int) (mouse_y / coteCase); 
 				player_selected_col = (int) (mouse_x / coteCase);
 
