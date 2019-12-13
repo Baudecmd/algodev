@@ -79,6 +79,10 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
         return false;
     }
 
+    /**
+     * Verifie si il y a un gagnant
+     * @return vrai si il y a un gagnant
+     */
     Boolean gagnant() { //Verifie si il y a un gagnant
         for (JoueurLoto j : joueurs)
             if (j.getGrille().isContained(j.getCochee()) && j.getGrille().isContained(tiree)) return true;
@@ -86,6 +90,9 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
         return false;
     }
 
+    /**
+     * Tire un nouveau chiffre
+     */
     public void tourSuivant() { //Passe au tour suivant en tirant un nouveau numéro
         tiree.add(tirage.getTokenToGame());
     }

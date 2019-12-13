@@ -98,6 +98,9 @@ public class Affichage extends Application {
 
 		primaryStage.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
+			/**
+			 * Gestion du clic sur l'un des grilles
+			 */
 			public void handle(MouseEvent mouseEvent) {
 				ajouterCoche(l,(int)mouseEvent.getX(),(int)mouseEvent.getY());
 				afficherTableau(root, l.getJoueurs(), l.getTiree());
@@ -122,12 +125,16 @@ public class Affichage extends Application {
 
 		afficherTableau(root, l.getJoueurs(), l.getTiree());
 
-		Scene scene = new Scene(root, (((int)l.getJoueurs().size()/4)+1)*470, fenetreY);
+		Scene scene = new Scene(root, ((((int)l.getJoueurs().size()-1)/4)+1)*470, fenetreY);
 		scene.getStylesheets().add(getClass().getResource("../resources/FXML/loto.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
+	/**
+	 * Ecran d'affichage de l'écran pas de gagnant
+	 * @param root
+	 */
 	private void afficherPasDeGagnant(Pane root) {
 
 		root.getChildren().clear();
@@ -139,7 +146,12 @@ public class Affichage extends Application {
 
 	}
 
-
+	/**
+	 * Affichage des grilles
+	 * @param root
+	 * @param lt liste des joueurs
+	 * @param tokenDejaTire Liste des chiffres déja tiré
+	 */
 	public void afficherTableau(Pane root, List<JoueurLoto> lt, List<Integer> tokenDejaTire) {
 
 		int nbJoueur = 0;
@@ -149,8 +161,8 @@ public class Affichage extends Application {
 			Label text = new Label();
 			text.setStyle("-fx-background-color:POWDERBLUE");
 			text.setText(jl.getNom());
-			text.setLayoutX(470*((int)(nbJoueur/4)));
-			text.setLayoutY((nbJoueur%4 )* 200  + 102);
+			text.setLayoutX(470*((int)(nbJoueur/4))+350);
+			text.setLayoutY((nbJoueur%4 )* 200  + 190);
 			root.getChildren().add(text);
 
 
@@ -193,19 +205,30 @@ public class Affichage extends Application {
 		}
 	}
 
+	/**
+	 * Ajoute le cercle du coché
+	 * @param root
+	 * @param x Xieme Case a coché
+	 * @param y Ieme Case à coché
+	 * @param nbJoueur nIeme Joueur
+	 */
 	public void ajouterCercle(Pane root, int x, int y, int nbJoueur) {
-
 					Circle c = new Circle(57 + x * 45+470*((int)(nbJoueur/4)), (nbJoueur%4) * 200 + 60 + y * 50, 20);
 					c.setFill(Color.TRANSPARENT);
 					c.setStroke(Color.RED);
 					root.getChildren().add(c);
-
 				}
 
 
+	/**
+	 * Ajoute dans la liste des cochés du joueur si il a bien cliqué sur une bonne case.
+	 * @param l Partie de loto
+	 * @param x position x du clic du joueur
+	 * @param y position y du clic du joueur
+	 */
 	public void ajouterCoche(Loto l,int x, int y){
 		if(l.getJoueurs().size()>3){
-			if(y<690){
+			if(y<780){
 				int j=(y-35)/200+4*((int)x/470);
 
 				x=(x-35-((470*((int)j/4))))/45;

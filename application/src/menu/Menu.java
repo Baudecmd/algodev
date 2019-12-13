@@ -86,14 +86,14 @@ public class Menu extends Application {
 		return a;
 	}
 
-	/**Proc�dure permettant de lancer une nouvelle partie de loto
+	/**Procédure permettant de lancer une nouvelle partie de loto
 	 * � l'aide des infomations sur les joueurs pr�c�dement rentr�es
 	 */
+
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		//SelecGrille s= new SelecGrille();
-		//s.start(stage2);
-
+		SelecGrille s= new SelecGrille();
+		s.start(stage2);
 	}
 
 	/**Proc�dure permettant de lancer une nouvelle partie de bataille navale
@@ -117,6 +117,7 @@ public class Menu extends Application {
 	/**Proc�dure permettant de lancer une nouvelle partie de poker
 	 * � l'aide des infomations sur les joueurs pr�c�dement rentr�es
 	 */
+
 
 	public void buttonPoker() {
 		PartiePoker pp = new PartiePoker(5);
