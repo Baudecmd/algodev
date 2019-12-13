@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,8 +30,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 
 public class Popups implements Initializable {
@@ -156,6 +159,14 @@ public class Popups implements Initializable {
 
 	public Popups() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public static void alertPoker(String message, Window w) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText(message);
+		alert.initOwner(w);
+		alert.show();
+		return;
 	}
 
 	public static void main(String[] args) {

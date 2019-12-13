@@ -33,14 +33,6 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-				<Button id="record-sales" layoutX="238.0" layoutY="200.0" mnemonicParsing="false" onAction="#buttonLoto" text="Bataille Navale ">
-               <graphic>
-                  <ImageView fitHeight="21.0" fitWidth="34.0">
-                     <image>
-                        <Image url="@../image/bateau.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
 			</children>
 		</AnchorPane>
 	</children>
