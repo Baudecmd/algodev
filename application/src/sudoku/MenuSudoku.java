@@ -1,11 +1,6 @@
 package sudoku;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import javafx.application.Application;
-import commun.Grille;
-import commun.Joueur;
 import commun.Popups;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sudoku.JeuSudoku;
 
 public class MenuSudoku extends Application {
 	@FXML

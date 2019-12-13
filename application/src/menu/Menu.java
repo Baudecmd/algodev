@@ -1,5 +1,7 @@
 package menu;
 
+import bataille.Bataille;
+import bataille.JoueurBataille;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import loto.Affichage;
@@ -25,7 +24,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import commun.*;
@@ -86,9 +84,20 @@ public class Menu extends Application {
 		return a;
 	}
 
+<<<<<<< HEAD
 	/**Proc�dure permettant de lancer une nouvelle partie de loto
 	 * � l'aide des infomations sur les joueurs pr�c�dement rentr�es
 	 */
+=======
+/////////////////////////////////////////
+//Ajouter les m�thodes pour lancer les parties ic
+	
+	public void buttonLoto() {
+		
+	}
+	
+
+>>>>>>> bataillenavale
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
 		//SelecGrille s= new SelecGrille();
@@ -100,9 +109,29 @@ public class Menu extends Application {
 	 * � l'aide des infomations sur les joueurs pr�c�dement rentr�es
 	 */
 	public void buttonBataille() {
+<<<<<<< HEAD
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setContentText("Jeu encore en developpement");
+=======
+		Stage temp = (Stage) loto.getScene().getWindow();
+		JoueurBataille j1 = new JoueurBataille(Menu.nomsJoueurs.get(0).getNom());
+		JoueurBataille j2 = new JoueurBataille(Menu.nomsJoueurs.get(1).getNom());
+		AffichageBN.bataille = new Bataille(j1,j2);
+		AffichageBN b = new AffichageBN();
+		try {
+			b.start(temp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void buttonPoker() {
+		Window w = loto.getScene().getWindow();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText("Jeu encore en d�veloppement");
+>>>>>>> bataillenavale
 		alert.initOwner(w);
 		alert.show();
 
@@ -164,6 +193,7 @@ public class Menu extends Application {
 	@FXML
 	public void handleNbJoueur() throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
+<<<<<<< HEAD
 		boolean stop = false;
 		try {
 	        Double d = Double.parseDouble(nbJoueur.getText());
@@ -172,6 +202,11 @@ public class Menu extends Application {
 	        stop = true;
 	    }
 		if ((nbJoueur.getText().isEmpty()) || stop ) {
+=======
+		// V�rif
+		System.out.println("Nombre de joueurs entr� :" + nbJoueur.getText());
+		if (nbJoueur.getText().isEmpty()) {
+>>>>>>> bataillenavale
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
@@ -237,7 +272,11 @@ public class Menu extends Application {
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
+<<<<<<< HEAD
 				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + this.i++ + " !");
+=======
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous �tes le joueur " + this.i++ + "!");
+>>>>>>> bataillenavale
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
