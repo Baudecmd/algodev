@@ -107,7 +107,12 @@ public class Popups implements Initializable {
 		window.showAndWait();
 
 	}
-
+	
+/**
+ * Timer utile pour le sudoku
+ * Code originel venant de SatyaSnehith
+ * Lien vers son github : https://gist.github.com/SatyaSnehith
+ */
 //Timer utile pour le Sudoku
 	static int mins = 0, secs = 0, millis = 0;
 
