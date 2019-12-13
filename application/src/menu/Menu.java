@@ -20,6 +20,8 @@ import sudoku.MenuSudoku;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +48,9 @@ public class Menu extends Application {
 
 	@FXML
 	private Button entrerNbJoueur;
+	
+	@FXML
+	private Button credit;
 	
 	@FXML
 	private Button jouer;
@@ -75,7 +80,7 @@ public class Menu extends Application {
 	}
 
 /////////////////////////////////////////
-//Ajouter les méthodes pour lancer les parties ic
+//Ajouter les mï¿½thodes pour lancer les parties ic
 	
 	public void buttonLoto() {
 		
@@ -93,7 +98,7 @@ public class Menu extends Application {
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
@@ -102,7 +107,7 @@ public class Menu extends Application {
 	public void buttonPoker() {
 		Window w = loto.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText("Jeu encore en développement");
+		alert.setContentText("Jeu encore en dï¿½veloppement");
 		alert.initOwner(w);
 		alert.show();
 
@@ -120,15 +125,30 @@ public class Menu extends Application {
 		}
 	}
 /////////////////////////////////////////
+	
+	@FXML
+	public void handleEnterKey(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			try {
+				handleNbJoueur();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
 
 	@FXML
-	public void handleNbJoueur(ActionEvent event) throws IOException {
+	public void handleNbJoueur() throws IOException {
 		Window w = entrerNbJoueur.getScene().getWindow();
-		// Vérif
-		System.out.println("Nombre de joueurs entré :" + nbJoueur.getText());
-		if (nbJoueur.getText().isEmpty()) {
+		boolean stop = false;
+		try {
+	        Double d = Double.parseDouble(nbJoueur.getText());
+	        if(d >= 5.0) throw new NumberFormatException();
+	    } catch (NumberFormatException nfe) {
+	        stop = true;
+	    }
+		if ((nbJoueur.getText().isEmpty()) || stop ) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Entrer un nombre de joueurs !");
+			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
 			alert.show();
 			return;
@@ -143,15 +163,31 @@ public class Menu extends Application {
 		}
 		System.out.println(Menu.nbJoueurInt);
 	}
+	
+	@FXML
+	public void handleLancerCredits(ActionEvent Event) throws IOException {
+		Stage temp = (Stage) this.credit.getScene().getWindow();
+		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
+		temp.setScene(new Scene(this.root));
+	}
 
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);
 		System.out.println(this.labelNomJoueur.getText());
 		this.labelNomJoueur.setText(s);
 	}
+	
+	public void handleEnterKeyNoms(KeyEvent event) {
+		if(event.getCode() == KeyCode.ENTER)
+			try {
+				handleNomsJoueurs();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 	@FXML
-	public void handleNomsJoueurs(ActionEvent event) throws IOException, InterruptedException {
+	public void handleNomsJoueurs() throws IOException, InterruptedException {
 		Window w = entrerNomJoueur.getScene().getWindow();
 		if (nomJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -160,10 +196,19 @@ public class Menu extends Application {
 			alert.show();
 			return;
 		} else {
+			if(nomJoueur.getText().length()>11) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("Le pseudo doit faire moins de 11 caractï¿½re !");
+				alert.initOwner(w);
+				alert.show();
+				nomJoueur.setText("");
+				return;
+				
+			}
 			if (Menu.nbJoueurInt > 0) {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
-				creationLabel("Bonjour, " + nomJoueur.getText() + " vous êtes le joueur " + Menu.i++ + "!");
+				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + Menu.i++ + " !");
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 
@@ -218,15 +263,31 @@ public class Menu extends Application {
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/styleMenu.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
+	@FXML
+	Button menuPrincipal;
+
+	public void handleRetourMenu() {
+	        Stage stage = (Stage) menuPrincipal.getScene().getWindow();
+	        Menu m = new Menu();
+	        try {
+	            m.start(stage);
+	        } catch (Exception a) {
+	            a.printStackTrace();
+	        }
+	    }
+
 		
 
 	public void start(Stage stage) throws IOException {
 		Popups.resetTimer();
+		Font.loadFont(getClass().getResourceAsStream("../resources/fonts/ka1.ttf"), 14);
+		Font.loadFont(getClass().getResourceAsStream("../resources/fonts/Arcadepix Plus.ttf"), 14);
 		this.stage = stage;
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/menu.fxml"));
 		this.scene = new Scene(root);
 		this.stage.setTitle("Menu");
 		this.stage.setScene(this.scene);
+		this.stage.setResizable(false);
 		this.stage.show();
 	}
 

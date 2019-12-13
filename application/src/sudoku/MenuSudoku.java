@@ -75,7 +75,7 @@ public class MenuSudoku extends Application {
 	}
 	
 	public void buttonOPTIONPressed() {
-		Popups.options((Stage) this.buttonDIFFICILE.getScene().getWindow(), "Option", "Option de Jeu");
+		Popups.options((Stage) this.buttonDIFFICILE.getScene().getWindow(), "Option", "Options de Jeu");
 	}
 
 	@Override
