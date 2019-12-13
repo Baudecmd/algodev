@@ -8,7 +8,6 @@ import java.util.Stack;
 
 import commun.Joueur;
 import commun.Partie;
-//import javafx.css.converter.LadderConverter;
 import java.util.*;
 
 

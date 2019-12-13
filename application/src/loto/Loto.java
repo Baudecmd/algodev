@@ -10,7 +10,7 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     private List<JoueurLoto> joueurs;
     private Tirage tirage;
     private List<Integer> tiree;
-    private final String fileName = "scoreboardLoto.ser";
+    public static final String fileName = "resources/scoreboardLoto.ser";
 
     public String getFileName() {
         return fileName;
@@ -98,9 +98,10 @@ public class Loto implements Partie { // Le Loto est composé d'une map associan
     }
 
     public static void main(String[] args) { //Test de la gestion des scores
-        Loto l = new Loto(new ArrayList<>());
-        Partie.ajouterVictoire(l.fileName, new Joueur("grr"));
-        ArrayList<Joueur> L = Partie.recupererScore(l.fileName);
+        ArrayList<Joueur> L = Partie.recupererScore(fileName);
+        Joueur j = new Joueur("jacques");
+        Partie.ajouterVictoire(fileName, j);
+        L = Partie.recupererScore(fileName);
         System.out.println(L.toString());
     }
 }

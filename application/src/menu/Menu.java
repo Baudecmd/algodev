@@ -67,6 +67,9 @@ public class Menu extends Application {
 
 	@FXML
 	private Button loto;
+	
+	@FXML
+	private Button scoreboard;
 
 	@FXML
 	private Label labelNomJoueur;
@@ -100,6 +103,7 @@ public class Menu extends Application {
 	 * à l'aide des infomations sur les joueurs précédement rentrées
 	 */
 	public void buttonBataille() {
+<<<<<<< HEAD
 		Stage temp = (Stage) loto.getScene().getWindow();
 		JoueurBataille j1 = new JoueurBataille(Menu.nomsJoueurs.get(0).getNom());
 		JoueurBataille j2 = new JoueurBataille(Menu.nomsJoueurs.get(1).getNom());
@@ -117,6 +121,7 @@ public class Menu extends Application {
 	/**Procï¿½dure permettant de lancer une nouvelle partie de poker
 	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
+
 
 
 	public void buttonPoker() {
@@ -142,9 +147,11 @@ public class Menu extends Application {
 		}
 	}
 
+
 	/**Procï¿½dure permettant de lancer une nouvelle partie de sudoku
 	 * ï¿½ l'aide des infomations sur le joueur prï¿½cï¿½dement rentrï¿½es
 	 */
+
 	public void buttonSudoku() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
 		JeuSudoku.nomsJoueurs = nomsJoueurs;
@@ -180,6 +187,7 @@ public class Menu extends Application {
 	        stop = true;
 	    }
 		if ((nbJoueur.getText().isEmpty()) || stop ) {
+
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
@@ -250,6 +258,7 @@ public class Menu extends Application {
 				Joueur j = new Joueur(nomJoueur.getText());
 				Menu.nomsJoueurs.add(j);
 				creationLabel("Bonjour, " + nomJoueur.getText() + " vous etes le joueur " + this.i++ + " !");
+
 				Menu.nbJoueurInt--;
 				System.out.println("Nombre de joueurs restants:" + Menu.nbJoueurInt);
 

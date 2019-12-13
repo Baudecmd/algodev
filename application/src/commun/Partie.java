@@ -12,7 +12,6 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
      */
     static void initialiser(String fileName) {
         File f = getFileFromResources(fileName);
-
         try {
             if (f.length() == 0) {
                 FileOutputStream fO = new FileOutputStream(f);
@@ -105,12 +104,20 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
      * @param fileName path du fichier
      * @return le fichier
      */
+
     static File getFileFromResources(String fileName) {
         ClassLoader classLoader = Partie.class.getClassLoader();
         URL resource = classLoader.getResource(fileName);
+        File file = new File(fileName);
 
         if (resource == null) {
-            throw new IllegalArgumentException("file is not found!");
+            try {
+				file.createNewFile();
+				return file;
+			} catch (IOException e) {
+				System.out.println("ça marche pas");
+				return null;
+			}
         } else {
             return new File(resource.getFile());
         }
@@ -121,4 +128,5 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
      * @return
      */
     Boolean partieFinie();
+
 }

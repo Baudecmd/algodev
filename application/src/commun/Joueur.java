@@ -3,6 +3,7 @@ package commun;
 import java.io.*;
 import java.util.Objects;
 
+
 public class Joueur implements Serializable, Comparable<Joueur> {
 	private static final long serialVersionUID = -2511917305652687589L;
 	private String nom;
@@ -45,5 +46,9 @@ public class Joueur implements Serializable, Comparable<Joueur> {
                 "nom='" + nom + '\'' +
                 ", score=" + score +
                 '}';
+    }
+
+    public float getScore() {
+        return score;
     }
 }
