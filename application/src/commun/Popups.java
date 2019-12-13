@@ -25,6 +25,8 @@ import menu.Menu;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import bataille.AffichageBN;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -194,6 +196,39 @@ public class Popups implements Initializable {
 		alert.initOwner(w);
 		alert.show();
 		return;
+	}
+	
+	public static void joueurDeux(Stage stage, String titre, String message) {
+		Stage window = new Stage();
+
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle(titre);
+		window.setMinWidth(300);
+		window.setMinHeight(300);
+
+		Label label = new Label();
+		label.setText(message);
+
+		Button parti = new Button("C'est fait !");
+		parti.setOnAction(e -> {
+			window.close();
+			AffichageBN m = new AffichageBN();
+			try {
+				m.start(stage);
+			} catch (Exception a) {
+				a.printStackTrace();
+			}
+
+		});
+
+		VBox layout = new VBox(10);
+		layout.getChildren().addAll(label, parti);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+
 	}
 
 	public static void main(String[] args) {

@@ -83,10 +83,6 @@ public class JeuSudoku extends Application implements Initializable {
 
 
 	// Fonction recopie � remplacer lorsque j'aurai trouv� la solution du probl�me
-<<<<<<< HEAD
-
-=======
->>>>>>> bataillenavale
 	public static Grille recopie(Grille a) {
 		if (a != null) {
 			Grille temp = new Grille(a.getNbLignes(),a.getNbLignes());

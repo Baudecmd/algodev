@@ -29,22 +29,8 @@ public class Case {
             return true;
         return this.i == a.getI() && this.j == a.getJ();
     }
-<<<<<<< HEAD
-
-    public Case(int i, int j, boolean contains) {
-        this.i = i;
-        this.j = j;
-        this.contains=contains;
-    }
-
-    public Case(int i, int j){
-        this.i=i;
-        this.j=j;
-        this.contains=false;     //par défaut, aucune pièce n'est présente sur la case
-=======
     
     public String toString() {
     	return "i = "+i+" j = "+j;
->>>>>>> bataillenavale
     }
 }
