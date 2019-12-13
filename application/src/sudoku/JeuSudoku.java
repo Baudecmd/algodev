@@ -82,7 +82,11 @@ public class JeuSudoku extends Application implements Initializable {
 
 
 
-	// Fonction recopie ï¿½ remplacer lorsque j'aurai trouvï¿½ la solution du problï¿½me
+	/**
+	 *  Fonction utilise pour copier un sudoku
+	 * 
+	 * 
+	 */
 	public static Grille recopie(Grille a) {
 		if (a != null) {
 			Grille temp = new Grille(a.getNbLignes(),a.getNbLignes());
@@ -109,6 +113,9 @@ public class JeuSudoku extends Application implements Initializable {
 	public JeuSudoku() {
 	}
 
+	/**
+	 * Actualise la grille du joueur
+	 */
 	int valErr,rowErr,colErr;
 	public void actualiserGrille(int val, int row, int col) {
 		if ((val >= 0 && val <= 9) && (initial.getMatrice()[row][col] == 0)) {
@@ -134,7 +141,12 @@ public class JeuSudoku extends Application implements Initializable {
 
 	}
 	
-	//here
+	/**
+	 * Affiche les numéros érronés en rouge
+	 * @param valeur du numéro
+	 * @param row indice de la ligne
+	 * @param col indice de la colonne
+	 */
 	public void afficherErreur(int val,int row,int col) {
 		int position_y = row * coteCase + 2;
 		int position_x = col * coteCase + 2;
@@ -148,6 +160,10 @@ public class JeuSudoku extends Application implements Initializable {
 		grille.getGraphicsContext2D().fillText(val + "", position_x, position_y);
 	}
 
+	/**
+	 * Permet de dessiner la grille du Sudoku sur le canvas
+	 * @param context
+	 */
 	public void drawOnCanvas(GraphicsContext context) {
 		// Dessine la grille
 		context.clearRect(0, 0, 450, 450);
@@ -193,7 +209,7 @@ public class JeuSudoku extends Application implements Initializable {
 				}
 			}
 		}
-		// Dessine les sï¿½parations des rï¿½gions du Sudoku
+		// Dessine les séparations des régions du Sudoku
 		context.setLineWidth(4);
 		context.setStroke(Color.BLACK);
 		context.strokeRoundRect(0, 0, 450, 450, 10, 10);
@@ -215,10 +231,10 @@ public class JeuSudoku extends Application implements Initializable {
 		//Change le EventHandler du canvas
 		grille.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
-				// rï¿½cupï¿½re les coordonï¿½es du clic et les transforme en int
+				// récupére les coordonï¿½es du clic et les transforme en int
 				int mouse_x = (int) event.getX();
 				int mouse_y = (int) event.getY();
-				//Met ï¿½ jour la case selectionnï¿½e par le joueur
+				//Met à jour la case selectionnée par le joueur
 				player_selected_row = (int) (mouse_y / coteCase); 
 				player_selected_col = (int) (mouse_x / coteCase);
 
@@ -287,7 +303,10 @@ public class JeuSudoku extends Application implements Initializable {
 		}
 	}
 
-	public void PartieFinie() {
+	/**
+	 * Gestion de la fin de la partie 
+	 */
+	public boolean PartieFinie() {
 		if (verification(grilleJoueur,grilleComplete)) {
 			try {
 				Popups.nom = nomsJoueurs.get(0).getNom(); // Nom du Joueur
@@ -296,7 +315,9 @@ public class JeuSudoku extends Application implements Initializable {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	public static boolean verification(Grille a,Grille b) {

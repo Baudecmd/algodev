@@ -1,5 +1,9 @@
 package sudoku;
 
+/**
+ * Classe représentant un coup au Sudoku, une coordonnéeet
+ *
+ */
 public class Coup {
 	private int x;
 	private int y;

@@ -6,7 +6,7 @@ public class templateSudoku {
 	public final int nbSudoku = 3;
 
 	/**
-	 * Genere une grille de sudoku
+	 * Genere une grille de sudoku facile
 	 * @return Un coupleSudoku contenant la grille et sa solution
 	 */
 	public static coupleSudoku facile(int id) {
@@ -120,7 +120,10 @@ public class templateSudoku {
 		return temp;
 	}
 	
-	
+	/**
+	 * Genere une grille de sudoku moyen
+	 * @return Un coupleSudoku contenant la grille et sa solution
+	 */
 	public static coupleSudoku moyen(int id) {
 		coupleSudoku temp = new coupleSudoku();
 		switch(id) {
@@ -233,7 +236,10 @@ public class templateSudoku {
 		return temp;
 	}
 	
-	
+	/**
+	 * Genere une grille de sudoku difficile
+	 * @return Un coupleSudoku contenant la grille et sa solution
+	 */
 	public static coupleSudoku difficile(int id) {
 		coupleSudoku temp = new coupleSudoku();
 		switch(id) {

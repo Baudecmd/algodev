@@ -11,6 +11,11 @@ public class Sudoku {
 	private static Grille grilleSolution = new Grille(9, 9);
 	private JoueurSudoku joueur;
 
+	/**
+	 * Constructeur d'un Sudoku, permet de générer aléatoirement une grille en fonction de son niveau de difficulté
+	 * @param lj
+	 * @param difficulty
+	 */
 	public Sudoku(ArrayList<Joueur> lj, int difficulty) {
 		if(lj !=null) this.joueur = new JoueurSudoku(lj.get(0)); else this.joueur = null;
 		//templateSudoku.setCouple(difficulty);
@@ -68,15 +73,26 @@ public class Sudoku {
 	}
 
 
-
+	/**
+	 * Retourne l'indice de la ligne du coup courant du joueur
+	 * @return indice de la ligne du coup courant du joueur
+	 */
 	public int getXCC() {
 		return this.joueur.getCoutCourant().getX();
 	}
-
+	
+	/**
+	 * Retourne l'indice de la colonne du coup courant du joueur
+	 * @return indice de la colonne du coup courant du joueur
+	 */
 	public int getYCC() {
 		return this.joueur.getCoutCourant().getY();
 	}
 
+	/**
+	 * Vérifie si la valeur d'un coup est possible
+	 * @return boolean
+	 */
 	public boolean possibilite() {
 		ArrayList<Integer> poss = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
@@ -91,7 +107,6 @@ public class Sudoku {
 				poss.remove((Integer) Sudoku.grille.getMatrice()[x][i]);
 			
 		}
-		System.out.println(poss);
 		switch (x % 3) {
 		case 0:
 			switch (y % 3) {

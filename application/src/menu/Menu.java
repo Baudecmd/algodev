@@ -87,7 +87,7 @@ public class Menu extends Application {
 	}
 
 	/**ProcÃ©dure permettant de lancer une nouvelle partie de loto
-	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
+	 * à l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 
 	public void handlePartieLoto(ActionEvent Event) {
@@ -96,8 +96,8 @@ public class Menu extends Application {
 		s.start(stage2);
 	}
 
-	/**Procï¿½dure permettant de lancer une nouvelle partie de bataille navale
-	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
+	/**Procédure permettant de lancer une nouvelle partie de bataille navale
+	 * à l'aide des infomations sur les joueurs précédement rentrées
 	 */
 	public void buttonBataille() {
 		Stage temp = (Stage) loto.getScene().getWindow();
@@ -197,7 +197,11 @@ public class Menu extends Application {
 		System.out.println(Menu.nbJoueurInt);
 	}
 
-		
+	/**
+	 * Procédure permttant de lancer les crédits
+	 * 
+	 * 
+	 */
 	@FXML
 	public void handleLancerCredits(ActionEvent Event) throws IOException {
 		Stage temp = (Stage) this.credit.getScene().getWindow();

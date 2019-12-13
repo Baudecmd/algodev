@@ -25,7 +25,9 @@ public class MenuSudoku extends Application {
 	public MenuSudoku() {
 		
 	}
-
+	/**
+	 * Gestion du bouton facile
+	 */
 	public void buttonFACILEPressed() {
 		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
@@ -40,6 +42,9 @@ public class MenuSudoku extends Application {
 		}
 	}
 
+	/**
+	 * Gestion du bouton Moyen
+	 */
 	public void buttonMOYENPressed() {
 		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
@@ -54,6 +59,9 @@ public class MenuSudoku extends Application {
 		}
 	}
 
+	/**
+	 * Gestion du bouton difficile
+	 */
 	public void buttonDIFFICILEPressed() {
 		Popups.resetTimer();
 		Stage stage2 = (Stage) this.buttonDIFFICILE.getScene().getWindow();
@@ -68,6 +76,9 @@ public class MenuSudoku extends Application {
 		}
 	}
 	
+	/**
+	 * Gestion du bouton Option
+	 */
 	public void buttonOPTIONPressed() {
 		Popups.options((Stage) this.buttonDIFFICILE.getScene().getWindow(), "Option", "Options de Jeu");
 	}

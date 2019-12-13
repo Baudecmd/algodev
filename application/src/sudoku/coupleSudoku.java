@@ -2,6 +2,10 @@ package sudoku;
 
 import commun.Grille;
 
+/**
+ * Un couple sudoku est représenté par sa grille de départ et sa solution
+ *
+ */
 public class coupleSudoku {
 	public Grille template;
 	protected Grille solution;
