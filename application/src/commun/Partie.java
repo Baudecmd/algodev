@@ -77,9 +77,16 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
     static File getFileFromResources(String fileName) {
         ClassLoader classLoader = Partie.class.getClassLoader();
         URL resource = classLoader.getResource(fileName);
+        File file = new File(fileName);
 
         if (resource == null) {
-            throw new IllegalArgumentException("file is not found!");
+            try {
+				file.createNewFile();
+				return file;
+			} catch (IOException e) {
+				System.out.println("ça marche pas");
+				return null;
+			}
         } else {
             return new File(resource.getFile());
         }

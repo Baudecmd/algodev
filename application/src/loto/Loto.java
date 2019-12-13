@@ -65,6 +65,10 @@ public class    Loto implements Partie { // Le Loto est composé d'une map assoc
 
     public static void main(String[] args) { //Test de la gestion des scores
         ArrayList<Joueur> L = Partie.recupererScore(fileName);
+        Joueur j = new Joueur("jacques");
+        Partie.ajouterVictoire(fileName, j);
+        L = Partie.recupererScore(fileName);
+
         System.out.println(L.toString());
     }
 }

@@ -44,7 +44,7 @@ public class scoreBoardAffichage extends Application {
                 jeux = "Loto";
                 break;
             case 2:
-                path = "scoreboardBataille.ser";
+                path = "resources/scoreboardBataille.ser";
                 pathImg = "resources/image/bateau.png";
                 jeux = "Bataille";
 
@@ -72,7 +72,7 @@ public class scoreBoardAffichage extends Application {
         nomJeux.setLayoutY(40);
         nomJeux.setAlignment(Pos.CENTER);
         root.getChildren().add(nomJeux);
-
+        Partie.initialiser(path);
         lJ = Partie.recupererScore(path);
 
         //entourage du tableau
