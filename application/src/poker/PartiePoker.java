@@ -3,7 +3,6 @@ package poker;
 import bataille.JoueurBataille;
 import commun.Joueur;
 import commun.Partie;
-import javafx.css.converter.LadderConverter;
 
 import java.util.*;
 

@@ -19,6 +19,8 @@ import loto.Loto;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bataille.Bataille;
+
 public class scoreBoardAffichage extends Application {
 
 
@@ -42,7 +44,7 @@ public class scoreBoardAffichage extends Application {
                 jeux = "Loto";
                 break;
             case 2:
-                path = Bataille.getFileName();
+                path = "scoreboardBataille.ser";
                 pathImg = "resources/image/bateau.png";
                 jeux = "Bataille";
 

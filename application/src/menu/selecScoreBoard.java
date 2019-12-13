@@ -1,4 +1,4 @@
-ppackage menu;
+package menu;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

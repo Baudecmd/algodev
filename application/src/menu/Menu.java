@@ -60,6 +60,9 @@ public class Menu extends Application {
 
 	@FXML
 	private Button loto;
+	
+	@FXML
+	private Button scoreboard;
 
 	@FXML
 	private Label labelNomJoueur;
@@ -76,7 +79,7 @@ public class Menu extends Application {
 /////////////////////////////////////////
 //Ajouter les m�thodes pour lancer les parties ic
 	
-	public void buttonLoto() {
+	public void buttonLoto() throws Exception {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
 		selecScoreBoard sCB= new selecScoreBoard();
 		sCB.start(stage2);
@@ -109,10 +112,10 @@ public class Menu extends Application {
 
 	}
 
-	public void buttonScoreBoard(){
-		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-			selecScoreBoard sCB= new selecScoreBoard();
-			scb.start(stage2);
+	public void buttonScoreBoard() throws Exception{
+		Stage stage2 = (Stage) this.scoreboard.getScene().getWindow();
+		selecScoreBoard sCB= new selecScoreBoard();
+		sCB.start(stage2);
 	}
 
 	//Fini
