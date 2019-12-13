@@ -361,8 +361,6 @@ public class Menu extends Application {
 		this.scene = new Scene(root);
 		this.stage.setTitle("Menu");
 		this.stage.setScene(this.scene);
-		stage.setHeight(400.0);
-		stage.setWidth(660.0);
 		this.stage.setResizable(false);
 		this.stage.show();
 	}
