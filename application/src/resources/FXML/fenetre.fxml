@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="fenetre" stylesheets="@styleSudoku.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.JeuSudoku">
+   <children>
+      <Button id="font-button" fx:id="buttonUN" layoutX="92.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonUNPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="1" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonDEUX" layoutX="158.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonDEUXPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="2" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonTROIS" layoutX="226.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonTROISPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="3" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonQUATRE" layoutX="295.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonQUATREPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="4" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonCINQ" layoutX="360.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonCINQPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="5" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonSIX" layoutX="428.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonSIXPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="6" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonSEPT" layoutX="494.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonSEPTPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="7" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonHUIT" layoutX="559.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonHUITPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="8" textAlignment="JUSTIFY" />
+      <Button id="font-button" fx:id="buttonNEUF" layoutX="625.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#buttonNEUFPressed" prefHeight="50.0" prefWidth="50.0" styleClass="boutonSudoku" text="9" textAlignment="JUSTIFY" />
+      <Canvas fx:id="grille" height="450.0" layoutX="160.0" layoutY="44.0" onMouseClicked="#canvasMouseClicked" onMouseEntered="#textSet" width="450.0" />
+      <Button fx:id="buttonOPTION" layoutX="737.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonOPTIONPressed" prefHeight="30.0" prefWidth="30.0">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="29.0">
+               <image>
+                  <Image url="@../image/option.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <VBox layoutX="642.0" layoutY="97.0" prefHeight="56.0" prefWidth="132.0" spacing="5.0" style="-fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 130% ,  #bdc3c7, #0C181D);; -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Temps de Jeu : " textAlignment="CENTER" wrappingWidth="143.1630859375">
+               <font>
+                  <Font name="Arial Narrow Bold" size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="text" onMouseClicked="#textSet" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00" textAlignment="CENTER" wrappingWidth="141.6708984375">
+               <font>
+                  <Font name="Courier New" size="21.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="NONE" />
+               </cursor>
+            </Text>
+         </children>
+      </VBox>
+   </children>
+</Pane>
