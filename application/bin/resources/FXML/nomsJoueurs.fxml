@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.Menu">
+	<children>
+		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="660.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+			<children>
+            <ImageView fitHeight="117.0" fitWidth="621.0" layoutX="21.0" layoutY="14.0">
+               <image>
+                  <Image url="@../image/banniere.png" />
+               </image>
+            </ImageView>
+				<Button id="rich-blue" fx:id="entrerNomJoueur" layoutX="424.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleNomsJoueurs" prefHeight="50.0" prefWidth="100.0" text="Entrer" textFill="#ab0000" />
+				<TextField id="nomJoueur" fx:id="nomJoueur" layoutX="150.0" layoutY="228.0" onKeyPressed="#handleEnterKeyNoms" />
+				<Label id="label1" alignment="CENTER" layoutX="64.0" layoutY="164.0" text="Entrer les noms des Joueurs !" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+				<Label id="label1" fx:id="labelNomJoueur" alignment="CENTER" layoutX="64.0" layoutY="302.0" style="&#10;" text="" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font size="22.0" />
+					</font>
+				</Label>
+				<Label id="arcade" alignment="CENTER" layoutX="21.0" layoutY="49.0" prefHeight="36.0" prefWidth="621.0" text="Les 4 jeux de l'apocalypse" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font name="Arial" size="26.0" />
+					</font>
+					</Label>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>
