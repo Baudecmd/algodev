@@ -503,7 +503,7 @@ public class AffichageBN extends Application {
 	 */
 	private void partie() throws IOException {
 		Stage temp = (Stage) pane.getScene().getWindow();
-		Partie.initialiser(bataille.getFileName());
+		//Partie.initialiser(bataille.getFileName());
 		root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixTire.fxml"));
 		temp.setScene(new Scene(this.root));
 		temp.setHeight(800);
