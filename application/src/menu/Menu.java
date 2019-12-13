@@ -88,9 +88,16 @@ public class Menu extends Application {
 		int a = Integer.parseInt(s);
 		return a;
 	}
+	
+	public void buttonLoto() throws Exception {
+		Stage stage2 = (Stage) this.loto.getScene().getWindow();
+		selecScoreBoard sCB= new selecScoreBoard();
+		sCB.start(stage2);
+	}
+
 
 	/**ProcÃ©dure permettant de lancer une nouvelle partie de loto
-	 * à l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
+	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 
 	public void handlePartieLoto(ActionEvent Event) {
@@ -99,11 +106,10 @@ public class Menu extends Application {
 		s.start(stage2);
 	}
 
-	/**Procédure permettant de lancer une nouvelle partie de bataille navale
-	 * à l'aide des infomations sur les joueurs précédement rentrées
+	/**Procï¿½dure permettant de lancer une nouvelle partie de bataille navale
+	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 	public void buttonBataille() {
-<<<<<<< HEAD
 		Stage temp = (Stage) loto.getScene().getWindow();
 		JoueurBataille j1 = new JoueurBataille(Menu.nomsJoueurs.get(0).getNom());
 		JoueurBataille j2 = new JoueurBataille(Menu.nomsJoueurs.get(1).getNom());
@@ -206,7 +212,7 @@ public class Menu extends Application {
 	}
 
 	/**
-	 * Procédure permttant de lancer les crédits
+	 * ProcÃ©dure permttant de lancer les crï¿½dits
 	 * 
 	 * 
 	 */
@@ -216,7 +222,7 @@ public class Menu extends Application {
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
-	/**Procï¿½dure permettant d'afficher le nom du joueur venant d'ï¿½tre rentrï¿½
+	/**ProcÃ©dure permettant d'afficher le nom du joueur venant d'ï¿½tre rentrï¿½
 	 */
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);
@@ -233,7 +239,7 @@ public class Menu extends Application {
 			}
 	}
 
-	/**Procï¿½dure permettant de rentrer le nom des joueurs
+	/**ProcÃ©dure permettant de rentrer le nom des joueurs
 	 */
 	@FXML
 	public void handleNomsJoueurs() throws IOException, InterruptedException {
@@ -271,7 +277,7 @@ public class Menu extends Application {
 
 	}
 	
-	/**Procï¿½dure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
+	/**ProcÃ©dure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
 	 * exemple on ne peut pas jouer au sudoku ï¿½ plusieurs
 	 */
 
@@ -319,6 +325,10 @@ public class Menu extends Application {
 	}
 	@FXML
 	Button menuPrincipal;
+	
+	/**
+	 * ProcÃ©dure permettant de retourner au menu depuis le scoreboard
+	 */
 
 	public void handleRetourMenu() {
 	        Stage stage = (Stage) menuPrincipal.getScene().getWindow();
@@ -329,6 +339,16 @@ public class Menu extends Application {
 	            a.printStackTrace();
 	        }
 	    }
+	
+	/**
+	 * ProcÃ©dure permettant d'afficher la fenetre du scoreboard
+	 */
+	
+	public void buttonScoreBoard() throws Exception{
+		Stage stage2 = (Stage) this.scoreboard.getScene().getWindow();
+		selecScoreBoard sCB= new selecScoreBoard();
+		sCB.start(stage2);
+	}
 
 		
 
@@ -341,6 +361,8 @@ public class Menu extends Application {
 		this.scene = new Scene(root);
 		this.stage.setTitle("Menu");
 		this.stage.setScene(this.scene);
+		stage.setHeight(400.0);
+		stage.setWidth(660.0);
 		this.stage.setResizable(false);
 		this.stage.show();
 	}

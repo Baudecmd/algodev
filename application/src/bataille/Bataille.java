@@ -6,7 +6,7 @@ import commun.Partie;
 import java.util.ArrayList;
 
 public class Bataille implements Partie {
-    private final String fileName = "scoreboardBataille.ser";
+    public static final String fileName = "scoreboardBataille.ser";
     private JoueurBataille j1, j2;
 
     public Bataille(JoueurBataille j1, JoueurBataille j2) {
@@ -47,9 +47,9 @@ public class Bataille implements Partie {
 
     public static void main(String[] args) {
         Joueur j = new Joueur("Jacques");
-        Partie.reset("scoreboardBataille.ser");
-        Partie.initialiser("scoreboardBataille.ser");
-        ArrayList<Joueur> L = Partie.recupererScore("scoreboardBataille.ser");
+        Partie.reset(fileName);
+        Partie.initialiser(fileName);
+        ArrayList<Joueur> L = Partie.recupererScore(fileName);
         System.out.println(L.toString());
     }
 }

@@ -121,7 +121,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * permet de trier les id des bateaux pour Ã©viter les bug dans le cas d'un placement des bateaux dans un ordre different que du plus petit au plus grand
+	 * permet de trier les id des bateaux pour éviter les bug dans le cas d'un placement des bateaux dans un ordre different que du plus petit au plus grand
 	 */
 	private void sortBateaux() {
 		for (int i = 21; i < 26; i++) {
@@ -191,7 +191,7 @@ public class AffichageBN extends Application {
 	}
 
 	/**
-	 * ajoutent le bateau placÃ© au joueur
+	 * ajoutent le bateau placé au joueur
 	 *
 	 * @param joueur   joueur concerné
 	 * @param i        ligne du bateau
@@ -313,7 +313,7 @@ public class AffichageBN extends Application {
 		Window w = pane.getScene().getWindow();
 		Alert alert = new Alert(AlertType.INFORMATION);
 		if (code == 1)
-			alert.setContentText("Erreur dans le placement de vos bateaux, tous vos bateaux ne sont pas placÃ©s sur la grille");
+			alert.setContentText("Erreur dans le placement de vos bateaux, tous vos bateaux ne sont pas placés sur la grille");
 		else
 			alert.setContentText("Erreur dans le placement de vos bateaux, un de vos bateaux sort de la grille ou vos bateaux sont superposÃ©s");
 		alert.initOwner(w);
@@ -683,7 +683,7 @@ public class AffichageBN extends Application {
 		Partie.ajouterVictoire(bataille.getFileName(), gagnant);
 		ArrayList<Joueur> scores = Partie.recupererScore(bataille.getFileName());
 		Popups.nom = gagnant.getNom();
-		Popups.score = "Vous avez gagnÃ© " + (int) (scores.get(scores.indexOf(gagnant)).getScore()) + " parties.";
+		Popups.score = "Vous avez gagné " + (int) (scores.get(scores.indexOf(gagnant)).getScore()) + " parties.";
 		try {
 			Popups.victoire((Stage) this.bateauxJ1.getScene().getWindow());
 		} catch (Exception e) {

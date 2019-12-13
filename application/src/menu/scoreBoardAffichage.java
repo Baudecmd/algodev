@@ -44,21 +44,9 @@ public class scoreBoardAffichage extends Application {
                 jeux = "Loto";
                 break;
             case 2:
-                path = "resources/scoreboardBataille.ser";
+                path = Bataille.fileName;
                 pathImg = "resources/image/bateau.png";
                 jeux = "Bataille";
-
-                break;
-            case 3:
-                path = "scoreboardSudoku.ser";
-                pathImg = "resources/image/grille.png";
-                jeux = "Sudoku";
-
-                break;
-            case 4:
-                path = "scoreboardPoker.ser";
-                pathImg = "resources/image/mise.png";
-                jeux = "Poker";
 
                 break;
             default:

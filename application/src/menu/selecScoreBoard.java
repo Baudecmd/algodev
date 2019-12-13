@@ -49,7 +49,6 @@ public class selecScoreBoard extends Application {
 
         });
 
-
         //bouton bataille navale
 
         Button btn1 = new Button();
@@ -64,46 +63,6 @@ public class selecScoreBoard extends Application {
             scoreBoardAffichage a = new scoreBoardAffichage();
             try {
                 a.start(primaryStage,2);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-
-
-        //bouton sudoku
-
-        Button btn2 = new Button();
-        root.getChildren().add(btn2);
-        btn2.setText("SUDOKU !");
-        btn2.setLayoutY(400);
-        btn2.setLayoutX(550);
-        btn2.setStyle("-fx-font-size:40");
-
-        btn2.setOnAction(event -> {
-
-            scoreBoardAffichage a = new scoreBoardAffichage();
-            try {
-                a.start(primaryStage,3);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-        //bouton poker
-
-        Button btn3 = new Button();
-        root.getChildren().add(btn3);
-        btn3.setText("POKER !");
-        btn3.setLayoutY(600);
-        btn3.setLayoutX(500);
-        btn3.setStyle("-fx-font-size:40");
-
-        btn3.setOnAction(event -> {
-
-            scoreBoardAffichage a = new scoreBoardAffichage();
-            try {
-                a.start(primaryStage,4);
             } catch (IOException e) {
                 e.printStackTrace();
             }

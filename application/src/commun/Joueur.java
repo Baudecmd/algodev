@@ -17,7 +17,6 @@ public class Joueur implements Serializable, Comparable<Joueur> {
     public String getNom() {
         return nom;
     }
-    public float getScore() { return score; }
 
     /**
      * Augmente le score du joueur

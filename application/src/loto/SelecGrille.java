@@ -39,7 +39,7 @@ public class SelecGrille extends Application {
         btn.setLayoutX(280);
         btn.setOnAction(event -> {
 
-            Affichage a= new Affichage();
+            Affichage a = new Affichage();
             a.start(primaryStage,Integer.parseInt(t.getText()));
 
         });
