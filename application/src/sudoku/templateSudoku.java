@@ -5,13 +5,11 @@ import commun.Grille;
 public class templateSudoku {
 	public final int nbSudoku = 3;
 
-
-	public static coupleSudoku facile(int id) {
 	/**
 	 * Genere une grille de sudoku
 	 * @return Un coupleSudoku contenant la grille et sa solution
 	 */
-	public static coupleSudoku facile() {
+	public static coupleSudoku facile(int id) {
 		coupleSudoku temp = new coupleSudoku();
 		switch(id) {
 		case 0:

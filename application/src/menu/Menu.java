@@ -71,14 +71,14 @@ public class Menu extends Application {
 	@FXML
 	private Label labelNomJoueur;
 	
-	/**Simple fonction de cast, d'un string en int d'une première façon
+	/**Simple fonction de cast, d'un string en int d'une premiï¿½re faï¿½on
 	 */
 
 	public static void stringtoint(String s, int a) {
 		a = Integer.parseInt(s);
 	}
 	
-	/**Simple fonction de cast, d'un string en int d'une deuxième façon 
+	/**Simple fonction de cast, d'un string en int d'une deuxiï¿½me faï¿½on 
 	 */
 
 	public static int stringtoint2(String s) {
@@ -86,18 +86,18 @@ public class Menu extends Application {
 		return a;
 	}
 
-	/**Procédure permettant de lancer une nouvelle partie de loto
-	 * à l'aide des infomations sur les joueurs précédement rentrées
+	/**Procï¿½dure permettant de lancer une nouvelle partie de loto
+	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 	public void handlePartieLoto(ActionEvent Event) {
 		Stage stage2 = (Stage) this.loto.getScene().getWindow();
-		SelecGrille s= new SelecGrille();
-		s.start(stage2);
+		//SelecGrille s= new SelecGrille();
+		//s.start(stage2);
 
 	}
 
-	/**Procédure permettant de lancer une nouvelle partie de bataille navale
-	 * à l'aide des infomations sur les joueurs précédement rentrées
+	/**Procï¿½dure permettant de lancer une nouvelle partie de bataille navale
+	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 	public void buttonBataille() {
 		Window w = loto.getScene().getWindow();
@@ -107,8 +107,8 @@ public class Menu extends Application {
 		alert.show();
 
 	}
-	/**Procédure permettant de lancer une nouvelle partie de poker
-	 * à l'aide des infomations sur les joueurs précédement rentrées
+	/**Procï¿½dure permettant de lancer une nouvelle partie de poker
+	 * ï¿½ l'aide des infomations sur les joueurs prï¿½cï¿½dement rentrï¿½es
 	 */
 
 	public void buttonPoker() {
@@ -134,8 +134,8 @@ public class Menu extends Application {
 		}
 	}
 
-	/**Procédure permettant de lancer une nouvelle partie de sudoku
-	 * à l'aide des infomations sur le joueur précédement rentrées
+	/**Procï¿½dure permettant de lancer une nouvelle partie de sudoku
+	 * ï¿½ l'aide des infomations sur le joueur prï¿½cï¿½dement rentrï¿½es
 	 */
 	public void buttonSudoku() {
 		Stage temp = (Stage) this.loto.getScene().getWindow();
@@ -158,8 +158,8 @@ public class Menu extends Application {
 				e.printStackTrace();
 			}
 	}
-	/**Procédure permettant de rentrer le nombre de joueur
-	 * on effectue un cast du string rentré afin de pouvoir manipuler ce nombre
+	/**Procï¿½dure permettant de rentrer le nombre de joueur
+	 * on effectue un cast du string rentrï¿½ afin de pouvoir manipuler ce nombre
 	 */
 	@FXML
 	public void handleNbJoueur() throws IOException {
@@ -172,9 +172,6 @@ public class Menu extends Application {
 	        stop = true;
 	    }
 		if ((nbJoueur.getText().isEmpty()) || stop ) {
-		// Vï¿½rif
-		System.out.println("Nombre de joueurs entrÃ© :" + nbJoueur.getText());
-		if (nbJoueur.getText().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Entrez un nombre de joueurs ! Pas plus de 4 attention");
 			alert.initOwner(w);
@@ -191,13 +188,15 @@ public class Menu extends Application {
 		}
 		System.out.println(Menu.nbJoueurInt);
 	}
+
+		
 	@FXML
 	public void handleLancerCredits(ActionEvent Event) throws IOException {
 		Stage temp = (Stage) this.credit.getScene().getWindow();
 		this.root = FXMLLoader.load(getClass().getResource("../resources/FXML/credit.fxml"));
 		temp.setScene(new Scene(this.root));
 	}
-	/**Procédure permettant d'afficher le nom du joueur venant d'être rentré
+	/**Procï¿½dure permettant d'afficher le nom du joueur venant d'ï¿½tre rentrï¿½
 	 */
 	public void creationLabel(String s) {
 		this.labelNomJoueur.setText(s);
@@ -214,7 +213,7 @@ public class Menu extends Application {
 			}
 	}
 
-	/**Procédure permettant de rentrer le nom des joueurs
+	/**Procï¿½dure permettant de rentrer le nom des joueurs
 	 */
 	@FXML
 	public void handleNomsJoueurs() throws IOException, InterruptedException {
@@ -251,8 +250,8 @@ public class Menu extends Application {
 
 	}
 	
-	/**Procédure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
-	 * exemple on ne peut pas jouer au sudoku à plusieurs
+	/**Procï¿½dure permettant d'afficher les jeux disponibles en fonction du nombre de joueur,
+	 * exemple on ne peut pas jouer au sudoku ï¿½ plusieurs
 	 */
 
 	public void affichageJeu() {
