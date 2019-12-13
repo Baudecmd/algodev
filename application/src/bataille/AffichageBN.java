@@ -503,7 +503,7 @@ public class AffichageBN extends Application {
 	 */
 	private void partie() throws IOException {
 		Stage temp = (Stage) pane.getScene().getWindow();
-		//Partie.initialiser(bataille.getFileName());
+		Partie.initialiser(bataille.getFileName());
 		root = FXMLLoader.load(getClass().getResource("../resources/FXML/ChoixTire.fxml"));
 		temp.setScene(new Scene(this.root));
 		temp.setHeight(800);
@@ -677,7 +677,7 @@ public class AffichageBN extends Application {
 	 * gère la fin de partie en affichant une fenêtre de victoire
 	 */
 	private void partieFinie() {
-		Joueur gagnant = bataille.retournerGagnant();
+		Joueur gagnant = new Joueur(bataille.retournerGagnant().getNom());
 		Partie.ajouterVictoire(bataille.getFileName(), gagnant);
 		ArrayList<Joueur> scores = Partie.recupererScore(bataille.getFileName());
 		Popups.nom = gagnant.getNom();

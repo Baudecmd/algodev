@@ -29,6 +29,22 @@ public interface Partie { //L'interface partie apporte les fonctions necessaires
         }
     }
 
+    static void reset(String fileName) {
+        File f = getFileFromResources(fileName);
+
+        try {
+            FileOutputStream fO = new FileOutputStream(f);
+            ObjectOutputStream oO = new ObjectOutputStream(fO);
+            for (int i = 0; i < 10; i++) {
+                oO.writeObject(new Joueur("_____"));
+            }
+            oO.close();
+            fO.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * recupere l'arraylist de joueur triée par scores
      * @param fileName path du scoreboard

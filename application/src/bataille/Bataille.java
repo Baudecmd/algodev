@@ -1,6 +1,9 @@
 package bataille;
 
+import commun.Joueur;
 import commun.Partie;
+
+import java.util.ArrayList;
 
 public class Bataille implements Partie {
     private final String fileName = "scoreboardBataille.ser";
@@ -40,6 +43,13 @@ public class Bataille implements Partie {
      */
     public Boolean partieFinie() {
         return !(!j1.getListeBateaux().isEmpty() && !j2.getListeBateaux().isEmpty());   //un bateau détruit est retiré de la liste des bateaux du joueur
+    }
 
+    public static void main(String[] args) {
+        Joueur j = new Joueur("Jacques");
+        Partie.reset("scoreboardBataille.ser");
+        Partie.initialiser("scoreboardBataille.ser");
+        ArrayList<Joueur> L = Partie.recupererScore("scoreboardBataille.ser");
+        System.out.println(L.toString());
     }
 }
